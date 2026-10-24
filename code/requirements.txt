@@ -1,0 +1,20 @@
+# 核心路径（main.py / system/run_system.py）：纯 Python 标准库，零第三方依赖
+# 以下仅为实验/校验工具链依赖
+
+# 开发/校验工具
+pytest>=7.4          # tests/ 套测试（本地实测 9.1.0）
+PyYAML>=6.0          # scripts/gen_patch.py 补丁自检
+
+# LongMemEval 实验 & 图表
+tiktoken>=0.14       # cl100k_base tokenizer
+rank_bm25>=0.2.2     # BM25 检索基线
+openai>=1.40         # LLM 调用（GLM-4-Flash / GLM-4.7-Flash 协议兼容）
+matplotlib>=3.8      # 图表渲染（charts.py / analyze.py 图表）
+numpy>=1.24          # diagnostics.py 数值处理
+
+# 重排器实验（E3 修订轮，纯 CPU 推理）
+sentence-transformers>=3.0   # bge-small/bge-base 编码器
+torch>=2.0           # 上述编码器的 PyTorch 后端
+
+# 框架配置（仅引擎 agentic 路径）
+#   pip install jiuwenswarm jiuwenswarm-tui   # 见 run_guide.md §4

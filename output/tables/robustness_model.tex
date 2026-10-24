@@ -1,0 +1,11 @@
+\begin{tabular}{lcc}
+\toprule
+Policy (GLM-4.7-Flash) & relaxed EM & $n$ \\
+\midrule
+full-context (verbatim) & 0.250 & 32 \\
+retrieval+recency @4096 & 0.283 & 60 \\
+hierarchical (3-tier) @4096 & 0.237 & 59 \\
+retrieval (BM25) @4096 & 0.231 & 26 \\
+compression (window+summ.) @4096 & 0.163 & 49 \\
+\bottomrule
+\end{tabular}

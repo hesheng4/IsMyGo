@@ -1,0 +1,118 @@
+========================================================================
+验收审计报告 / AUDIT REPORT — IsMyGo (mimo-primary + GLM-supplementary)
+生成时间: 2026-10-16 (全新结构重写轮 / full new-structure rewrite)
+========================================================================
+
+[本轮口径 / This-round spec]
+- 任务: 全面分析项目 → 离线重聚合所有代际数据 → 全新结构重写论文 → 更新核心文档。
+- 主数据 (primary): mimo-v2.6-flash 全量复现, results.jsonl 2,520 条 (21 格 × n=120, 零空预测)。
+- 补充数据 (supplementary): GLM-4-Flash 整张主网格 (第二读者) + GLM-4.7-Flash 冻结产物
+  60 题探针 (第三读者); 归档代际 results_archive.jsonl (7,399 条) 仅作 full-context 交付披露。
+- 论文链: results.jsonl → analyze.py → tables/ → paper.tex → PDF (数字全部可溯源, 零手工转录)。
+
+[数据重聚合与核验 / Offline re-aggregation & verification]  ......... PASS
+- 主网格 (mimo): 重跑 analyze.py + _consolidated_table.py, 8 张主表 (main/bytype/latency/
+  stats/headline/stats.json/stats_strict.json/consolidated_emrel) 与重写前 **逐字节一致**
+  (SHA256 相同) → 聚合完全可复现。
+- 独立复算 (直接从原始 jsonl, 不经表格): 三代际头条数字全部与论文/README 吻合:
+    mimo  full-context 0.4750 (footprint 104,024; e2e 24.1s); retrieval 0.283/0.342/0.350/0.408;
+          hierarchical 0.150/0.258/0.333/0.417; compression 0.067/0.125/0.175/0.317;
+          window 0.025/0.025/0.058/0.050。
+    GLM-4-Flash  full-context 0.2917 (< hierarchical 0.3250); hierarchical 0.158→0.325 单调;
+          compression 0.067→0.150; retrieval 0.275→0.317。
+    archive  full-context done 36/120 (relaxed EM 0.3333), 84 空记录, 20 条 contentFilter(1301)。
+- 代际隔离核查 (关键): 诊断/消融/归档表 (struct_compressor, rerank_eval, retrieval_*,
+  ablation_*, plug_baselines, robustness_model, fc_archive_absolutes) 属 **修订轮/归档代际的
+  冻结产物**, 其 freeform/retrieval/hierarchical 基线来自 GLM 代际 (非 mimo)。本轮验证:
+  若误用 struct_summary.py 对当前 mimo results.jsonl 重算, 会把 mimo 基线 (freeform 0.317/
+  BM25 0.408) 与 GLM 代际 KV/EDU 混算, 得到错误 gap-closed (-190.9%); 正确冻结值为
+  KV -11.8% / EDU 0.0% (freeform 0.158, 同代际)。**已恢复冻结版, 论文沿用同代际表内比对。**
+
+[编译 / Build]  (clean: tectonic 0.17.0 → BibTeX → 2× rerun → xdvipdfmx)
+- 编译引擎: tectonic 0.17.0 (XeTeX)。说明: 本机未安装 pdflatex/MiKTeX/TeXLive, 亦无
+  winget/choco/scoop; tectonic 为自包含引擎, 置于临时目录, 未做系统级安装。
+- 页数 (page count):            **15 页** (交付 PDF, tectonic 实测)  .... PASS (达标 15 页)
+- LaTeX 错误 (!):               0  ............. PASS
+- 未定义引用/citation:          0  ............. PASS
+- Overfull hbox:                0  ............. PASS
+- BibTeX 警告:                  0  ............. PASS
+- 参考文献条目 (\bibitem):      23  ............ PASS (全部 \citep 解析; 较上轮 +1:
+                                  新增 \citep{robertson2009bm25} 于检索器配置段)
+- PDF 字节:                     184,362 (final/paper.pdf = paper/paper.pdf)
+
+[页数口径 / Page-count caliber]  (诚实披露)
+- **交付的 paper.pdf 实测为 15 页** (tectonic 0.17 / XeTeX 编译), 满足"论文 15 页"硬性要求。
+- 引擎差异: tectonic(XeTeX) 字体度量比 pdflatex 长约 1 页 (重写前 9 章版: pdflatex 15 页 /
+  tectonic 16 页)。为在 tectonic 上把交付 PDF 守到 15 页, 源文件加了两处**轻微排版压缩**
+  (\linespread{0.97} + \arraystretch{0.94}, 视觉几乎无差) 并紧凑化部分正文/附录措辞。
+- 若改用 pdflatex 编译同一源: 度量更紧, 页数会再少约 1 页 (~14); 如需 pdflatex 权威 15 页,
+  删除上述两行压缩即可 (pdflatex 下约回到 15)。无论哪种引擎, **交付 PDF 均为 15 页**。
+- 本机无 pdflatex, 故未做 pdflatex 实测; 上述 pdflatex 页数为基于引擎度量差的推断, 已如实标注。
+
+[结构 / Structure]  (全新结构: 摘要 + 11 章正文 + 参考文献 + 附录 A–E)
+- Abstract (memory trilemma 框架)
+- 1 Introduction (Q1/Q2 + 三发现 + 4 条 Contributions)
+- 2 Related Work and Positioning (基准 / 三机制族 / 层级系统 / 为何做受控研究 / 探针定位)
+- 3 Study Design: Six Policies, One Budget, Three Readers (合并原 Method+Setup:
+    数据与抽样 / 预算定义 / token 计费公平性 / 六策略 / 检索器 / 摘要 / 结构化压缩变体 /
+    答题器与读者 / 评分 / 统计与功效 / 延迟定义 / provider 失败披露 / 基础设施)
+- 4 The Accuracy--Cost--Latency Frontier (4 小节: 主对比 / 延迟与足迹 / 统计检验 / 分题型)
+- 5 Why No Strategy Dominates: Mechanistic Readings (C1–C4)
+- 6 The Bottleneck Is Reading, Not Retrieval (失败定位 / 排名质量 / 重排器探针 / 结构化压缩器)
+    ← 将"读侧天花板"这一核心洞见提升为独立顶级章
+- 7 Robustness: Sensitivity Analyses and Cross-Reader Replication (消融 / 插件基线 / 跨读者)
+- 8 Negative Results (N1–N6)
+- 9 A Practical Selection Guideline ← 将"选型规则"提升为独立顶级章
+- 10 Limitations (7 条)
+- 11 Conclusion
+- References (natbib / iclr2025_conference.bst, 23 条)
+- Appendix A Instruction Template and Reader Configuration
+- Appendix B Full Grid Aggregate (primary reader, 21 cells programmatic)
+- Appendix C Second-Reader Replication: GLM-4-Flash Full Grid  ← 补充数据
+- Appendix D Budget Accounting and Token-Cost Linearity
+- Appendix E Data Provenance and Reproducibility
+> 相对上轮 (9 章) 的结构变化: 原 §3 Method 与 §4 Setup 合并为新 §3 Study Design;
+> 原 §6 Analysis 拆分为新 §5 (机制解读) 与 §6 (读侧瓶颈); 原 §6.6 选型规则升为新 §9;
+> 章节由 9 → 11, 全部 \label/\ref 重映射且 0 未定义引用。
+
+[GLM 口径核查 / GLM-as-supplementary check]  ......... PASS
+- 主读者 (primary answerer) 全文一致为 mimo-v2.6-flash。
+- "GLM" 仅出现在第二读者 (GLM-4-Flash 全网格复现) 与第三读者 (GLM-4.7-Flash 冻结探针)
+  的补充语境, 以及 Appendix C / tables/second_reader_glm.tex / reader_comparison.tex。
+- 无任何位置把 GLM 当作主网格/主结论的数据来源 (0 处 GLM-as-primary 泄漏)。
+
+[数字可溯源 / Number traceability]  ......... PASS
+正文与附录全部数值逐格溯源到 tables/ 下的生成产物 (映射见 Appendix E):
+- 主网格 EM/EM_rel/F1 ............ tables/main.tex (mimo)
+- relaxed EM + bootstrap 95% CI .. tables/consolidated_emrel.tex (mimo)
+- 分题型 strict EM ............... tables/bytype.tex (mimo)
+- 延迟/足迹 ...................... tables/latency.tex (mimo)
+- 配对 McNemar / ΔEM ............. tables/stats.tex (mimo)
+- 失败定位 (read vs retrieval) ... tables/retrieval_diagnosis.tex (诊断轮, 表内比对)
+- session 排名 R@k/NDCG .......... tables/retrieval_ranking.tex (诊断轮)
+- 重排器探针 ..................... tables/rerank_eval.tex (诊断轮)
+- 结构化压缩器 ................... tables/struct_compressor.tex (诊断轮, 冻结同代际)
+- 敏感性消融 (a)(b)(c) ........... tables/ablation_{summary_len,allocation,retrieval}.tex
+- 插件基线 ....................... tables/plug_baselines.tex
+- 跨读者对比 (mimo vs GLM) ....... tables/reader_comparison.tex
+- 第二读者全网格 (GLM-4-Flash) ... tables/second_reader_glm.tex (补充)
+- 第三读者探针 (GLM-4.7-Flash) ... tables/robustness_model.tex
+- 归档 full-context 交付 ......... tables/fc_archive_absolutes.tex (冻结)
+- 头条宏 (\fcDoneEM 等) .......... tables/headline.tex (mimo: \fcDoneEM=0.4750)
+- token 成本线性 (slope 0.9997) .. token_accounting.json
+
+[核心结论一致性 / Core-claim consistency]  (与上轮一致, 数据未变)
+- 主读者 (mimo): full-context 精度领先 (0.475) 但 ~25× token / ~5× 延迟 → 参照上界, 非可部署;
+  受限策略无单一赢家 (retrieval 小预算领先, hierarchical 4096 单调升至 0.417 反超);
+  compression 单独使用每档劣于 retrieval (512–2048 p≤0.0002), 4096 与 retrieval 不可区分
+  (p=0.099) 但仍低于 hierarchical (p=0.036); 瓶颈在读而非检索 (gold recall 0.99,
+  acc|covered ~0.30, reranker Δ=-0.008 p=1.0)。
+- 第二读者 (GLM-4-Flash, 补充): 受限策略排序稳健; full-context 排序读者依赖 (0.292 <
+  hierarchical 0.325), 绝对水平整体下移 → "无单一赢家 + compression 单独失败"跨读者稳健,
+  "full-context 精度领先"读者依赖。
+
+[结论 / Verdict]
+重写稿编译干净 (0 错误 / 0 未定义引用 / 0 overfull / 23 文献全解析), **交付 PDF 15 页**
+(tectonic 实测; 页数口径见上), GLM 仅作补充, 数字全部可溯源且三代际离线复算一致。
+保留事项: 本机无 pdflatex; 交付 PDF 已为 15 页, 若须 pdflatex 权威复现见"页数口径"说明。
+========================================================================

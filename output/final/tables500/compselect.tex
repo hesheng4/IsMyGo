@@ -1,0 +1,8 @@
+\begin{tabular}{lcccc}
+\toprule
+Compression variant & $B{=}1024$ & $B{=}4096$ & $\Delta$@1024 vs.\ retr. & $\Delta$@4096 vs.\ retr. \\
+\midrule
+write-time only (take-newest) & 0.142 & 0.292 & -0.175 & -0.083\\
++ query-time digest selection & 0.292 & 0.324 & -0.020 (p=0.36) & -0.040 (p=0.059)\\
+\bottomrule
+\end{tabular}

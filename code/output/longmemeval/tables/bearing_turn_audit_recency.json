@@ -1,0 +1,548 @@
+{
+ "meta": {
+  "policy": "retrieval_recency",
+  "budget": 4096,
+  "reader": "mimo-v2.6-flash",
+  "n": 76,
+  "threshold": 0.5,
+  "class_counts": {
+   "bearing-in-history": 20,
+   "bearing-in-context": 38,
+   "none": 18
+  }
+ },
+ "rows": [
+  {
+   "question_id": "0100672e",
+   "question_type": "multi-session",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "031748ae",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.75,
+   "best_all_overlap": 0.75
+  },
+  {
+   "question_id": "07b6f563",
+   "question_type": "single-session-preference",
+   "class": "none",
+   "best_ctx_overlap": 0.36,
+   "best_all_overlap": 0.48
+  },
+  {
+   "question_id": "09ba9854_abs",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.429,
+   "best_all_overlap": 0.429
+  },
+  {
+   "question_id": "0db4c65d",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.25,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "157a136e",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 0.0
+  },
+  {
+   "question_id": "16c90bf4",
+   "question_type": "single-session-assistant",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.8,
+   "best_all_overlap": 0.8
+  },
+  {
+   "question_id": "1903aded",
+   "question_type": "single-session-assistant",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "1a1907b4",
+   "question_type": "single-session-preference",
+   "class": "none",
+   "best_ctx_overlap": 0.256,
+   "best_all_overlap": 0.279
+  },
+  {
+   "question_id": "1a8a66a6",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "1d4e3b97",
+   "question_type": "single-session-preference",
+   "class": "none",
+   "best_ctx_overlap": 0.207,
+   "best_all_overlap": 0.345
+  },
+  {
+   "question_id": "2133c1b5_abs",
+   "question_type": "knowledge-update",
+   "class": "none",
+   "best_ctx_overlap": 0.429,
+   "best_all_overlap": 0.429
+  },
+  {
+   "question_id": "27016adc",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "2788b940",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "2ebe6c90",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.25,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "2ebe6c92",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "35a27287",
+   "question_type": "single-session-preference",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.571,
+   "best_all_overlap": 0.571
+  },
+  {
+   "question_id": "3a704032",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "3b6f954b",
+   "question_type": "single-session-user",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "4100d0a0",
+   "question_type": "single-session-user",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.667,
+   "best_all_overlap": 0.667
+  },
+  {
+   "question_id": "4bc144e2",
+   "question_type": "multi-session",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "5025383b",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "50635ada",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "58ef2f1c",
+   "question_type": "single-session-user",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "5c40ec5b",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "60bf93ed_abs",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.143,
+   "best_all_overlap": 0.286
+  },
+  {
+   "question_id": "61f8c8f8",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "6456829e",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "65240037",
+   "question_type": "single-session-assistant",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.692,
+   "best_all_overlap": 0.692
+  },
+  {
+   "question_id": "6cb6f249",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "73d42213",
+   "question_type": "multi-session",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "8077ef71",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.375,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "80ec1f4f_abs",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.333,
+   "best_all_overlap": 0.333
+  },
+  {
+   "question_id": "86f00804",
+   "question_type": "single-session-user",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "8cf51dda",
+   "question_type": "single-session-assistant",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.947,
+   "best_all_overlap": 0.947
+  },
+  {
+   "question_id": "92a0aa75",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.75
+  },
+  {
+   "question_id": "9ee3ecd6",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "a1eacc2a",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "af082822",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "b0479f84",
+   "question_type": "single-session-preference",
+   "class": "none",
+   "best_ctx_overlap": 0.312,
+   "best_all_overlap": 0.312
+  },
+  {
+   "question_id": "b46e15ed",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "bcbe585f",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "c8090214",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "d23cf73b",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "d851d5ba",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "e493bb7c",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "e4e14d04",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "e5ba910e_abs",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.125,
+   "best_all_overlap": 0.375
+  },
+  {
+   "question_id": "eac54adc",
+   "question_type": "temporal-reasoning",
+   "class": "none",
+   "best_ctx_overlap": 0.222,
+   "best_all_overlap": 0.333
+  },
+  {
+   "question_id": "edced276_abs",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.25,
+   "best_all_overlap": 0.25
+  },
+  {
+   "question_id": "eeda8a6d",
+   "question_type": "multi-session",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "f35224e0",
+   "question_type": "multi-session",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "f685340e",
+   "question_type": "knowledge-update",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.818,
+   "best_all_overlap": 0.818
+  },
+  {
+   "question_id": "f685340e_abs",
+   "question_type": "knowledge-update",
+   "class": "none",
+   "best_ctx_overlap": 0.286,
+   "best_all_overlap": 0.429
+  },
+  {
+   "question_id": "fca70973",
+   "question_type": "single-session-preference",
+   "class": "none",
+   "best_ctx_overlap": 0.49,
+   "best_all_overlap": 0.49
+  },
+  {
+   "question_id": "gpt4_1d80365e",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 0.625
+  },
+  {
+   "question_id": "gpt4_1e4a8aeb",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.375,
+   "best_all_overlap": 0.625
+  },
+  {
+   "question_id": "gpt4_2c50253f",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.333,
+   "best_all_overlap": 0.667
+  },
+  {
+   "question_id": "gpt4_372c3eed",
+   "question_type": "multi-session",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_45189cb4",
+   "question_type": "temporal-reasoning",
+   "class": "none",
+   "best_ctx_overlap": 0.357,
+   "best_all_overlap": 0.429
+  },
+  {
+   "question_id": "gpt4_4cd9eba1",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_4fc4f797",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.25,
+   "best_all_overlap": 0.5
+  },
+  {
+   "question_id": "gpt4_6ed717ea",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.333,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_731e37d7",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 0.0
+  },
+  {
+   "question_id": "gpt4_78cf46a3",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.75,
+   "best_all_overlap": 0.75
+  },
+  {
+   "question_id": "gpt4_7ca326fa",
+   "question_type": "temporal-reasoning",
+   "class": "none",
+   "best_ctx_overlap": 0.333,
+   "best_all_overlap": 0.333
+  },
+  {
+   "question_id": "gpt4_7fce9456",
+   "question_type": "multi-session",
+   "class": "none",
+   "best_ctx_overlap": 0.194,
+   "best_all_overlap": 0.333
+  },
+  {
+   "question_id": "gpt4_85da3956",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_88806d6e",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_8c8961ae",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 1.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_93f6379c",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_9a159967",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_a2d1d1f6",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.444,
+   "best_all_overlap": 0.556
+  },
+  {
+   "question_id": "gpt4_b5700ca9",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-context",
+   "best_ctx_overlap": 0.5,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_d6585ce9",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  },
+  {
+   "question_id": "gpt4_fe651585",
+   "question_type": "temporal-reasoning",
+   "class": "bearing-in-history",
+   "best_ctx_overlap": 0.0,
+   "best_all_overlap": 1.0
+  }
+ ]
+}

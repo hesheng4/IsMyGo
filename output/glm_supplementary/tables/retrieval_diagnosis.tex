@@ -1,0 +1,34 @@
+\begin{tabular}{llccccc}
+\toprule
+Policy & Budget & $n$ & gold recall & acc$|_{\mathrm{covered}}$ & read-fail & retr.-fail \\
+\midrule
+sliding\_window & 512 & 120 & 0.050 & 0.167 & 0.042 & 0.917 \\
+sliding\_window & 1024 & 120 & 0.058 & 0.286 & 0.042 & 0.892 \\
+sliding\_window & 2048 & 120 & 0.075 & 0.222 & 0.058 & 0.867 \\
+sliding\_window & 4096 & 119 & 0.109 & 0.308 & 0.076 & 0.832 \\
+retrieval & 512 & 118 & 0.814 & 0.312 & 0.559 & 0.178 \\
+retrieval & 1024 & 117 & 0.915 & 0.299 & 0.641 & 0.077 \\
+retrieval & 2048 & 117 & 0.974 & 0.307 & 0.675 & 0.017 \\
+retrieval & 4096 & 118 & 0.992 & 0.299 & 0.695 & 0.000 \\
+retrieval\_recency & 512 & 118 & 0.737 & 0.287 & 0.525 & 0.254 \\
+retrieval\_recency & 1024 & 117 & 0.872 & 0.324 & 0.590 & 0.120 \\
+retrieval\_recency & 2048 & 117 & 0.940 & 0.300 & 0.658 & 0.051 \\
+retrieval\_recency & 4096 & 118 & 0.975 & 0.243 & 0.737 & 0.017 \\
+compression & 512 & 120 & 0.250 & 0.100 & 0.225 & 0.717 \\
+compression & 1024 & 120 & 0.417 & 0.200 & 0.333 & 0.558 \\
+compression & 2048 & 120 & 0.675 & 0.173 & 0.558 & 0.308 \\
+compression & 4096 & 120 & 0.900 & 0.167 & 0.750 & 0.092 \\
+hierarchical & 512 & 118 & 0.568 & 0.224 & 0.441 & 0.407 \\
+hierarchical & 1024 & 118 & 0.712 & 0.274 & 0.517 & 0.254 \\
+hierarchical & 2048 & 117 & 0.897 & 0.314 & 0.615 & 0.103 \\
+hierarchical & 4096 & 117 & 0.983 & 0.322 & 0.667 & 0.017 \\
+dense\_retrieval & 512 & 120 & 0.950 & 0.289 & 0.675 & 0.042 \\
+dense\_retrieval & 1024 & 118 & 0.983 & 0.328 & 0.661 & 0.017 \\
+dense\_retrieval & 2048 & 118 & 1.000 & 0.322 & 0.678 & 0.000 \\
+dense\_retrieval & 4096 & 119 & 1.000 & 0.328 & 0.672 & 0.000 \\
+hybrid\_retrieval & 512 & 118 & 0.898 & 0.311 & 0.619 & 0.093 \\
+hybrid\_retrieval & 1024 & 118 & 0.983 & 0.319 & 0.669 & 0.017 \\
+hybrid\_retrieval & 2048 & 118 & 1.000 & 0.263 & 0.737 & 0.000 \\
+hybrid\_retrieval & 4096 & 118 & 1.000 & 0.339 & 0.661 & 0.000 \\
+\bottomrule
+\end{tabular}

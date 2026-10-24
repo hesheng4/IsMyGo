@@ -1,0 +1,409 @@
+{
+  "run_id": "agent-sci-2026-comp-001",
+  "command": "python code/experiments/longmemeval/run.py --full --log-run --fresh",
+  "model": "mimo-v2.6-flash",
+  "llm_calls": 7290,
+  "token_input": 22483215,
+  "token_output": 711177,
+  "token_total": 23194392,
+  "wall_seconds": 10728.1,
+  "note": "实验段(agent-sci-2026-comp-001)产物清单: results.jsonl + tables/ 为论文数字来源(mimo 2,520条)。final/ 为论文写作段(paper-gen-15p-20261016, 见 logs/run.json)定稿; glm_supplementary/ 为GLM第二/第三读者补充证据。README.md 与本文件不计入。",
+  "artifacts": {
+    "archive\\results_archive.jsonl": {
+      "bytes": 3074525,
+      "sha256_16": "c3d4b8dc8b99df5f"
+    },
+    "draft\\outline.md": {
+      "bytes": 797,
+      "sha256_16": "a63dda5d3e248587"
+    },
+    "draft\\run_summary.md": {
+      "bytes": 484,
+      "sha256_16": "b403b30bb539219d"
+    },
+    "final\\README.md": {
+      "bytes": 3716,
+      "sha256_16": "281ff20282e8bd69"
+    },
+    "final\\audit_report.txt": {
+      "bytes": 5611,
+      "sha256_16": "8856245be82a98cf"
+    },
+    "final\\iclr2025_conference.bst": {
+      "bytes": 26973,
+      "sha256_16": "2d67552db7ed38cc"
+    },
+    "final\\iclr2025_conference.sty": {
+      "bytes": 9025,
+      "sha256_16": "9e280a9ff99be84a"
+    },
+    "final\\paper.aux": {
+      "bytes": 21935,
+      "sha256_16": "91af79586a6df477"
+    },
+    "final\\paper.bbl": {
+      "bytes": 7199,
+      "sha256_16": "5fc2288d4e38075f"
+    },
+    "final\\paper.bib": {
+      "bytes": 7462,
+      "sha256_16": "dd900c131f6ac0ee"
+    },
+    "final\\paper.blg": {
+      "bytes": 1058,
+      "sha256_16": "44ee578b59954c9c"
+    },
+    "final\\paper.log": {
+      "bytes": 22022,
+      "sha256_16": "19f6246d8cc918bc"
+    },
+    "final\\paper.out": {
+      "bytes": 5047,
+      "sha256_16": "8e34341da30bd624"
+    },
+    "final\\paper.pdf": {
+      "bytes": 384597,
+      "sha256_16": "e0bc2ed7f9baed38"
+    },
+    "final\\paper.tex": {
+      "bytes": 60601,
+      "sha256_16": "99eff8792ef95832"
+    },
+    "final\\tables\\ablation_allocation.tex": {
+      "bytes": 252,
+      "sha256_16": "332184fee8dbc208"
+    },
+    "final\\tables\\ablation_retrieval.tex": {
+      "bytes": 370,
+      "sha256_16": "e2aa2d0dfc792245"
+    },
+    "final\\tables\\ablation_summary_len.tex": {
+      "bytes": 295,
+      "sha256_16": "5da30af7503f2b9d"
+    },
+    "final\\tables\\bytype.tex": {
+      "bytes": 531,
+      "sha256_16": "618d002d2da71474"
+    },
+    "final\\tables\\consolidated_emrel.tex": {
+      "bytes": 851,
+      "sha256_16": "9b34c3313cbdd1a9"
+    },
+    "final\\tables\\fc_archive_absolutes.tex": {
+      "bytes": 332,
+      "sha256_16": "5d324a555ca759b4"
+    },
+    "final\\tables\\fig_accuracy_vs_budget.pdf": {
+      "bytes": 17696,
+      "sha256_16": "d2553a29ef747a0c"
+    },
+    "final\\tables\\fig_latency_vs_budget.pdf": {
+      "bytes": 16872,
+      "sha256_16": "c11f05202e10720b"
+    },
+    "final\\tables\\headline.tex": {
+      "bytes": 511,
+      "sha256_16": "4b9d596b125663f1"
+    },
+    "final\\tables\\latency.tex": {
+      "bytes": 1253,
+      "sha256_16": "f898081d2cfe8248"
+    },
+    "final\\tables\\main.tex": {
+      "bytes": 1482,
+      "sha256_16": "78e0547ebcbc4efe"
+    },
+    "final\\tables\\matched_analysis.tex": {
+      "bytes": 374,
+      "sha256_16": "8256e9bf97811554"
+    },
+    "final\\tables\\plug_baselines.tex": {
+      "bytes": 738,
+      "sha256_16": "c00869f64b6893ac"
+    },
+    "final\\tables\\reader_comparison.tex": {
+      "bytes": 1151,
+      "sha256_16": "ba32303f388aa91d"
+    },
+    "final\\tables\\rerank_eval.tex": {
+      "bytes": 416,
+      "sha256_16": "31a2177a1e7c0a43"
+    },
+    "final\\tables\\retrieval_diagnosis.tex": {
+      "bytes": 1950,
+      "sha256_16": "089e9d691e675df8"
+    },
+    "final\\tables\\retrieval_ranking.tex": {
+      "bytes": 311,
+      "sha256_16": "abd38d976cdf7430"
+    },
+    "final\\tables\\robustness_model.tex": {
+      "bytes": 333,
+      "sha256_16": "6174f006dca5be6d"
+    },
+    "final\\tables\\second_reader_glm.tex": {
+      "bytes": 1726,
+      "sha256_16": "840953d4dfe3189f"
+    },
+    "final\\tables\\stats.tex": {
+      "bytes": 474,
+      "sha256_16": "24c118889ed402d9"
+    },
+    "final\\tables\\struct_compressor.tex": {
+      "bytes": 508,
+      "sha256_16": "81d33eddeb7815fe"
+    },
+    "glm_supplementary\\README.md": {
+      "bytes": 2068,
+      "sha256_16": "3ac0f76d9f9b376b"
+    },
+    "glm_supplementary\\results_glm.jsonl": {
+      "bytes": 1131528,
+      "sha256_16": "5977b91577bcca28"
+    },
+    "glm_supplementary\\run_manifest_glm.json": {
+      "bytes": 4634,
+      "sha256_16": "d13f2a95c403d1f3"
+    },
+    "glm_supplementary\\tables\\ablation_allocation.tex": {
+      "bytes": 252,
+      "sha256_16": "332184fee8dbc208"
+    },
+    "glm_supplementary\\tables\\ablation_retrieval.tex": {
+      "bytes": 370,
+      "sha256_16": "e2aa2d0dfc792245"
+    },
+    "glm_supplementary\\tables\\ablation_summary_len.tex": {
+      "bytes": 295,
+      "sha256_16": "5da30af7503f2b9d"
+    },
+    "glm_supplementary\\tables\\bytype.tex": {
+      "bytes": 531,
+      "sha256_16": "142c8a5cd1064df7"
+    },
+    "glm_supplementary\\tables\\consolidated_emrel.tex": {
+      "bytes": 849,
+      "sha256_16": "f82df048e5537156"
+    },
+    "glm_supplementary\\tables\\fc_archive_absolutes.tex": {
+      "bytes": 332,
+      "sha256_16": "5d324a555ca759b4"
+    },
+    "glm_supplementary\\tables\\fig_accuracy_vs_budget.pdf": {
+      "bytes": 17696,
+      "sha256_16": "47fc5624f30d4e7d"
+    },
+    "glm_supplementary\\tables\\fig_latency_vs_budget.pdf": {
+      "bytes": 16872,
+      "sha256_16": "5bd069ec3b6785ac"
+    },
+    "glm_supplementary\\tables\\headline.tex": {
+      "bytes": 511,
+      "sha256_16": "233a69b258f1320e"
+    },
+    "glm_supplementary\\tables\\judge_full.json": {
+      "bytes": 272212,
+      "sha256_16": "ca4e0cceaf5927bb"
+    },
+    "glm_supplementary\\tables\\latency.tex": {
+      "bytes": 1253,
+      "sha256_16": "23cd9de47f8b18cf"
+    },
+    "glm_supplementary\\tables\\main.csv": {
+      "bytes": 1225,
+      "sha256_16": "65ee47cd525ed431"
+    },
+    "glm_supplementary\\tables\\main.tex": {
+      "bytes": 1482,
+      "sha256_16": "0e95196a7ebecec0"
+    },
+    "glm_supplementary\\tables\\rerank_eval.json": {
+      "bytes": 7925,
+      "sha256_16": "45177b8811614b46"
+    },
+    "glm_supplementary\\tables\\rerank_eval.tex": {
+      "bytes": 416,
+      "sha256_16": "31a2177a1e7c0a43"
+    },
+    "glm_supplementary\\tables\\rerank_ranking.json": {
+      "bytes": 69009,
+      "sha256_16": "990fc17423332ef0"
+    },
+    "glm_supplementary\\tables\\retrieval_diagnosis.json": {
+      "bytes": 435997,
+      "sha256_16": "44dada3a8970f75c"
+    },
+    "glm_supplementary\\tables\\retrieval_diagnosis.tex": {
+      "bytes": 1950,
+      "sha256_16": "089e9d691e675df8"
+    },
+    "glm_supplementary\\tables\\retrieval_ranking.json": {
+      "bytes": 90799,
+      "sha256_16": "4139625d7100d853"
+    },
+    "glm_supplementary\\tables\\retrieval_ranking.tex": {
+      "bytes": 279,
+      "sha256_16": "ccda9b1a5d9c4155"
+    },
+    "glm_supplementary\\tables\\robustness_model.tex": {
+      "bytes": 331,
+      "sha256_16": "6080c759058a374c"
+    },
+    "glm_supplementary\\tables\\stats.json": {
+      "bytes": 3036,
+      "sha256_16": "f42841c46e61c852"
+    },
+    "glm_supplementary\\tables\\stats.tex": {
+      "bytes": 543,
+      "sha256_16": "c32ab46f3e4767e3"
+    },
+    "glm_supplementary\\tables\\stats_strict.json": {
+      "bytes": 2887,
+      "sha256_16": "a389c2168c6e34ce"
+    },
+    "glm_supplementary\\tables\\struct_compressor.tex": {
+      "bytes": 508,
+      "sha256_16": "81d33eddeb7815fe"
+    },
+    "glm_supplementary\\tables\\struct_eval.json": {
+      "bytes": 8428,
+      "sha256_16": "0c986b6a9cdb151e"
+    },
+    "glm_supplementary\\tables\\token_accounting.json": {
+      "bytes": 190,
+      "sha256_16": "05c386447e717cdd"
+    },
+    "results.jsonl": {
+      "bytes": 1109827,
+      "sha256_16": "62c4c19115dc90a1"
+    },
+    "tables\\ablation_allocation.tex": {
+      "bytes": 252,
+      "sha256_16": "332184fee8dbc208"
+    },
+    "tables\\ablation_readside.tex": {
+      "bytes": 394,
+      "sha256_16": "a929dc12098baca9"
+    },
+    "tables\\ablation_retrieval.tex": {
+      "bytes": 370,
+      "sha256_16": "e2aa2d0dfc792245"
+    },
+    "tables\\ablation_summary_len.tex": {
+      "bytes": 295,
+      "sha256_16": "5da30af7503f2b9d"
+    },
+    "tables\\bytype.tex": {
+      "bytes": 531,
+      "sha256_16": "618d002d2da71474"
+    },
+    "tables\\consolidated_emrel.tex": {
+      "bytes": 851,
+      "sha256_16": "9b34c3313cbdd1a9"
+    },
+    "tables\\fc_archive_absolutes.tex": {
+      "bytes": 332,
+      "sha256_16": "5d324a555ca759b4"
+    },
+    "tables\\fig_accuracy_vs_budget.pdf": {
+      "bytes": 17696,
+      "sha256_16": "d2553a29ef747a0c"
+    },
+    "tables\\fig_latency_vs_budget.pdf": {
+      "bytes": 16872,
+      "sha256_16": "c11f05202e10720b"
+    },
+    "tables\\headline.tex": {
+      "bytes": 511,
+      "sha256_16": "4b9d596b125663f1"
+    },
+    "tables\\judge_full.json": {
+      "bytes": 272212,
+      "sha256_16": "ca4e0cceaf5927bb"
+    },
+    "tables\\latency.tex": {
+      "bytes": 1253,
+      "sha256_16": "f898081d2cfe8248"
+    },
+    "tables\\main.csv": {
+      "bytes": 1226,
+      "sha256_16": "a10de98abb2a11b6"
+    },
+    "tables\\main.tex": {
+      "bytes": 1482,
+      "sha256_16": "78e0547ebcbc4efe"
+    },
+    "tables\\matched_analysis.tex": {
+      "bytes": 374,
+      "sha256_16": "8256e9bf97811554"
+    },
+    "tables\\plug_baselines.tex": {
+      "bytes": 738,
+      "sha256_16": "c00869f64b6893ac"
+    },
+    "tables\\readside_stats.json": {
+      "bytes": 5631,
+      "sha256_16": "301cde5ae28d8601"
+    },
+    "tables\\rerank_eval.json": {
+      "bytes": 7925,
+      "sha256_16": "45177b8811614b46"
+    },
+    "tables\\rerank_eval.tex": {
+      "bytes": 416,
+      "sha256_16": "31a2177a1e7c0a43"
+    },
+    "tables\\rerank_ranking.json": {
+      "bytes": 69009,
+      "sha256_16": "990fc17423332ef0"
+    },
+    "tables\\retrieval_diagnosis.json": {
+      "bytes": 435997,
+      "sha256_16": "44dada3a8970f75c"
+    },
+    "tables\\retrieval_diagnosis.tex": {
+      "bytes": 1950,
+      "sha256_16": "089e9d691e675df8"
+    },
+    "tables\\retrieval_ranking.json": {
+      "bytes": 90799,
+      "sha256_16": "4139625d7100d853"
+    },
+    "tables\\retrieval_ranking.tex": {
+      "bytes": 279,
+      "sha256_16": "ccda9b1a5d9c4155"
+    },
+    "tables\\robustness_m53.tex": {
+      "bytes": 518,
+      "sha256_16": "f7bafd32ef51fff3"
+    },
+    "tables\\robustness_model.tex": {
+      "bytes": 333,
+      "sha256_16": "6174f006dca5be6d"
+    },
+    "tables\\stats.json": {
+      "bytes": 3091,
+      "sha256_16": "0e9fd609c64a9c00"
+    },
+    "tables\\stats.tex": {
+      "bytes": 474,
+      "sha256_16": "24c118889ed402d9"
+    },
+    "tables\\stats_strict.json": {
+      "bytes": 2887,
+      "sha256_16": "a389c2168c6e34ce"
+    },
+    "tables\\struct_compressor.tex": {
+      "bytes": 508,
+      "sha256_16": "81d33eddeb7815fe"
+    },
+    "tables\\struct_eval.json": {
+      "bytes": 8428,
+      "sha256_16": "0c986b6a9cdb151e"
+    },
+    "tables\\token_accounting.json": {
+      "bytes": 190,
+      "sha256_16": "05c386447e717cdd"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+\begin{tabular}{llcccc}
+\toprule
+Policy & Budget & $n$ & EM & EM$_{\text{rel}}$ & token-F1 \\
+\midrule
+full-context (verbatim)$^{\dagger}$ & -- & 120 & 0.1833 & 0.2917 & 0.3683 \\
+sliding window & 512 & 120 & 0.0417 & 0.0417 & 0.0885 \\
+sliding window & 1024 & 120 & 0.0583 & 0.0667 & 0.1143 \\
+sliding window & 2048 & 120 & 0.0667 & 0.0750 & 0.1177 \\
+sliding window & 4096 & 120 & 0.0750 & 0.0917 & 0.1524 \\
+retrieval (BM25) & 512 & 120 & 0.2417 & 0.2750 & 0.3483 \\
+retrieval (BM25) & 1024 & 120 & 0.2500 & 0.2917 & 0.3786 \\
+retrieval (BM25) & 2048 & 120 & 0.2750 & 0.3167 & 0.3993 \\
+retrieval (BM25) & 4096 & 120 & 0.2750 & 0.3167 & 0.4027 \\
+retrieval+recency & 512 & 120 & 0.2167 & 0.2333 & 0.3113 \\
+retrieval+recency & 1024 & 120 & 0.2750 & 0.3000 & 0.3938 \\
+retrieval+recency & 2048 & 120 & 0.2583 & 0.3000 & 0.3871 \\
+retrieval+recency & 4096 & 120 & 0.2250 & 0.2583 & 0.3628 \\
+compression (window+summ.) & 512 & 120 & 0.0667 & 0.0667 & 0.1098 \\
+compression (window+summ.) & 1024 & 120 & 0.1083 & 0.1083 & 0.1620 \\
+compression (window+summ.) & 2048 & 120 & 0.1250 & 0.1333 & 0.1955 \\
+compression (window+summ.) & 4096 & 120 & 0.1250 & 0.1500 & 0.2161 \\
+hierarchical (3-tier) & 512 & 120 & 0.1333 & 0.1583 & 0.2058 \\
+hierarchical (3-tier) & 1024 & 120 & 0.2000 & 0.2417 & 0.2993 \\
+hierarchical (3-tier) & 2048 & 120 & 0.2583 & 0.2917 & 0.3600 \\
+hierarchical (3-tier) & 4096 & 120 & 0.3000 & 0.3250 & 0.4176 \\
+\bottomrule
+\end{tabular}

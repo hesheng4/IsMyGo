@@ -1,0 +1,12 @@
+\begin{tabular}{lcccc}
+\toprule
+Ranker & offline R@5 & online EM$_{\text{rel}}$@4096 & $\Delta$ & McNemar $p$ \\
+\midrule
+BM25 & 0.834 & 0.300 & -- & -- \\
+BM25 + reranker & 0.954 & 0.292 & $-$0.008 & 1.000 \\
+\midrule
+dense (bge-small) & -- & 0.325 & -- & -- \\
+dense (bge-base) & 0.969 & 0.350 & +0.025 & 0.549 \\
+dense (bge-base) + reranker & 0.981 & 0.350 & +0.000 & 1.000 \\
+\bottomrule
+\end{tabular}

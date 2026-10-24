@@ -1,0 +1,10 @@
+[openJiuwen 科研短论文系统] 确定性运行日志 2026-10-15 16:20:50
+模式: deterministic（零 LLM，真实数据，零幻觉）
+数据源: C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\output\results.json
+论文: C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\paper_system\paper_memory_engine.md
+图表: C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\charts_system\fig1_accuracy_vs_budget.png, C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\charts_system\fig2_latency_vs_budget.png, C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\charts_system\fig3_compression_recovery.png, C:\Users\yangy\Desktop\369459+IsMyGo\IsMyGo\code\charts_system\fig4_recency_bias.png
+耗时: 13.11s
+--- FARS 优化① Token 降本: baseline=3167 → optimized=504 (84.1%)
+--- FARS 优化② 假设门控: pass (nov=7.2, fea=8.0)
+--- FARS 优化③ 因果洞察: 4 条机制级洞察，3 条负结果诊断
+--- 调度: {'succeeded': 4}

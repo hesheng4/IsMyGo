@@ -1,0 +1,107 @@
+{
+ "full_context|None": {
+  "access_ms": 33.72,
+  "median_ms": 32.94,
+  "footprint": 104024
+ },
+ "sliding_window|512": {
+  "access_ms": 0.1,
+  "median_ms": 0.1,
+  "footprint": 333
+ },
+ "sliding_window|1024": {
+  "access_ms": 0.23,
+  "median_ms": 0.22,
+  "footprint": 826
+ },
+ "sliding_window|2048": {
+  "access_ms": 0.58,
+  "median_ms": 0.5,
+  "footprint": 1809
+ },
+ "sliding_window|4096": {
+  "access_ms": 1.26,
+  "median_ms": 1.1,
+  "footprint": 3897
+ },
+ "retrieval|512": {
+  "access_ms": 30.49,
+  "median_ms": 29.68,
+  "footprint": 300
+ },
+ "retrieval|1024": {
+  "access_ms": 29.3,
+  "median_ms": 28.1,
+  "footprint": 848
+ },
+ "retrieval|2048": {
+  "access_ms": 31.35,
+  "median_ms": 30.09,
+  "footprint": 1861
+ },
+ "retrieval|4096": {
+  "access_ms": 31.09,
+  "median_ms": 30.92,
+  "footprint": 3842
+ },
+ "retrieval_recency|512": {
+  "access_ms": 28.49,
+  "median_ms": 27.26,
+  "footprint": 334
+ },
+ "retrieval_recency|1024": {
+  "access_ms": 29.44,
+  "median_ms": 28.34,
+  "footprint": 828
+ },
+ "retrieval_recency|2048": {
+  "access_ms": 31.03,
+  "median_ms": 30.37,
+  "footprint": 1843
+ },
+ "retrieval_recency|4096": {
+  "access_ms": 44.05,
+  "median_ms": 36.71,
+  "footprint": 3875
+ },
+ "compression|512": {
+  "access_ms": 0.59,
+  "median_ms": 0.49,
+  "footprint": 471
+ },
+ "compression|1024": {
+  "access_ms": 13.55,
+  "median_ms": 0.91,
+  "footprint": 985
+ },
+ "compression|2048": {
+  "access_ms": 2.62,
+  "median_ms": 2.42,
+  "footprint": 2007
+ },
+ "compression|4096": {
+  "access_ms": 4.43,
+  "median_ms": 4.22,
+  "footprint": 4038
+ },
+ "hierarchical|512": {
+  "access_ms": 85.21,
+  "median_ms": 51.77,
+  "footprint": 284
+ },
+ "hierarchical|1024": {
+  "access_ms": 104.97,
+  "median_ms": 54.44,
+  "footprint": 686
+ },
+ "hierarchical|2048": {
+  "access_ms": 106.19,
+  "median_ms": 52.32,
+  "footprint": 1614
+ },
+ "hierarchical|4096": {
+  "access_ms": 59.36,
+  "median_ms": 47.49,
+  "footprint": 3683
+ }
+}

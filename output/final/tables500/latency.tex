@@ -1,0 +1,27 @@
+\begin{tabular}{llcc}
+\toprule
+Policy & Budget & access (ms) & mem.\ tokens \\
+\midrule
+full-context (verbatim)$^{\dagger}$ & -- & 32.94 & 104024 \\
+sliding window & 512 & 0.10 & 333 \\
+sliding window & 1024 & 0.22 & 826 \\
+sliding window & 2048 & 0.50 & 1809 \\
+sliding window & 4096 & 1.10 & 3897 \\
+retrieval (BM25) & 512 & 29.68 & 300 \\
+retrieval (BM25) & 1024 & 28.10 & 848 \\
+retrieval (BM25) & 2048 & 30.09 & 1861 \\
+retrieval (BM25) & 4096 & 30.92 & 3842 \\
+retrieval+recency & 512 & 27.26 & 334 \\
+retrieval+recency & 1024 & 28.34 & 828 \\
+retrieval+recency & 2048 & 30.37 & 1843 \\
+retrieval+recency & 4096 & 36.71 & 3875 \\
+compression (write-time) & 512 & 0.49 & 471 \\
+compression (write-time) & 1024 & 0.91 & 985 \\
+compression (write-time) & 2048 & 2.42 & 2007 \\
+compression (write-time) & 4096 & 4.22 & 4038 \\
+hierarchical (3-tier) & 512 & 51.77 & 284 \\
+hierarchical (3-tier) & 1024 & 54.44 & 686 \\
+hierarchical (3-tier) & 2048 & 52.32 & 1614 \\
+hierarchical (3-tier) & 4096 & 47.49 & 3683 \\
+\bottomrule
+\end{tabular}

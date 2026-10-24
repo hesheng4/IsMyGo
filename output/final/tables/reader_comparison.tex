@@ -1,0 +1,19 @@
+% Cross-reader comparison: relaxed EM, primary reader (mimo-v2.6-flash) vs second
+% reader (GLM-4-Flash). mimo cells: IsMyGo/output/tables/consolidated_emrel.tex;
+% GLM cells: IsMyGo-glm/output/tables/consolidated_emrel.tex. Same 120-question
+% stratified sample, same budget grid, same harness; only the answerer differs.
+\begin{tabular}{lcccc|cccc}
+\toprule
+ & \multicolumn{4}{c|}{mimo-v2.6-flash (primary)} & \multicolumn{4}{c}{GLM-4-Flash (second reader)} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Policy (relaxed EM) & 512 & 1024 & 2048 & 4096 & 512 & 1024 & 2048 & 4096 \\
+\midrule
+sliding window & 0.025 & 0.025 & 0.058 & 0.050 & 0.042 & 0.067 & 0.075 & 0.092 \\
+retrieval (BM25) & 0.283 & 0.342 & 0.350 & 0.408 & 0.275 & 0.292 & 0.317 & 0.317 \\
+retrieval+recency & 0.258 & 0.308 & 0.325 & 0.342 & 0.233 & 0.300 & 0.300 & 0.258 \\
+compression (window+summ.) & 0.067 & 0.125 & 0.175 & 0.317 & 0.067 & 0.108 & 0.133 & 0.150 \\
+hierarchical (3-tier) & 0.150 & 0.258 & 0.333 & 0.417 & 0.158 & 0.242 & 0.292 & 0.325 \\
+\midrule
+full-context (verbatim)$^{\dagger}$ & \multicolumn{4}{c|}{0.475} & \multicolumn{4}{c}{0.292} \\
+\bottomrule
+\end{tabular}

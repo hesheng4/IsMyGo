@@ -1,0 +1,12 @@
+\begin{tabular}{lccccc}
+\toprule
+Compressor & $B{=}512$ & $B{=}1024$ & $B{=}2048$ & $B{=}4096$ & gap-closed@$4096$ \\
+\midrule
+free-form digest (w60) & 0.058 & 0.108 & 0.133 & 0.158 & -- \\
+KV extract (verbatim) & 0.058 & 0.075 & 0.083 & 0.142 & $-$11.8\% \\
+EDU extract (verbatim) & 0.075 & 0.125 & 0.150 & 0.158 & +0.0\% \\
+\midrule
+\textit{retrieval (BM25)} & 0.258 & 0.275 & 0.300 & 0.300 & -- \\
+\textit{hierarchical (3-tier)} & 0.150 & 0.225 & 0.275 & 0.308 & -- \\
+\bottomrule
+\end{tabular}

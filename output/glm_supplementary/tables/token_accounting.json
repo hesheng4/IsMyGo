@@ -1,0 +1,7 @@
+{
+ "n": 5100,
+ "slope_glm_per_cl100k": 0.9997195561541278,
+ "intercept_template_overhead": 145.28354178508127,
+ "r2": 0.9998827013783859,
+ "slope_ci95_halfwidth": 0.39590038136000366
+}

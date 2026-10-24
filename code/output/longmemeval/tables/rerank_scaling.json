@@ -1,0 +1,32 @@
+{
+ "meta": {
+  "model": "bge-reranker-base",
+  "device": "cpu",
+  "threads": 8,
+  "n_q": 6,
+  "e2e_ref_ms": 4300.0
+ },
+ "rows": [
+  {
+   "threads": 8,
+   "top_k": 10,
+   "n_q": 6,
+   "mean_ms": 2819.4,
+   "per_pair_ms": 281.94
+  },
+  {
+   "threads": 8,
+   "top_k": 50,
+   "n_q": 6,
+   "mean_ms": 12611.1,
+   "per_pair_ms": 252.22
+  }
+ ],
+ "reference": {
+  "top50_mean_ms": 12611.1,
+  "top10_mean_ms": 2819.4,
+  "share_of_e2e_top50": 2.93,
+  "share_of_e2e_top10": 0.66,
+  "per_pair_ms_top50": 252.22
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "n": 303,
+ "baseline": 0.0,
+ "oracle": 0.1485,
+ "delta": 0.1485,
+ "ci": [
+  0.1089,
+  0.1914
+ ],
+ "p": 0.0,
+ "fixed": 45,
+ "by_type": {
+  "knowledge-update": {
+   "n": 26,
+   "fixed": 7
+  },
+  "multi-session": {
+   "n": 100,
+   "fixed": 21
+  },
+  "single-session-assistant": {
+   "n": 24,
+   "fixed": 5
+  },
+  "single-session-preference": {
+   "n": 27,
+   "fixed": 0
+  },
+  "single-session-user": {
+   "n": 18,
+   "fixed": 5
+  },
+  "temporal-reasoning": {
+   "n": 108,
+   "fixed": 7
+  }
+ }
+}

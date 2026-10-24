@@ -1,0 +1,13 @@
+\begin{tabular}{llcccccc}
+\toprule
+ & & \multicolumn{3}{c}{strict EM} & \multicolumn{3}{c}{relaxed EM} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+Budget & Baseline & $\Delta$ & 95\% CI & McNemar $p$ & $\Delta$ & 95\% CI & McNemar $p$ \\
+\midrule
+512 & retrieval (BM25) & -0.1340 & [-0.176, -0.092] & 0.0000 & -0.1480 & [-0.190, -0.106] & 0.0000 \\
+1024 & retrieval (BM25) & -0.1380 & [-0.180, -0.094] & 0.0000 & -0.1400 & [-0.182, -0.096] & 0.0000 \\
+2048 & retrieval (BM25) & -0.0960 & [-0.138, -0.054] & 0.0000 & -0.0920 & [-0.132, -0.052] & 0.0000 \\
+4096 & retrieval (BM25) & -0.0540 & [-0.092, -0.016] & 0.0086 & -0.0300 & [-0.068, +0.008] & 0.1462 \\
+4096 & hierarchical (3-tier) & -0.0580 & [-0.096, -0.020] & 0.0038 & -0.0380 & [-0.074, -0.002] & 0.0503 \\
+\bottomrule
+\end{tabular}

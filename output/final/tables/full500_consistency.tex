@@ -1,0 +1,17 @@
+\begin{tabular}{@{}llrrr@{\hspace{9pt}}llrrr@{}}
+\toprule
+Policy & $B$ & EM$^{120}$ & EM$^{500}$ & $\Delta$ & Policy & $B$ & EM$^{120}$ & EM$^{500}$ & $\Delta$ \\
+\midrule
+full\_context & -- & 0.375 & 0.370 & -0.005 & retrieval\_recency & 2048 & 0.300 & 0.310 & +0.010 \\
+sliding\_window & 512 & 0.033 & 0.036 & +0.003 & retrieval\_recency & 4096 & 0.317 & 0.342 & +0.025 \\
+sliding\_window & 1024 & 0.067 & 0.054 & -0.013 & compression & 512 & 0.100 & 0.124 & +0.024 \\
+sliding\_window & 2048 & 0.050 & 0.056 & +0.006 & compression & 1024 & 0.142 & 0.172 & +0.030 \\
+sliding\_window & 4096 & 0.067 & 0.068 & +0.001 & compression & 2048 & 0.233 & 0.242 & +0.009 \\
+retrieval & 512 & 0.308 & 0.272 & -0.036 & compression & 4096 & 0.292 & 0.334 & +0.042 \\
+retrieval & 1024 & 0.317 & 0.312 & -0.005 & hierarchical & 512 & 0.200 & 0.208 & +0.008 \\
+retrieval & 2048 & 0.325 & 0.334 & +0.009 & hierarchical & 1024 & 0.258 & 0.268 & +0.010 \\
+retrieval & 4096 & 0.375 & 0.364 & -0.011 & hierarchical & 2048 & 0.325 & 0.328 & +0.003 \\
+retrieval\_recency & 512 & 0.275 & 0.274 & -0.001 & hierarchical & 4096 & 0.358 & 0.372 & +0.014 \\
+retrieval\_recency & 1024 & 0.325 & 0.288 & -0.037 & & & & \\
+\bottomrule
+\end{tabular}

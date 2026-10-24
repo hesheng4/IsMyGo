@@ -1,0 +1,29 @@
+{
+  "dataset": {
+    "path": "data\\longmemeval-cleaned\\longmemeval_s_cleaned.json",
+    "exists": true,
+    "bytes": 277383467,
+    "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442"
+  },
+  "regenerated_by_analyze_py": [
+    {
+      "path": "code\\output\\longmemeval\\tables\\latency.tex",
+      "exists": true,
+      "bytes": 1253,
+      "sha256": "6d7b31501058a4ced65889e0f7c8397010c9643773d3b92a852485c5ad536895"
+    },
+    {
+      "path": "code\\output\\longmemeval\\tables\\fig_accuracy_vs_budget.pdf",
+      "exists": true,
+      "bytes": 17708,
+      "sha256": "a82a558084b5be63e563244874ec97800f9700a40ccde0ce5b97e44fab146335"
+    },
+    {
+      "path": "code\\output\\longmemeval\\tables\\fig_latency_vs_budget.pdf",
+      "exists": true,
+      "bytes": 17035,
+      "sha256": "ad4e8b11c94d2f5b5d7fd985bec21766cdc7826a07eaad502e423b6dc3b5e1ad"
+    }
+  ],
+  "note": "latency.tex 的 full-context 内存足迹由交付版的 104024 变为 104003：paper.pdf 第 7 页 Table 4 实际为 104003，交付版为过期表格；再生成结果与论文一致（见复现报告 §3.4）。"
+}

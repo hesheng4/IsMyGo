@@ -1,0 +1,13 @@
+\begin{tabular}{lcccc}
+\toprule
+Policy @ $B{=}4096$ & DeepSeek-V4.1 (500) & mimo-v2.6 (120) & GLM-4-Flash (120) & GLM-4.7 probe \\
+\midrule
+sliding window & 0.068 & 0.050 & 0.092 & -- \\
+retrieval (BM25) & 0.364 & 0.408 & 0.317 & 0.231 \\
+retrieval+recency & 0.342 & 0.342 & 0.258 & 0.283 \\
+compression (window+summ.) & 0.334 & 0.317 & 0.150 & 0.163 \\
+hierarchical (3-tier) & 0.372 & 0.417 & 0.325 & 0.237 \\
+\midrule
+full-context (verbatim)$^{\dagger}$ & 0.370 & 0.475 & 0.292 & 0.250 \\
+\bottomrule
+\end{tabular}

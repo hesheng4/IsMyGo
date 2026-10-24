@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-10-15 16:20:50",
+  "mode": "deterministic",
+  "results_source": "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\output\\results.json",
+  "paper_path": "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\paper_system\\paper_memory_engine.md",
+  "figures": [
+    "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\charts_system\\fig1_accuracy_vs_budget.png",
+    "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\charts_system\\fig2_latency_vs_budget.png",
+    "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\charts_system\\fig3_compression_recovery.png",
+    "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\charts_system\\fig4_recency_bias.png"
+  ],
+  "elapsed_sec": 13.11,
+  "orchestration": {
+    "backend": "agentcore",
+    "engine": "openjiuwen.core.workflow",
+    "steps": [
+      {
+        "phase": "ideation",
+        "decision": "reject"
+      },
+      {
+        "phase": "planning",
+        "n_items": 5
+      },
+      {
+        "phase": "experiment",
+        "passed": true
+      },
+      {
+        "phase": "writing",
+        "path": "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code\\paper_system\\paper_memory_engine.md"
+      }
+    ],
+    "workflow_card": "paper_research_pipeline",
+    "workflow_state": "WorkflowExecutionState.COMPLETED"
+  },
+  "fars_optimizations": {
+    "context_compression_cache": {
+      "baseline_tokens": 3167,
+      "optimized_tokens": 504,
+      "saving_pct": 84.1,
+      "breakdown": {
+        "results": {
+          "baseline": 1779,
+          "optimized": 88
+        },
+        "literature": {
+          "baseline": 807,
+          "optimized": 242
+        },
+        "plan": {
+          "baseline": 581,
+          "optimized": 174
+        }
+      },
+      "interpretation": "启用上下文压缩（文献/计划仅消费压缩体≈30%）+ 中间结果缓存复用（results 数值表跨 5 篇仅首次生成），单篇估算降本 84.1%。FARS 实测单篇约 1.14 亿 token（228 小时 28 分产出 100 篇、合计 114 亿 token）；同类系统若复用本缓存机制，同数据集多论文场景可显著摊薄。"
+    },
+    "hypothesis_2d_gate": {
+      "hypothesis": "在受限上下文预算下，分层记忆引擎（滑窗+检索+压缩）优于单一策略，且预算越大优势越显著——可通过 memory_bench 三预算×三种子验证。",
+      "eval": {
+        "novelty": 7.2,
+        "feasibility": 8.0,
+        "decision": "pass",
+        "rationale": "novelty=7.2(≥6.0) feasibility=8.0(≥6.0) → pass"
+      },
+      "gate": {
+        "total": 1,
+        "pass": 1,
+        "revise": 0,
+        "reject": 0,
+        "pass_rate": 1.0
+      }
+    },
+    "causal_analysis": {
+      "n_insights": 4,
+      "insights": [
+        "压缩策略的准确率随预算超线性跃升：预算越大，摘要聚合越能保真",
+        "检索策略查询延迟随预算线性增长：候选集规模主导耗时",
+        "滑窗对远古事实的准确率为结构性零：由窗口淘汰机制决定，不随预算改善",
+        "全量上下文是 oracle 上界（accuracy=1.0）但 footprint 恒为 158：无界基线不可作为被超越对象"
+      ],
+      "negative_diagnoses": [
+        "sliding_window@16 accuracy=0.0777 逼近随机：窗口过小（16）且远古事实淘汰，既丢历史又无足够近期样本 → 近因偏置 + 小样本共同导致。",
+        "compression@16 accuracy=0.0891 且 accuracy_ancient=0.0：过度压缩使摘要几乎不含信息，属方法在极小预算下的失效边界（非 bug，为真实负结果）。",
+        "retrieval_recency 相对 retrieval 提升微弱（64 时 0.3278 vs 0.3054）：在 40 实体规模下「近期加权」收益有限，提示需更大规模验证该变体。"
+      ]
+    }
+  },
+  "scheduler": {
+    "total": 4,
+    "by_status": {
+      "succeeded": 4
+    },
+    "degraded_tasks": [],
+    "history": [
+      {
+        "id": "t_idea",
+        "status": "succeeded",
+        "attempts": 1
+      },
+      {
+        "id": "t_plan",
+        "status": "succeeded",
+        "attempts": 1
+      },
+      {
+        "id": "t_exp",
+        "status": "succeeded",
+        "attempts": 1
+      },
+      {
+        "id": "t_write",
+        "status": "succeeded",
+        "attempts": 1
+      }
+    ],
+    "task_tree": "t_idea:succeeded\nt_plan:succeeded\nt_exp:succeeded\nt_write:succeeded",
+    "backend": "agentcore"
+  },
+  "negative_results": [
+    "sliding_window@16 accuracy=0.0777 逼近随机：窗口过小（16）且远古事实淘汰，既丢历史又无足够近期样本 → 近因偏置 + 小样本共同导致。",
+    "compression@16 accuracy=0.0891 且 accuracy_ancient=0.0：过度压缩使摘要几乎不含信息，属方法在极小预算下的失效边界（非 bug，为真实负结果）。",
+    "retrieval_recency 相对 retrieval 提升微弱（64 时 0.3278 vs 0.3054）：在 40 实体规模下「近期加权」收益有限，提示需更大规模验证该变体。"
+  ]
+}

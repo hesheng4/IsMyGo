@@ -1,0 +1,78 @@
+# =============================================================================
+# JiuwenSwarm config.yaml 示例 —— 方案 A 科研论文流水线
+# 复制为 ~/.jiuwenswarm/config/config.yaml （Windows 路径：
+#   C:\Users\<用户名>\.jiuwenswarm\config\config.yaml ）
+# 保存后 JiuwenSwarm 会自动热加载；如需启用 SwarmFlow，须 /new 新建会话生效。
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 模型配置（科研流水线所需）
+# 说明：创意/写作用强模型，筛选/编排用快速模型。可在脚本 options["model"] 中
+# 覆盖模型名。支持 provider：OpenAI / DeepSeek / DashScope / SiliconFlow /
+# OpenRouter / InferenceAffinity / OpenAIAccount。
+# -----------------------------------------------------------------------------
+models:
+  defaults:
+    - model_client_config:
+        api_base: ${API_BASE}          # 例如 https://api.deepseek.com
+        api_key: ${API_KEY}
+        model_name: ${MODEL_NAME}      # 例如 deepseek-chat / gpt-4o
+        client_provider: ${MODEL_PROVIDER}  # 例如 DeepSeek / OpenAI
+        timeout: 360
+        stream_first_chunk_timeout: 300
+        stream_idle_timeout: 120
+        verify_ssl: true
+        custom_headers: {}
+      model_config_obj:
+        temperature: 0.95
+      is_default: true
+
+# 可选：可按 agent 细分模型（research_pipeline.py 的 MODEL_STRONG / MODEL_FAST
+# 默认均为 GLM-4-Flash，即本文件 models.defaults 的主模型；用
+# PAPER_LAB_STRONG_MODEL / PAPER_LAB_FAST_MODEL 覆盖后须在此登记）
+# agents:
+#   agent_strong:
+#     model:
+#       model_client_config:
+#         client_provider: DeepSeek
+#         api_base: https://api.deepseek.com
+#         api_key: sk-xxx
+#       model_request_config:
+#         model: deepseek-chat
+#     max_iterations: 300
+#     completion_timeout: 600.0
+
+# -----------------------------------------------------------------------------
+# SwarmFlow 相关配置（团队模式）
+# -----------------------------------------------------------------------------
+modes:
+  team:
+    jiuwen_team:
+      # 开启 SwarmFlow：true 时 Leader 可调用 swarmflow()
+      enable_swarmflow: true
+      # 团队共享 token 预算上限（用尽后 run 进入 failed，不可断点续跑）
+      swarmflow_budget: 500000
+
+# -----------------------------------------------------------------------------
+# 工具权限安全护栏（可选）
+# enable 后工具执行前需审批；rules 按 allow/ask/deny 策略执行
+# -----------------------------------------------------------------------------
+# permissions:
+#   enabled: true
+
+# -----------------------------------------------------------------------------
+# 科研论文护栏（需框架打 paper_guard 补丁，见 FRAMEWORK_PATCH.md）
+# enabled 后为每个团队成员挂载 HallucinationCheckRail + AcademicFormatRail
+# -----------------------------------------------------------------------------
+paper_guard:
+  enabled: true
+  # 真实实验结果基准文件（JSON）。量化断言必须可溯源到该文件。
+  # 留空使用默认路径 ~/.jiuwenswarm/agent/workspace/output/results.json
+  # results_path: D:\paper-lab\output\results.json
+
+# -----------------------------------------------------------------------------
+# 技能自演进（可选，属于进阶方案 C 范畴）
+# -----------------------------------------------------------------------------
+# react:
+#   evolution:
+#     skill_evolution: false

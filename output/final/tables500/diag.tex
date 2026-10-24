@@ -1,0 +1,16 @@
+\begin{tabular}{llcccc}
+\toprule
+Policy & Budget & gold recall & acc$|_{\mathrm{covered}}$ & read-fail & retr.-fail \\
+\midrule
+sliding window & 1024 & 0.050 & 0.200 & 0.040 & 0.906 \\
+sliding window & 4096 & 0.104 & 0.250 & 0.078 & 0.854 \\
+retrieval (BM25) & 1024 & 0.880 & 0.352 & 0.570 & 0.118 \\
+retrieval (BM25) & 4096 & 0.968 & 0.374 & 0.606 & 0.030 \\
+retrieval+recency & 1024 & 0.844 & 0.337 & 0.560 & 0.152 \\
+retrieval+recency & 4096 & 0.940 & 0.362 & 0.600 & 0.058 \\
+compression & 1024 & 0.462 & 0.342 & 0.304 & 0.524 \\
+compression & 4096 & 0.958 & 0.347 & 0.626 & 0.040 \\
+hierarchical & 1024 & 0.736 & 0.356 & 0.474 & 0.258 \\
+hierarchical & 4096 & 0.962 & 0.387 & 0.590 & 0.038 \\
+\bottomrule
+\end{tabular}

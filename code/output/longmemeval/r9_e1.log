@@ -1,0 +1,7 @@
+[r9] reader=deepseek-v4.1-flash summaries: DS=19195 GLM=15
+[r9] existing=0
+[r9] arm=compselect_ext questions=500
+[r9] run compression_select|512|-|deepseek-v4.1-flash n=500
+[r9] wrote 500 rows for compression_select|512|-|deepseek-v4.1-flash
+[r9] run compression_select|2048|-|deepseek-v4.1-flash n=500
+[r9] wrote 500 rows for compression_select|2048|-|deepseek-v4.1-flash

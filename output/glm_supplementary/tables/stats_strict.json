@@ -1,0 +1,130 @@
+{
+  "512": {
+    "primary_bm25": {
+      "baseline": 0.24166666666666667,
+      "metric": "em",
+      "compression": 0.06666666666666667,
+      "delta_ci95": [
+        -0.25833333333333336,
+        -0.1
+      ],
+      "p_boot_greater": 0.0,
+      "mcnemar": {
+        "n10": 3,
+        "n01": 24,
+        "p_value": 4.9233436584472656e-05
+      }
+    },
+    "strongest_alternative": {
+      "baseline": 0.24166666666666667,
+      "metric": "em",
+      "compression": 0.06666666666666667,
+      "delta_ci95": [
+        -0.25833333333333336,
+        -0.1
+      ],
+      "p_boot_greater": 0.0,
+      "mcnemar": {
+        "n10": 3,
+        "n01": 24,
+        "p_value": 4.9233436584472656e-05
+      }
+    }
+  },
+  "1024": {
+    "primary_bm25": {
+      "baseline": 0.25,
+      "metric": "em",
+      "compression": 0.10833333333333334,
+      "delta_ci95": [
+        -0.23333333333333334,
+        -0.05
+      ],
+      "p_boot_greater": 0.0009,
+      "mcnemar": {
+        "n10": 9,
+        "n01": 26,
+        "p_value": 0.0059881205670535564
+      }
+    },
+    "strongest_alternative": {
+      "baseline": 0.275,
+      "metric": "em",
+      "compression": 0.10833333333333334,
+      "delta_ci95": [
+        -0.25833333333333336,
+        -0.075
+      ],
+      "p_boot_greater": 0.0,
+      "mcnemar": {
+        "n10": 7,
+        "n01": 27,
+        "p_value": 0.0008213953115046024
+      }
+    }
+  },
+  "2048": {
+    "primary_bm25": {
+      "baseline": 0.275,
+      "metric": "em",
+      "compression": 0.125,
+      "delta_ci95": [
+        -0.23333333333333334,
+        -0.06666666666666667
+      ],
+      "p_boot_greater": 0.0002,
+      "mcnemar": {
+        "n10": 6,
+        "n01": 24,
+        "p_value": 0.001430906355381012
+      }
+    },
+    "strongest_alternative": {
+      "baseline": 0.275,
+      "metric": "em",
+      "compression": 0.125,
+      "delta_ci95": [
+        -0.23333333333333334,
+        -0.06666666666666667
+      ],
+      "p_boot_greater": 0.0002,
+      "mcnemar": {
+        "n10": 6,
+        "n01": 24,
+        "p_value": 0.001430906355381012
+      }
+    }
+  },
+  "4096": {
+    "primary_bm25": {
+      "baseline": 0.275,
+      "metric": "em",
+      "compression": 0.125,
+      "delta_ci95": [
+        -0.24166666666666667,
+        -0.06666666666666667
+      ],
+      "p_boot_greater": 0.0004,
+      "mcnemar": {
+        "n10": 7,
+        "n01": 25,
+        "p_value": 0.0021024015732109547
+      }
+    },
+    "strongest_alternative": {
+      "baseline": 0.3,
+      "metric": "em",
+      "compression": 0.125,
+      "delta_ci95": [
+        -0.25833333333333336,
+        -0.09166666666666666
+      ],
+      "p_boot_greater": 0.0,
+      "mcnemar": {
+        "n10": 5,
+        "n01": 26,
+        "p_value": 0.00019219517707824707
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# IDE / 编辑器
+.idea/
+.vscode/
+
+# 会话与临时目录
+.tmp/
+.team/
+
+# 大文件产物（数据集与本地模型另行获取，见 code/README.md §3）
+data/longmemeval-cleaned/
+models/
+code/output/longmemeval/cache/
+
+# LaTeX 编译中间产物（仅编译工作区）
+output/final/*.aux
+output/final/*.blg
+output/final/*.out
+output/final/*.synctex.gz
+output/final/build*.log
+output/final/b*.log
+
+# 系统杂项
+Thumbs.db
+.DS_Store

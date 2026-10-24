@@ -1,0 +1,236 @@
+\begin{thebibliography}{35}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cao et~al.(2026{\natexlab{a}})]{cao2026higmem}
+Shuai Cao et~al.
+\newblock Higmem: A hierarchical and llm-guided memory system for long-term
+  conversational agents.
+\newblock \emph{arXiv preprint arXiv:2604.18349; ACL 2026 Findings},
+  2026{\natexlab{a}}.
+
+\bibitem[Cao et~al.(2026{\natexlab{b}})Cao, Qu, Gu, et~al.]{cao2026autoviewmem}
+Zijie Cao, Xijun Qu, Zhicheng Gu, et~al.
+\newblock Autoviewmem: Self-configuring orthogonal views for conversational
+  long-term memory.
+\newblock \emph{arXiv preprint arXiv:2609.21940}, 2026{\natexlab{b}}.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and
+  Yadav]{chhikara2025mem0}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: Building production-ready ai agents with scalable long-term
+  memory.
+\newblock \emph{arXiv preprint arXiv:2504.19413}, 2025.
+
+\bibitem[Feng \& Fan(2026)Feng and Fan]{feng2026mempursuit}
+Qi~Feng and Jicong Fan.
+\newblock Recall what is missing: Composing evidence from long-term agent
+  memory.
+\newblock \emph{arXiv preprint arXiv:2610.15642}, 2026.
+
+\bibitem[Hu et~al.(2025)]{hu2025memoryagentbench}
+Yuanming Hu et~al.
+\newblock Evaluating memory in llm agents via incremental multi-turn
+  interactions.
+\newblock \emph{arXiv preprint arXiv:2507.05257}, 2025.
+
+\bibitem[Ji et~al.(2026)Ji, Wu, Wang, Xia, Li, Wang, Ding, Zhu, Li, Dai, and
+  Wang]{ji2026infini}
+Suozhao Ji, Baodong Wu, Zehao Wang, Lei Xia, Qingping Li, Ruisong Wang, Wenbo
+  Ding, Zhenhua Zhu, Boxun Li, Guohao Dai, and Yu~Wang.
+\newblock Infini memory: Maintainable topic documents for long-term llm agent
+  memory.
+\newblock \emph{arXiv preprint arXiv:2606.10677}, 2026.
+
+\bibitem[Jiang et~al.(2026)Jiang, Li, Li, and Li]{jiang2026magma}
+Dongming Jiang, Yi~Li, Guanpeng Li, and Bingzhe Li.
+\newblock Magma: A multi-graph based agentic memory architecture for ai agents.
+\newblock \emph{arXiv preprint arXiv:2601.03236}, 2026.
+
+\bibitem[Kang et~al.(2026)Kang, Liu, Kai, Liang, et~al.]{kang2026oas}
+Qingcan Kang, Mingyang Liu, Shixiong Kai, Kaichao Liang, et~al.
+\newblock Retain or consolidate? budget-dependent operator selection for
+  language agent memory.
+\newblock \emph{arXiv preprint arXiv:2607.17545}, 2026.
+
+\bibitem[Karpukhin et~al.(2020)Karpukhin, O{\u g}uz, Min, Lewis, Wu, Edunov,
+  Chen, and Yih]{karpukhin2020dense}
+Vladimir Karpukhin, Barlas O{\u g}uz, Sewon Min, Patrick Lewis, Ledell Wu,
+  Sergey Edunov, Danqi Chen, and Wen-tau Yih.
+\newblock Dense passage retrieval for open-domain question answering.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pp.\  6769--6781, 2020.
+
+\bibitem[Lewis et~al.(2020)Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal,
+  K{\"u}ttler, Lewis, Yih, Rockt{\"a}schel, Riedel, and
+  Kiela]{lewis2020retrieval}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+  Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim
+  Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~33, pp.\  9459--9474, 2020.
+
+\bibitem[Li et~al.(2026{\natexlab{a}})Li, Yu, Ni, et~al.]{li2026timem}
+Kai Li, Xuanqing Yu, Ziyi Ni, et~al.
+\newblock Timem: Temporal-hierarchical memory consolidation for long-horizon
+  conversational agents.
+\newblock \emph{arXiv preprint arXiv:2601.02845}, 2026{\natexlab{a}}.
+
+\bibitem[Li et~al.(2026{\natexlab{b}})Li, Zhang, Xu, Du, Fu, and
+  Chen]{li2026refind}
+Ruizhe Li, Licheng Zhang, Benfeng Xu, Mingxuan Du, Zheren Fu, and Weidong Chen.
+\newblock When your agent opens the chat app: Agent-controlled search over raw
+  chat logs rivals structured memory.
+\newblock \emph{arXiv preprint arXiv:2608.12888}, 2026{\natexlab{b}}.
+
+\bibitem[Li et~al.(2026{\natexlab{c}})Li, Banerjee, and Che]{li2026ember}
+Yilong Li, Suman Banerjee, and Tong Che.
+\newblock Ember: Efficient memory via budgeted evidence retention for
+  long-horizon agents.
+\newblock \emph{arXiv preprint arXiv:2606.05894}, 2026{\natexlab{c}}.
+
+\bibitem[Li et~al.(2026{\natexlab{d}})Li, Li, Xu, et~al.]{li2026bfr}
+Yufeng Li, Shuxin Li, Zhenhua Xu, et~al.
+\newblock Relevance is not sufficiency: What actually closes the evidence gap
+  in long-term memory qa.
+\newblock \emph{arXiv preprint arXiv:2610.09348}, 2026{\natexlab{d}}.
+
+\bibitem[Li et~al.(2026{\natexlab{e}})Li, He, Zhang, and Gong]{li2026evimem}
+Yuyang Li, Yime He, Zeyu Zhang, and Dong Gong.
+\newblock Evimem: Evidence-gap-driven iterative retrieval for long-term
+  conversational memory.
+\newblock \emph{arXiv preprint arXiv:2604.27695}, 2026{\natexlab{e}}.
+
+\bibitem[Lia \& Mazumder(2026)Lia and Mazumder]{lia2026lre}
+Nusrat~Jahan Lia and Aritra Mazumder.
+\newblock Learning what not to forget: Long-horizon agent memory from a few
+  kilobytes of learning.
+\newblock \emph{arXiv preprint arXiv:2606.20954}, 2026.
+
+\bibitem[Liu et~al.(2024)Liu, Wang, et~al.]{liu2024memlong}
+Wen Liu, Hua Wang, et~al.
+\newblock Memlong: Memory-augmented retrieval for long text modeling.
+\newblock \emph{arXiv preprint arXiv:2408.16967}, 2024.
+
+\bibitem[Ma et~al.(2026)Ma, Wang, Wang, Ning, et~al.]{ma2026s3attention}
+Qingsen Ma, Dianyun Wang, Yaoye Wang, Lechen Ning, et~al.
+\newblock S$^3$-attention: Attention-aligned endogenous retrieval for
+  memory-bounded long-context inference.
+\newblock \emph{arXiv preprint arXiv:2601.17702}, 2026.
+
+\bibitem[Packer et~al.(2023)Packer, Wooders, Lin, Fang, Patil, Stoica, and
+  Gonzalez]{packer2023memgpt}
+Charles Packer, Sarah Wooders, Kevin Lin, Vivian Fang, Shishir~G. Patil, Ion
+  Stoica, and Joseph~E. Gonzalez.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock \emph{arXiv preprint arXiv:2310.08560}, 2023.
+
+\bibitem[Pan et~al.(2024)Pan, Gao, Wang, et~al.]{pan2025secom}
+Zihan Pan, Chen Gao, Xiaochong Wang, et~al.
+\newblock On memory construction and retrieval for personalized conversational
+  agents.
+\newblock In \emph{NeurIPS}, 2024.
+\newblock arXiv:2502.05589.
+
+\bibitem[Park et~al.(2023)Park, O'Brien, Cai, Morris, Liang, and
+  Bernstein]{park2023generative}
+Joon~Sung Park, Joseph~C. O'Brien, Carrie~J. Cai, Meredith~Ringel Morris, Percy
+  Liang, and Michael~S. Bernstein.
+\newblock Generative agents: Interactive simulacra of human behavior.
+\newblock In \emph{Proceedings of the 36th Annual ACM Symposium on User
+  Interface Software and Technology (UIST)}, 2023.
+
+\bibitem[Peng et~al.(2026)Peng, Wan, Liu, and Sun]{peng2026prism}
+Jingyi Peng, Zhongwei Wan, Weiting Liu, and Qiuzhuang Sun.
+\newblock Prism: Pareto-efficient retrieval over intent-aware structured memory
+  for long-horizon agents.
+\newblock \emph{arXiv preprint arXiv:2605.12260}, 2026.
+
+\bibitem[Robertson \& Zaragoza(2009)Robertson and Zaragoza]{robertson2009bm25}
+Stephen Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: Bm25 and beyond.
+\newblock In \emph{Foundations and Trends in Information Retrieval}, 2009.
+
+\bibitem[Sen et~al.(2026)Sen, Lumer, Gulati, and Subbiah]{chronos2026}
+Sahil Sen, Elias Lumer, Anmol Gulati, and Vamse~Kumar Subbiah.
+\newblock Chronos: Temporal-aware conversational agents with structured event
+  memory.
+\newblock \emph{arXiv preprint arXiv:2603.16862}, 2026.
+
+\bibitem[Tang et~al.(2026)Tang, Guo, Chen, Zeng, Long, Wang,
+  et~al.]{tang2026memtrace}
+Jiliang Tang, Kai Guo, Zhikai Chen, Shenglai Zeng, Xianxuan Long, Shouren Wang,
+  et~al.
+\newblock Memtrace: Probing what final accuracy misses in long-term memory.
+\newblock \emph{arXiv preprint arXiv:2606.17328}, 2026.
+
+\bibitem[Tiwari \& Fofadiya(2026)Tiwari and Fofadiya]{mlmf2026}
+Sunil Tiwari and Payal Fofadiya.
+\newblock Multi-layered memory architectures for llm agents.
+\newblock \emph{arXiv preprint arXiv:2603.29194}, 2026.
+
+\bibitem[Wang et~al.(2026)Wang, Lin, Xu, et~al.]{wang2026memloc}
+Yifan Wang, Xinkui Lin, Yongxiu Xu, et~al.
+\newblock Where to look and what to use: Retrieve--localize--generate for
+  long-term conversational memory question answering.
+\newblock In \emph{Proceedings of EMNLP}, 2026.
+
+\bibitem[Wu et~al.(2024{\natexlab{a}})Wu, Cao, Chen, Shum, Zheng, Zhang, Xu,
+  Jiang, Han, and Chen]{wu2024longmemeval}
+Di~Wu, Hongwei Cao, Jintian Chen, Kaijing Shum, Xiaoyu Zheng, Yu~Zhang, Zhen
+  Xu, Meng Jiang, Weili Han, and Yuxuan Chen.
+\newblock Longmemeval: Benchmarking chat assistants on long-term interactive
+  memory.
+\newblock \emph{arXiv preprint arXiv:2410.10813}, 2024{\natexlab{a}}.
+
+\bibitem[Wu et~al.(2024{\natexlab{b}})Wu, Wang, Wang, Chen, and
+  Wang]{wu2024memorybank}
+Wenyi Wu, Xin Wang, Weiqi Wang, Yufan Chen, and Chaoyi Wang.
+\newblock Memorybank: Enhancing large language models with long-term memory.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~38, pp.\  19724--19732, 2024{\natexlab{b}}.
+
+\bibitem[Wu et~al.(2025)Wu, Zhang, et~al.]{wu2025sgmem}
+Yang Wu, Zheng Zhang, et~al.
+\newblock Sgmem: Sentence graph memory for long-term conversational agents.
+\newblock \emph{arXiv preprint arXiv:2509.21212}, 2025.
+
+\bibitem[Xia et~al.(2026)Xia, Chen, Ge, Deng, Yang, et~al.]{xia2026remory}
+Hanchen Xia, Baoyou Chen, Yutang Ge, Naihao Deng, Senqiao Yang, et~al.
+\newblock Remory: Learning residual memory for context compaction.
+\newblock \emph{arXiv preprint arXiv:2610.11287}, 2026.
+
+\bibitem[Yang et~al.(2026)Yang, Sun, Wei, and Hu]{yang2026promem}
+Chengyuan Yang, Zequn Sun, Wei Wei, and Wei Hu.
+\newblock Beyond static summarization: Proactive memory extraction for llm
+  agents.
+\newblock \emph{arXiv preprint arXiv:2601.04463}, 2026.
+
+\bibitem[Yu et~al.(2026)Yu, Yao, Xie, Tan, Feng, Li, and Wu]{agemem2026}
+Yi~Yu, Liuyi Yao, Yuexiang Xie, Qingquan Tan, Jiaqi Feng, Yali Li, and Libing
+  Wu.
+\newblock Agentic memory: Learning unified long-term and short-term memory
+  management.
+\newblock \emph{arXiv preprint arXiv:2601.01885; ACL 2026 SAC Highlight}, 2026.
+
+\bibitem[Zhang et~al.(2026)Zhang, Yue, Feng, Long, Bao, Jin, Zhang, Li, You,
+  Qin, and Wang]{zhang2026budgetmem}
+Haozhen Zhang, Haodong Yue, Tao Feng, Quanyu Long, Jianzhu Bao, Bowen Jin,
+  Weizhi Zhang, Xiao Li, Jiaxuan You, Chengwei Qin, and Wenya Wang.
+\newblock Learning query-aware budget-tier routing for runtime agent memory.
+\newblock In \emph{ICML}, 2026.
+\newblock arXiv:2602.06025.
+
+\bibitem[Zhang et~al.(2024)Zhang, Bo, Ma, Li, Chen, Dai, Zhu, Dong, and
+  Wen]{zhang2024survey}
+Zeyu Zhang, Xiao Bo, Chen Ma, Rui Li, Xu~Chen, Quanyu Dai, Jiaming Zhu, Zhengyi
+  Dong, and Ji-Rong Wen.
+\newblock A survey on the memory mechanism of large language model based
+  agents.
+\newblock \emph{arXiv preprint arXiv:2404.13501}, 2024.
+
+\end{thebibliography}

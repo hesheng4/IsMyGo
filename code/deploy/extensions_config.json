@@ -1,0 +1,23 @@
+{
+  "hallucination_check": {
+    "name": "hallucination_check",
+    "class_name": "HallucinationCheckRail",
+    "enabled": true,
+    "description": "论文量化断言必须可溯源到 output/results.json 真实实验结果",
+    "priority": 80
+  },
+  "claim_alignment": {
+    "name": "claim_alignment",
+    "class_name": "ClaimAlignmentRail",
+    "enabled": true,
+    "description": "主张-证据对齐：oracle公平对照/统计置信/指标口径/复现要素/相关工作规模（源自 Stanford Agentic Reviewer 评审反馈）",
+    "priority": 75
+  },
+  "academic_format": {
+    "name": "academic_format",
+    "class_name": "AcademicFormatRail",
+    "enabled": true,
+    "description": "论文章节完整性规范（摘要/引言/方法/实验/结论/参考文献）",
+    "priority": 70
+  }
+}

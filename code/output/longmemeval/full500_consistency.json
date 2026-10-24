@@ -1,0 +1,184 @@
+{
+ "reader": "deepseek-v4.1-flash",
+ "n_full": 500,
+ "n_subset": 120,
+ "cells": {
+  "full_context|None": {
+   "em120": 0.375,
+   "em500": 0.37,
+   "delta": -0.005,
+   "n500": 500
+  },
+  "sliding_window|512": {
+   "em120": 0.0333,
+   "em500": 0.036,
+   "delta": 0.0027,
+   "n500": 500
+  },
+  "sliding_window|1024": {
+   "em120": 0.0667,
+   "em500": 0.054,
+   "delta": -0.0127,
+   "n500": 500
+  },
+  "sliding_window|2048": {
+   "em120": 0.05,
+   "em500": 0.056,
+   "delta": 0.006,
+   "n500": 500
+  },
+  "sliding_window|4096": {
+   "em120": 0.0667,
+   "em500": 0.068,
+   "delta": 0.0013,
+   "n500": 500
+  },
+  "retrieval|512": {
+   "em120": 0.3083,
+   "em500": 0.272,
+   "delta": -0.0363,
+   "n500": 500
+  },
+  "retrieval|1024": {
+   "em120": 0.3167,
+   "em500": 0.312,
+   "delta": -0.0047,
+   "n500": 500
+  },
+  "retrieval|2048": {
+   "em120": 0.325,
+   "em500": 0.334,
+   "delta": 0.009,
+   "n500": 500
+  },
+  "retrieval|4096": {
+   "em120": 0.375,
+   "em500": 0.364,
+   "delta": -0.011,
+   "n500": 500
+  },
+  "retrieval_recency|512": {
+   "em120": 0.275,
+   "em500": 0.274,
+   "delta": -0.001,
+   "n500": 500
+  },
+  "retrieval_recency|1024": {
+   "em120": 0.325,
+   "em500": 0.288,
+   "delta": -0.037,
+   "n500": 500
+  },
+  "retrieval_recency|2048": {
+   "em120": 0.3,
+   "em500": 0.31,
+   "delta": 0.01,
+   "n500": 500
+  },
+  "retrieval_recency|4096": {
+   "em120": 0.3167,
+   "em500": 0.342,
+   "delta": 0.0253,
+   "n500": 500
+  },
+  "compression|512": {
+   "em120": 0.1,
+   "em500": 0.124,
+   "delta": 0.024,
+   "n500": 500
+  },
+  "compression|1024": {
+   "em120": 0.1417,
+   "em500": 0.172,
+   "delta": 0.0303,
+   "n500": 500
+  },
+  "compression|2048": {
+   "em120": 0.2333,
+   "em500": 0.242,
+   "delta": 0.0087,
+   "n500": 500
+  },
+  "compression|4096": {
+   "em120": 0.2917,
+   "em500": 0.334,
+   "delta": 0.0423,
+   "n500": 500
+  },
+  "hierarchical|512": {
+   "em120": 0.2,
+   "em500": 0.208,
+   "delta": 0.008,
+   "n500": 500
+  },
+  "hierarchical|1024": {
+   "em120": 0.2583,
+   "em500": 0.268,
+   "delta": 0.0097,
+   "n500": 500
+  },
+  "hierarchical|2048": {
+   "em120": 0.325,
+   "em500": 0.328,
+   "delta": 0.003,
+   "n500": 500
+  },
+  "hierarchical|4096": {
+   "em120": 0.3583,
+   "em500": 0.372,
+   "delta": 0.0137,
+   "n500": 500
+  }
+ },
+ "ordering_500": {
+  "512": [
+   "retrieval_recency",
+   "retrieval",
+   "hierarchical",
+   "compression",
+   "sliding_window"
+  ],
+  "1024": [
+   "retrieval",
+   "retrieval_recency",
+   "hierarchical",
+   "compression",
+   "sliding_window"
+  ],
+  "2048": [
+   "retrieval",
+   "hierarchical",
+   "retrieval_recency",
+   "compression",
+   "sliding_window"
+  ],
+  "4096": [
+   "hierarchical",
+   "retrieval",
+   "retrieval_recency",
+   "compression",
+   "sliding_window"
+  ]
+ },
+ "paired_rh_4096": {
+  "n": 500,
+  "retrieval": 0.364,
+  "hierarchical": 0.372,
+  "delta": -0.008,
+  "ci": [
+   -0.038,
+   0.024
+  ],
+  "p": 0.7035366713552734
+ },
+ "paired_fc_hier_4096": {
+  "full_context": 0.37,
+  "hierarchical": 0.372,
+  "delta": -0.002,
+  "ci": [
+   -0.036,
+   0.032
+  ],
+  "p": 1.0
+ }
+}

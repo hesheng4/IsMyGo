@@ -1,0 +1,15 @@
+{
+  "run_id": "agent-sci-2026-full500-015",
+  "model": "deepseek-v4.1-flash",
+  "started_at": "2026-10-17T21:49:00+08:00",
+  "ended_at": "2026-10-17T21:50:48+08:00",
+  "wall_seconds": 108.0,
+  "token_input": 2628,
+  "token_output": 4,
+  "token_total": 2632,
+  "llm_calls": 2,
+  "topic": "W1批2 终扫补齐 (deepseek)",
+  "command": "python code/experiments/longmemeval/run.py --full500 --policies compression,hierarchical --log-run",
+  "output_dir": "code/output/longmemeval/",
+  "output_paper": "paper/paper.pdf"
+}

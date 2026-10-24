@@ -1,0 +1,56 @@
+[
+ {
+  "policy": "full_context",
+  "n": 30,
+  "e2e_mean_s": 5.81,
+  "e2e_median_s": 5.39,
+  "e2e_p90_s": 6.31,
+  "access_ms": 0.42,
+  "footprint": 104064
+ },
+ {
+  "policy": "sliding_window",
+  "n": 30,
+  "e2e_mean_s": 2.7,
+  "e2e_median_s": 2.64,
+  "e2e_p90_s": 3.03,
+  "access_ms": 0.05,
+  "footprint": 3774
+ },
+ {
+  "policy": "retrieval",
+  "n": 30,
+  "e2e_mean_s": 2.72,
+  "e2e_median_s": 2.69,
+  "e2e_p90_s": 3.05,
+  "access_ms": 29.11,
+  "footprint": 3862
+ },
+ {
+  "policy": "retrieval_recency",
+  "n": 30,
+  "e2e_mean_s": 2.76,
+  "e2e_median_s": 2.72,
+  "e2e_p90_s": 3.1,
+  "access_ms": 29.9,
+  "footprint": 3923
+ },
+ {
+  "policy": "compression",
+  "n": 30,
+  "e2e_mean_s": 2.67,
+  "e2e_median_s": 2.64,
+  "e2e_p90_s": 2.83,
+  "access_ms": 2.31,
+  "footprint": 4047
+ },
+ {
+  "policy": "hierarchical",
+  "n": 30,
+  "e2e_mean_s": 2.65,
+  "e2e_median_s": 2.7,
+  "e2e_p90_s": 2.98,
+  "access_ms": 33.15,
+  "footprint": 3638
+ }
+]

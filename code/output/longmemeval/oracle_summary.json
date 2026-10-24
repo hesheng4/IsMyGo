@@ -1,0 +1,90 @@
+{
+ "n": 226,
+ "in_context": {
+  "n": 76,
+  "baseline": 0.0,
+  "oracle": 0.1447,
+  "delta": 0.1447,
+  "ci": [
+   0.0658,
+   0.2237
+  ],
+  "p": 0.000977,
+  "fixed": 11,
+  "by_type": {
+   "knowledge-update": {
+    "n": 13,
+    "fixed": 2
+   },
+   "multi-session": {
+    "n": 7,
+    "fixed": 0
+   },
+   "single-session-assistant": {
+    "n": 19,
+    "fixed": 0
+   },
+   "single-session-preference": {
+    "n": 3,
+    "fixed": 0
+   },
+   "single-session-user": {
+    "n": 5,
+    "fixed": 1
+   },
+   "temporal-reasoning": {
+    "n": 29,
+    "fixed": 8
+   }
+  }
+ },
+ "in_history": {
+  "n": 150,
+  "baseline": 0.0,
+  "oracle": 0.0867,
+  "delta": 0.0867,
+  "ci": [
+   0.0467,
+   0.1333
+  ],
+  "p": 0.000244,
+  "fixed": 13,
+  "by_type": {
+   "knowledge-update": {
+    "n": 9,
+    "fixed": 1
+   },
+   "multi-session": {
+    "n": 66,
+    "fixed": 2
+   },
+   "single-session-assistant": {
+    "n": 5,
+    "fixed": 4
+   },
+   "single-session-preference": {
+    "n": 2,
+    "fixed": 0
+   },
+   "single-session-user": {
+    "n": 7,
+    "fixed": 0
+   },
+   "temporal-reasoning": {
+    "n": 61,
+    "fixed": 6
+   }
+  }
+ },
+ "all": {
+  "n": 226,
+  "baseline": 0.0,
+  "oracle": 0.1062,
+  "delta": 0.1062,
+  "ci": [
+   0.0664,
+   0.146
+  ],
+  "fixed": 24
+ }
+}

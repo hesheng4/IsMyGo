@@ -1,0 +1,10 @@
+\begin{tabular}{lcccc}
+\toprule
+Retriever & 512 & 1024 & 2048 & 4096 \\
+\midrule
+BM25 (sparse) & 0.2578 & 0.2734 & 0.2969 & 0.2969 \\
+dense (bge-small-en-v1.5, local) & 0.2833 & 0.3167 & 0.3167 & 0.3250 \\
+hybrid (BM25+dense, RRF) & 0.2833 & 0.3083 & 0.2583 & 0.3333 \\
+BM25 + recency half-budget & 0.2109 & 0.2812 & 0.2812 & 0.2422 \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,13 @@
+\begin{tabular}{lcccc}
+\toprule
+Strategy & EM@512 & EM@2048 & EM@4096 & $\Delta$@4096 vs.\ parent (95\% CI) \\
+\midrule
+compression (window+summ.) & 0.0667 & 0.1250 & 0.1250 & (parent) \\
+compression-select (relevance-ranked summ.) & 0.1250 & 0.1500 & 0.1750 & +0.0333 [-0.0167, +0.0833] \\
+fetch-then-summarize (2-stage) & 0.2167 & 0.2250 & 0.2500 & +0.1500 [+0.0583, +0.2417] \\
+retrieval (BM25, turn-level) & 0.2417 & 0.2750 & 0.2750 & (parent) \\
+retrieval (BM25, sentence-level) & 0.2833 & 0.3000 & 0.2917 & +0.0083 [-0.0500, +0.0667] \\
+hierarchical (3-tier) & 0.1333 & 0.2583 & 0.3000 & (parent) \\
+hierarchical + event/time-aware leg & 0.0833 & 0.1000 & 0.1333 & -0.1750 [-0.2583, -0.0917] \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,7 @@
+[timing] questions=500 summaries=19195
+[timing] full_context|None                {'median_ms': 0.32, 'mean_ms': 0.34, 'p90_ms': 0.45, 'footprint': 104068}  (117s)
+[timing] sliding_window|512               {'median_ms': 0.0, 'mean_ms': 0.01, 'p90_ms': 0.01, 'footprint': 324}  (0s)
+[timing] sliding_window|1024              {'median_ms': 0.01, 'mean_ms': 0.01, 'p90_ms': 0.02, 'footprint': 820}  (1s)
+[timing] sliding_window|2048              {'median_ms': 0.01, 'mean_ms': 0.01, 'p90_ms': 0.02, 'footprint': 1821}  (2s)
+[timing] sliding_window|4096              {'median_ms': 0.02, 'mean_ms': 0.02, 'p90_ms': 0.03, 'footprint': 3886}  (3s)
+[timing] retrieval|512                    {'median_ms': 42.05, 'mean_ms': 46.07, 'p90_ms': 65.65, 'footprint': 321}  (73s)

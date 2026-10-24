@@ -1,0 +1,12 @@
+\begin{tabular}{lcccccc}
+\toprule
+Policy & single-* & multi & temporal & update & overall \\
+\midrule
+full-context (verbatim)$^{\dagger}$ & 0.541 & 0.062 & 0.219 & 0.316 & 0.183 \\
+sliding window & 0.068 & 0.023 & 0.117 & 0.066 & 0.060 \\
+retrieval (BM25) & 0.520 & 0.094 & 0.117 & 0.526 & 0.260 \\
+retrieval+recency & 0.486 & 0.078 & 0.094 & 0.487 & 0.244 \\
+compression (window+summ.) & 0.108 & 0.047 & 0.148 & 0.184 & 0.106 \\
+hierarchical (3-tier) & 0.446 & 0.055 & 0.141 & 0.408 & 0.223 \\
+\bottomrule
+\end{tabular}

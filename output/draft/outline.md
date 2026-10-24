@@ -1,0 +1,23 @@
+# 论文大纲（由 iclr_paper.tex 的章节结构抽取）
+
+- Introduction
+- Related Work
+- Method: Six Policies under One Budget Definition
+- Experimental Setup
+- Results
+  - Main comparison
+  - Latency and footprint
+  - Statistical tests
+- Analysis
+  - When does memory compression pay off? Rarely---and only in company
+  - Causal insights
+  - Is it the format? Structured verbatim compressors
+  - Where do failures occur? Retrieval vs.\ reading
+  - Ranking or reading? A reranker probe at fixed budget
+  - Practical selection guideline
+  - Plug-in strong baselines: read-side selection, finer retrieval, multi-stage pipelines
+  - Sensitivity analyses
+- Negative Results and Diagnostic Analysis
+- Limitations
+- Conclusion
+- Instruction Template and Reader Configuration

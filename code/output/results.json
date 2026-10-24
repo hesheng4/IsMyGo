@@ -1,0 +1,254 @@
+{
+  "meta": {
+    "topic": "Agent记忆引擎：长程流式任务中的记忆策略权衡",
+    "experiment": "memory_bench",
+    "python": "3.14.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "duration_sec": 0.219,
+    "deterministic": true
+  },
+  "experiments": {
+    "memory_bench": {
+      "main": [
+        {
+          "policy": "full_context",
+          "budget": 16,
+          "accuracy": 1.0,
+          "accuracy_ancient": 1.0,
+          "accuracy_mid": 1.0,
+          "accuracy_recent": 1.0,
+          "footprint": 158.0,
+          "query_latency_ms": 0.0001,
+          "accuracy_std": 0.0,
+          "accuracy_ci95": 0.0
+        }
+      ],
+      "ablation": [
+        {
+          "policy": "full_context",
+          "budget": 32,
+          "accuracy": 1.0,
+          "accuracy_ancient": 1.0,
+          "accuracy_mid": 1.0,
+          "accuracy_recent": 1.0,
+          "footprint": 158.0,
+          "query_latency_ms": 0.0001,
+          "accuracy_std": 0.0,
+          "accuracy_ci95": 0.0
+        },
+        {
+          "policy": "full_context",
+          "budget": 64,
+          "accuracy": 1.0,
+          "accuracy_ancient": 1.0,
+          "accuracy_mid": 1.0,
+          "accuracy_recent": 1.0,
+          "footprint": 158.0,
+          "query_latency_ms": 0.0011,
+          "accuracy_std": 0.0,
+          "accuracy_ci95": 0.0
+        },
+        {
+          "policy": "sliding_window",
+          "budget": 16,
+          "accuracy": 0.0777,
+          "accuracy_ancient": 0.0,
+          "accuracy_mid": 0.0,
+          "accuracy_recent": 0.225,
+          "footprint": 16.0,
+          "query_latency_ms": 0.0001,
+          "accuracy_std": 0.0226,
+          "accuracy_ci95": 0.0562
+        },
+        {
+          "policy": "sliding_window",
+          "budget": 32,
+          "accuracy": 0.1697,
+          "accuracy_ancient": 0.0,
+          "accuracy_mid": 0.0,
+          "accuracy_recent": 0.4917,
+          "footprint": 32.0,
+          "query_latency_ms": 0.0001,
+          "accuracy_std": 0.0107,
+          "accuracy_ci95": 0.0265
+        },
+        {
+          "policy": "sliding_window",
+          "budget": 64,
+          "accuracy": 0.3222,
+          "accuracy_ancient": 0.0,
+          "accuracy_mid": 0.0417,
+          "accuracy_recent": 0.8917,
+          "footprint": 64.0,
+          "query_latency_ms": 0.0001,
+          "accuracy_std": 0.0127,
+          "accuracy_ci95": 0.0316
+        },
+        {
+          "policy": "retrieval",
+          "budget": 16,
+          "accuracy": 0.1032,
+          "accuracy_ancient": 0.018,
+          "accuracy_mid": 0.025,
+          "accuracy_recent": 0.2583,
+          "footprint": 16.0,
+          "query_latency_ms": 0.035,
+          "accuracy_std": 0.0296,
+          "accuracy_ci95": 0.0734
+        },
+        {
+          "policy": "retrieval",
+          "budget": 32,
+          "accuracy": 0.198,
+          "accuracy_ancient": 0.0281,
+          "accuracy_mid": 0.0333,
+          "accuracy_recent": 0.5167,
+          "footprint": 32.0,
+          "query_latency_ms": 0.0609,
+          "accuracy_std": 0.0217,
+          "accuracy_ci95": 0.054
+        },
+        {
+          "policy": "retrieval",
+          "budget": 64,
+          "accuracy": 0.3054,
+          "accuracy_ancient": 0.0496,
+          "accuracy_mid": 0.0167,
+          "accuracy_recent": 0.825,
+          "footprint": 64.0,
+          "query_latency_ms": 0.1402,
+          "accuracy_std": 0.0346,
+          "accuracy_ci95": 0.086
+        },
+        {
+          "policy": "retrieval_recency",
+          "budget": 16,
+          "accuracy": 0.1181,
+          "accuracy_ancient": 0.0437,
+          "accuracy_mid": 0.0333,
+          "accuracy_recent": 0.2667,
+          "footprint": 16.0,
+          "query_latency_ms": 0.0337,
+          "accuracy_std": 0.0157,
+          "accuracy_ci95": 0.0391
+        },
+        {
+          "policy": "retrieval_recency",
+          "budget": 32,
+          "accuracy": 0.2043,
+          "accuracy_ancient": 0.0437,
+          "accuracy_mid": 0.05,
+          "accuracy_recent": 0.5,
+          "footprint": 32.0,
+          "query_latency_ms": 0.065,
+          "accuracy_std": 0.0105,
+          "accuracy_ci95": 0.0261
+        },
+        {
+          "policy": "retrieval_recency",
+          "budget": 64,
+          "accuracy": 0.3278,
+          "accuracy_ancient": 0.0347,
+          "accuracy_mid": 0.0667,
+          "accuracy_recent": 0.85,
+          "footprint": 64.0,
+          "query_latency_ms": 0.1109,
+          "accuracy_std": 0.0174,
+          "accuracy_ci95": 0.0433
+        },
+        {
+          "policy": "compression",
+          "budget": 16,
+          "accuracy": 0.0891,
+          "accuracy_ancient": 0.0,
+          "accuracy_mid": 0.0,
+          "accuracy_recent": 0.2583,
+          "footprint": 17.6667,
+          "query_latency_ms": 0.0002,
+          "accuracy_std": 0.0054,
+          "accuracy_ci95": 0.0134
+        },
+        {
+          "policy": "compression",
+          "budget": 32,
+          "accuracy": 0.1901,
+          "accuracy_ancient": 0.0,
+          "accuracy_mid": 0.0,
+          "accuracy_recent": 0.55,
+          "footprint": 36.0,
+          "query_latency_ms": 0.0005,
+          "accuracy_std": 0.0286,
+          "accuracy_ci95": 0.0709
+        },
+        {
+          "policy": "compression",
+          "budget": 64,
+          "accuracy": 0.5245,
+          "accuracy_ancient": 0.342,
+          "accuracy_mid": 0.425,
+          "accuracy_recent": 0.7833,
+          "footprint": 89.6667,
+          "query_latency_ms": 0.0002,
+          "accuracy_std": 0.0595,
+          "accuracy_ci95": 0.1479
+        },
+        {
+          "policy": "hierarchical",
+          "budget": 16,
+          "accuracy": 0.1039,
+          "accuracy_ancient": 0.0628,
+          "accuracy_mid": 0.0333,
+          "accuracy_recent": 0.2083,
+          "footprint": 16.0,
+          "query_latency_ms": 0.0102,
+          "accuracy_std": 0.0251,
+          "accuracy_ci95": 0.0623
+        },
+        {
+          "policy": "hierarchical",
+          "budget": 32,
+          "accuracy": 0.1778,
+          "accuracy_ancient": 0.0555,
+          "accuracy_mid": 0.0417,
+          "accuracy_recent": 0.425,
+          "footprint": 32.6667,
+          "query_latency_ms": 0.0138,
+          "accuracy_std": 0.0138,
+          "accuracy_ci95": 0.0342
+        },
+        {
+          "policy": "hierarchical",
+          "budget": 64,
+          "accuracy": 0.3136,
+          "accuracy_ancient": 0.0371,
+          "accuracy_mid": 0.075,
+          "accuracy_recent": 0.8,
+          "footprint": 69.0,
+          "query_latency_ms": 0.0267,
+          "accuracy_std": 0.0177,
+          "accuracy_ci95": 0.044
+        }
+      ],
+      "config": {
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "budgets": [
+          16,
+          32,
+          64
+        ],
+        "n_entities": 40,
+        "facts_per_entity": 6,
+        "n_queries": 120
+      }
+    }
+  },
+  "provenance": {
+    "cmd": "python experiments/run_all.py",
+    "cwd": "C:\\Users\\yangy\\Desktop\\369459+IsMyGo\\IsMyGo\\code",
+    "seed_policy": "random.Random(seed) per task; no global RNG leakage"
+  }
+}

@@ -1,0 +1,346 @@
+{
+ "experiment": "E1 structured compressor (KV verbatim / EDU verbatim) vs freeform w60",
+ "protocol": "ANALYSIS_PROTOCOL.md §3 + Addendum B; 主判据 KV @4096 relaxed EM n=120, gap-closed 分母=BM25 retrieval; 敏感性口径排除 contentFilter 拒答题 n=116; 第二对照 (hierarchical) 并报不用于判据",
+ "n_questions": 120,
+ "filter_refusal_questions": [
+  "3b6f954b",
+  "8550ddae",
+  "a06e4cfe",
+  "gpt4_372c3eed"
+ ],
+ "completeness": {
+  "kv@512": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "kv@1024": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "kv@2048": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "kv@4096": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "edu@512": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "edu@1024": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "edu@2048": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  },
+  "edu@4096": {
+   "n": 120,
+   "missing": 0,
+   "filter_refusals": 0,
+   "infra_failures": 0
+  }
+ },
+ "complete": true,
+ "cells": {
+  "kv@512": {
+   "n": 120,
+   "relaxed_em": 0.058333333333333334,
+   "em": 0.05
+  },
+  "kv@1024": {
+   "n": 120,
+   "relaxed_em": 0.075,
+   "em": 0.06666666666666667
+  },
+  "kv@2048": {
+   "n": 120,
+   "relaxed_em": 0.08333333333333333,
+   "em": 0.075
+  },
+  "kv@4096": {
+   "n": 120,
+   "relaxed_em": 0.14166666666666666,
+   "em": 0.11666666666666667
+  },
+  "edu@512": {
+   "n": 120,
+   "relaxed_em": 0.075,
+   "em": 0.06666666666666667
+  },
+  "edu@1024": {
+   "n": 120,
+   "relaxed_em": 0.125,
+   "em": 0.10833333333333334
+  },
+  "edu@2048": {
+   "n": 120,
+   "relaxed_em": 0.15,
+   "em": 0.125
+  },
+  "edu@4096": {
+   "n": 120,
+   "relaxed_em": 0.15833333333333333,
+   "em": 0.13333333333333333
+  },
+  "freeform@512": {
+   "n": 120,
+   "relaxed_em": 0.058333333333333334,
+   "em": 0.058333333333333334
+  },
+  "freeform@1024": {
+   "n": 120,
+   "relaxed_em": 0.10833333333333334,
+   "em": 0.10833333333333334
+  },
+  "freeform@2048": {
+   "n": 120,
+   "relaxed_em": 0.13333333333333333,
+   "em": 0.125
+  },
+  "freeform@4096": {
+   "n": 120,
+   "relaxed_em": 0.15833333333333333,
+   "em": 0.125
+  },
+  "retrieval@512": {
+   "n": 120,
+   "relaxed_em": 0.25833333333333336,
+   "em": 0.23333333333333334
+  },
+  "retrieval@1024": {
+   "n": 120,
+   "relaxed_em": 0.275,
+   "em": 0.23333333333333334
+  },
+  "retrieval@2048": {
+   "n": 120,
+   "relaxed_em": 0.3,
+   "em": 0.25833333333333336
+  },
+  "retrieval@4096": {
+   "n": 120,
+   "relaxed_em": 0.3,
+   "em": 0.25833333333333336
+  },
+  "hierarchical@512": {
+   "n": 120,
+   "relaxed_em": 0.15,
+   "em": 0.13333333333333333
+  },
+  "hierarchical@1024": {
+   "n": 120,
+   "relaxed_em": 0.225,
+   "em": 0.19166666666666668
+  },
+  "hierarchical@2048": {
+   "n": 120,
+   "relaxed_em": 0.275,
+   "em": 0.25
+  },
+  "hierarchical@4096": {
+   "n": 120,
+   "relaxed_em": 0.30833333333333335,
+   "em": 0.275
+  }
+ },
+ "analysis_at_4096": {
+  "main": {
+   "n": 120,
+   "kv_vs_bm25": {
+    "struct_relaxed_em": 0.14166666666666666,
+    "freeform_relaxed_em": 0.15833333333333333,
+    "denominator_policy": "retrieval",
+    "denominator_relaxed_em": 0.3,
+    "gap_closed": -0.11764705882352938,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 6,
+     "n01": 8,
+     "p_value": 0.79052734375
+    },
+    "delta_struct_vs_freeform": -0.016666666666666663,
+    "delta_ci95": [
+     -0.075,
+     0.041666666666666664
+    ]
+   },
+   "edu_vs_bm25": {
+    "struct_relaxed_em": 0.15833333333333333,
+    "freeform_relaxed_em": 0.15833333333333333,
+    "denominator_policy": "retrieval",
+    "denominator_relaxed_em": 0.3,
+    "gap_closed": 0.0,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 8,
+     "n01": 8,
+     "p_value": 1.0
+    },
+    "delta_struct_vs_freeform": 0.0,
+    "delta_ci95": [
+     -0.06666666666666667,
+     0.06666666666666667
+    ]
+   },
+   "kv_vs_strongest": {
+    "struct_relaxed_em": 0.14166666666666666,
+    "freeform_relaxed_em": 0.15833333333333333,
+    "denominator_policy": "hierarchical",
+    "denominator_relaxed_em": 0.30833333333333335,
+    "gap_closed": -0.11111111111111106,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 6,
+     "n01": 8,
+     "p_value": 0.79052734375
+    },
+    "delta_struct_vs_freeform": -0.016666666666666663,
+    "delta_ci95": [
+     -0.075,
+     0.041666666666666664
+    ]
+   },
+   "edu_vs_strongest": {
+    "struct_relaxed_em": 0.15833333333333333,
+    "freeform_relaxed_em": 0.15833333333333333,
+    "denominator_policy": "hierarchical",
+    "denominator_relaxed_em": 0.30833333333333335,
+    "gap_closed": 0.0,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 8,
+     "n01": 8,
+     "p_value": 1.0
+    },
+    "delta_struct_vs_freeform": 0.0,
+    "delta_ci95": [
+     -0.06666666666666667,
+     0.06666666666666667
+    ]
+   }
+  },
+  "excl_filter": {
+   "n": 116,
+   "kv_vs_bm25": {
+    "struct_relaxed_em": 0.14655172413793102,
+    "freeform_relaxed_em": 0.16379310344827586,
+    "denominator_policy": "retrieval",
+    "denominator_relaxed_em": 0.3103448275862069,
+    "gap_closed": -0.11764705882352945,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 6,
+     "n01": 8,
+     "p_value": 0.79052734375
+    },
+    "delta_struct_vs_freeform": -0.017241379310344834,
+    "delta_ci95": [
+     -0.08620689655172414,
+     0.04310344827586207
+    ]
+   },
+   "edu_vs_bm25": {
+    "struct_relaxed_em": 0.16379310344827586,
+    "freeform_relaxed_em": 0.16379310344827586,
+    "denominator_policy": "retrieval",
+    "denominator_relaxed_em": 0.3103448275862069,
+    "gap_closed": 0.0,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 8,
+     "n01": 8,
+     "p_value": 1.0
+    },
+    "delta_struct_vs_freeform": 0.0,
+    "delta_ci95": [
+     -0.06896551724137931,
+     0.06896551724137931
+    ]
+   },
+   "kv_vs_strongest": {
+    "struct_relaxed_em": 0.14655172413793102,
+    "freeform_relaxed_em": 0.16379310344827586,
+    "denominator_policy": "hierarchical",
+    "denominator_relaxed_em": 0.31896551724137934,
+    "gap_closed": -0.11111111111111113,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 6,
+     "n01": 8,
+     "p_value": 0.79052734375
+    },
+    "delta_struct_vs_freeform": -0.017241379310344834,
+    "delta_ci95": [
+     -0.08620689655172414,
+     0.04310344827586207
+    ]
+   },
+   "edu_vs_strongest": {
+    "struct_relaxed_em": 0.16379310344827586,
+    "freeform_relaxed_em": 0.16379310344827586,
+    "denominator_policy": "hierarchical",
+    "denominator_relaxed_em": 0.31896551724137934,
+    "gap_closed": 0.0,
+    "struct_ge_denominator": false,
+    "mcnemar_struct_vs_freeform": {
+     "n10": 8,
+     "n01": 8,
+     "p_value": 1.0
+    },
+    "delta_struct_vs_freeform": 0.0,
+    "delta_ci95": [
+     -0.06896551724137931,
+     0.06896551724137931
+    ]
+   }
+  }
+ },
+ "judgments": {
+  "main": {
+   "kv_tier": "结构不救 (有损压缩普遍失败, 最强泛化)",
+   "kv_significant_vs_freeform": false,
+   "edu_tier": "结构不救 (有损压缩普遍失败, 最强泛化)"
+  },
+  "excl_filter": {
+   "kv_tier": "结构不救 (有损压缩普遍失败, 最强泛化)",
+   "kv_significant_vs_freeform": false,
+   "edu_tier": "结构不救 (有损压缩普遍失败, 最强泛化)"
+  }
+ },
+ "trigger_full_500_confirmation": false,
+ "footprint": {
+  "kv": {
+   "mean_memory_footprint_tokens": 1868.3666666666666,
+   "mean_summary_words": 64.20185185185186,
+   "n_summaries": 5400
+  },
+  "edu": {
+   "mean_memory_footprint_tokens": 1863.2395833333333,
+   "mean_summary_words": 88.33327161636734,
+   "n_summaries": 5401
+  },
+  "freeform": {
+   "mean_memory_footprint_tokens": 1874.7270833333334,
+   "mean_summary_words": 61.30358641526325,
+   "n_summaries": 17873
+  }
+ }
+}

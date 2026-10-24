@@ -1,0 +1,1010 @@
+diff --git a/jiuwenswarm/agents/harness/common/rails/paper_guard/__init__.py b/jiuwenswarm/agents/harness/common/rails/paper_guard/__init__.py
+new file mode 100644
+index 0000000..fa89445
+--- /dev/null
++++ b/jiuwenswarm/agents/harness/common/rails/paper_guard/__init__.py
+@@ -0,0 +1,27 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""Paper-guard rails: research-paper quality constraints for swarm members.
++
++Provides two config-driven rails for automated research paper generation
++scenarios (e.g. the openJiuwen paper-agent pipeline):
++
++- ``HallucinationCheckRail`` — quantitative claims in model output must be
++  traceable to a ground-truth results file; unmatched numbers trigger an
++  injected warning so downstream stages drop or fix them.
++- ``AcademicFormatRail`` — enforces complete paper sections (abstract /
++  introduction / method / experiment / conclusion / references) on outputs
++  that look like a paper draft.
++
++Mounted per-member via the ``swarm.paper_guard`` provider
++(``agents/swarm/providers/member_rails.py``), gated on
++``paper_guard.enabled`` in ``config.yaml``.
++"""
++
++from jiuwenswarm.agents.harness.common.rails.paper_guard.academic_format_rail import (
++    AcademicFormatRail,
++)
++from jiuwenswarm.agents.harness.common.rails.paper_guard.hallucination_check_rail import (
++    HallucinationCheckRail,
++)
++
++__all__ = ["HallucinationCheckRail", "AcademicFormatRail"]
+\ No newline at end of file
+diff --git a/jiuwenswarm/agents/harness/common/rails/paper_guard/academic_format_rail.py b/jiuwenswarm/agents/harness/common/rails/paper_guard/academic_format_rail.py
+new file mode 100644
+index 0000000..4b8541e
+--- /dev/null
++++ b/jiuwenswarm/agents/harness/common/rails/paper_guard/academic_format_rail.py
+@@ -0,0 +1,98 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""Academic-format rail for automated research paper generation.
++
++Outputs that look like a paper draft (contain an abstract/introduction
++heading) are checked for required sections; missing sections trigger an
++injected "must complete" note so writing stages self-correct.
++
++Config (``paper_guard`` section in ``config.yaml``)::
++
++    paper_guard:
++      enabled: true
++"""
++
++from __future__ import annotations
++
++import logging
++import re
++from typing import Any
++
++from openjiuwen.core.single_agent.rail.base import AgentCallbackContext
++from openjiuwen.harness.rails.base import DeepAgentRail
++
++logger = logging.getLogger(__name__)
++
++_REQUIRED_SECTIONS: tuple[tuple[str, re.Pattern[str]], ...] = (
++    ("abstract", re.compile(r"^#{1,4}\s*(abstract|摘\s*要)", re.IGNORECASE | re.MULTILINE)),
++    ("introduction", re.compile(r"^#{1,4}\s*(introduction|引\s*言)", re.IGNORECASE | re.MULTILINE)),
++    ("method", re.compile(r"^#{1,4}\s*(method|methodology|方\s*法)", re.IGNORECASE | re.MULTILINE)),
++    ("experiment", re.compile(r"^#{1,4}\s*(experiment|实验)", re.IGNORECASE | re.MULTILINE)),
++    ("conclusion", re.compile(r"^#{1,4}\s*(conclusion|结\s*论)", re.IGNORECASE | re.MULTILINE)),
++    ("references", re.compile(r"^#{1,4}\s*(references|参考文献)", re.IGNORECASE | re.MULTILINE)),
++)
++
++_LOOKS_LIKE_PAPER = re.compile(r"(abstract|摘\s*要|introduction|引\s*言)", re.IGNORECASE)
++_HAS_HEADING = re.compile(r"^#{1,4}\s+\S+", re.MULTILINE)
++
++
++class AcademicFormatRail(DeepAgentRail):
++    """Require complete paper sections on paper-looking outputs."""
++
++    priority: int = 70
++
++    def __init__(self, enabled: bool = True) -> None:
++        super().__init__()
++        self._enabled = enabled
++
++    async def after_model_call(self, ctx: AgentCallbackContext) -> None:
++        if not self._enabled:
++            return
++        try:
++            output = _output_text(ctx)
++            if not output or not _HAS_HEADING.search(output):
++                return
++            if not _LOOKS_LIKE_PAPER.search(output):
++                return
++            missing = [label for label, pat in _REQUIRED_SECTIONS if not pat.search(output)]
++            if missing:
++                _inject(
++                    ctx,
++                    "PAPER_GUARD[academic]: paper draft is missing required sections: "
++                    + ", ".join(missing)
++                    + "; complete them before finalizing.",
++                )
++            if re.search(r"\[\d+\]", output) and not re.search(
++                r"(references|参考文献)", output, re.IGNORECASE,
++            ):
++                _inject(ctx, "PAPER_GUARD[academic]: citations present but the "
++                             "references section is missing.")
++        except Exception as exc:
++            logger.warning("[PaperGuard] academic-format check skipped: %s", exc)
++
++
++def _output_text(ctx: AgentCallbackContext) -> str:
++    for attr in ("output", "response", "result", "text"):
++        val = getattr(ctx, attr, None)
++        if isinstance(val, str) and val:
++            return val
++        for sub in ("message", "text", "content"):
++            sub_val = getattr(val, sub, None)
++            if isinstance(sub_val, str) and sub_val:
++                return sub_val
++    return ""
++
++
++def _inject(ctx: AgentCallbackContext, note: str) -> None:
++    for attr in ("notes", "warnings", "system_notes"):
++        lst = getattr(ctx, attr, None)
++        if isinstance(lst, list):
++            lst.append(note)
++            logger.info("%s", note)
++            return
++    if hasattr(ctx, "__dict__"):
++        for attr in vars(ctx):
++            if isinstance(getattr(ctx, attr, None), list):
++                getattr(ctx, attr).append(note)
++                break
++    logger.info("%s", note)
+\ No newline at end of file
+diff --git a/jiuwenswarm/agents/harness/common/rails/paper_guard/hallucination_check_rail.py b/jiuwenswarm/agents/harness/common/rails/paper_guard/hallucination_check_rail.py
+new file mode 100644
+index 0000000..dece127
+--- /dev/null
++++ b/jiuwenswarm/agents/harness/common/rails/paper_guard/hallucination_check_rail.py
+@@ -0,0 +1,200 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""Hallucination-check rail for automated research paper generation.
++
++Quantitative claims (percentages, metric values) in a member's model output
++are validated against a ground-truth experiment results file. Numbers that
++cannot be traced to the ground truth cause an injected warning note, so the
++writing/proofreading stages know to remove or correct them.
++
++Config (``paper_guard`` section in ``config.yaml``)::
++
++    paper_guard:
++      enabled: true
++      results_path: null        # optional override; default resolves below
++"""
++
++from __future__ import annotations
++
++import json
++import logging
++import os
++import re
++from pathlib import Path
++from typing import Any
++
++from openjiuwen.core.single_agent.rail.base import AgentCallbackContext
++from openjiuwen.harness.rails.base import DeepAgentRail
++
++logger = logging.getLogger(__name__)
++
++_NUM_PATTERNS: tuple[re.Pattern[str], ...] = (
++    re.compile(r"\d+(?:\.\d+)?\s*%"),
++    re.compile(
++        # \b before the keyword: stops "accept 128" from splitting into Acc +
++        # [a-z_]* and matching as a metric claim. The suffix allows only
++        # underscore-joined key variants (accuracy_recent), not verb endings.
++        r"\b(?:F1|Accuracy|Acc|Precision|Recall|BLEU|mAP|loss)"
++        r"(?:_[A-Za-z]+)?[\s=:\"']+\d+(?:\.\d+)?",
++        re.IGNORECASE,
++    ),
++)
++
++
++def _default_results_path() -> Path:
++    override = os.environ.get("PAPER_GUARD_RESULTS_PATH")
++    if override:
++        return Path(override)
++    return (
++        Path.home()
++        / ".jiuwenswarm"
++        / "agent"
++        / "workspace"
++        / "output"
++        / "results.json"
++    )
++
++
++def _extract_numbers(text: str) -> set[str]:
++    found: set[str] = set()
++    if not text:
++        return found
++    for pat in _NUM_PATTERNS:
++        found.update(m.group(0).replace(" ", "") for m in pat.finditer(text))
++    return found
++
++
++def _num_value(token: str) -> float | None:
++    # Take the trailing number so metric names with embedded digits
++    # (F1, mAP) are not mistaken for the claim value.
++    m = re.search(r"(\d+(?:\.\d+)?)\s*%?$", token)
++    return float(m.group(1)) if m else None
++
++
++def _unsupported_claims(claimed: set[str], truth: set[str]) -> set[str]:
++    """Claims lacking ground-truth support.
++
++    Percent-vs-fraction is normalized (92.3% matches 0.923); otherwise an
++    exact numeric comparison with float tolerance decides.
++    """
++    truth_vals: list[float] = []
++    for tok in truth:
++        v = _num_value(tok)
++        if v is None:
++            continue
++        truth_vals.append(v)
++        if tok.endswith("%"):
++            truth_vals.append(v / 100.0)
++    bad: set[str] = set()
++    for claim in claimed:
++        v = _num_value(claim)
++        if v is None:
++            continue
++        candidates = [v / 100.0] if claim.endswith("%") else [v]
++        if not any(
++            abs(c - t) <= 1e-9 * max(1.0, abs(t))
++            for c in candidates
++            for t in truth_vals
++        ):
++            bad.add(claim)
++    return bad
++
++
++class HallucinationCheckRail(DeepAgentRail):
++    """Warn when quantitative claims lack ground-truth support."""
++
++    priority: int = 80
++
++    def __init__(
++        self,
++        results_path: str | None = None,
++        enabled: bool = True,
++    ) -> None:
++        super().__init__()
++        self._results_path = Path(results_path) if results_path else _default_results_path()
++        self._enabled = enabled
++
++    def _ground_truth(self) -> set[str]:
++        try:
++            raw = self._results_path.read_text(encoding="utf-8")
++            return _extract_numbers(json.dumps(json.loads(raw), ensure_ascii=False))
++        except (OSError, json.JSONDecodeError, ValueError):
++            return set()
++
++    async def after_model_call(self, ctx: AgentCallbackContext) -> None:
++        if not self._enabled:
++            return
++        try:
++            output = _output_text(ctx)
++            claimed = _extract_numbers(output)
++            if not claimed:
++                return
++            truth = self._ground_truth()
++            if not truth:
++                _inject(ctx, "PAPER_GUARD[hallucination]: no ground-truth results file, "
++                             "quantitative claims left unverified.")
++                return
++            unsupported = _unsupported_claims(claimed, truth)
++            if unsupported:
++                _inject(
++                    ctx,
++                    "PAPER_GUARD[hallucination]: quantitative claims not found in "
++                    "ground-truth results; remove or correct: "
++                    + "; ".join(sorted(unsupported)[:10]),
++                )
++                logger.warning(
++                    "[PaperGuard] %d unsupported quantitative claims", len(unsupported),
++                )
++        except Exception as exc:
++            logger.warning("[PaperGuard] hallucination check skipped: %s", exc)
++
++    async def before_tool_call(self, ctx: AgentCallbackContext) -> None:
++        if not self._enabled:
++            return
++        try:
++            inputs = getattr(ctx, "inputs", None)
++            tool_name = str(getattr(inputs, "tool_name", "") or "")
++            tool_args = getattr(inputs, "tool_args", None) or {}
++            if not isinstance(tool_args, dict) or "write" not in tool_name.lower():
++                return
++            content = str(tool_args.get("content") or tool_args.get("text") or "")
++            claimed = _extract_numbers(content)
++            if not claimed:
++                return
++            truth = self._ground_truth()
++            if not truth:
++                return
++            unsupported = _unsupported_claims(claimed, truth)
++            if unsupported:
++                _inject(
++                    ctx,
++                    "PAPER_GUARD[hallucination]: file write contains untraceable "
++                    "numbers: " + "; ".join(sorted(unsupported)[:10]),
++                )
++        except Exception as exc:
++            logger.warning("[PaperGuard] pre-write check skipped: %s", exc)
++
++
++def _output_text(ctx: AgentCallbackContext) -> str:
++    for attr in ("output", "response", "result", "text"):
++        val = getattr(ctx, attr, None)
++        if isinstance(val, str) and val:
++            return val
++        for sub in ("message", "text", "content"):
++            sub_val = getattr(val, sub, None)
++            if isinstance(sub_val, str) and sub_val:
++                return sub_val
++    return ""
++
++
++def _inject(ctx: AgentCallbackContext, note: str) -> None:
++    for attr in ("notes", "warnings", "system_notes"):
++        lst = getattr(ctx, attr, None)
++        if isinstance(lst, list):
++            lst.append(note)
++            logger.info("%s", note)
++            return
++    if hasattr(ctx, "__dict__"):
++        for attr in vars(ctx):
++            if isinstance(getattr(ctx, attr, None), list):
++                getattr(ctx, attr).append(note)
++                break
++    logger.info("%s", note)
+\ No newline at end of file
+diff --git a/jiuwenswarm/agents/harness/common/tools/deepsearch_tools.py b/jiuwenswarm/agents/harness/common/tools/deepsearch_tools.py
+new file mode 100644
+index 0000000..049e968
+--- /dev/null
++++ b/jiuwenswarm/agents/harness/common/tools/deepsearch_tools.py
+@@ -0,0 +1,149 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""DeepSearch Research Toolkit
++
++提供文献调研工具 ``deepsearch_literature``：将 openJiuwen-DeepSearch
++(https://atomgit.com/openJiuwen/deepsearch) 作为科研流水线 Ideation/Writing
++模块的检索引擎, 以子进程方式调用其 CLI, 返回研究报告/检索结果的内容摘录
++与落盘路径, 供后续 Rail 做引用溯源。
++
++使用方式:
++1. 在 config.yaml 的 ``research_tools`` 段配置 deepsearch.repo_dir 等参数
++2. ``DeepSearchToolkit(...).get_tools()`` 获取工具列表并注册到 Runner
++
++未配置或调用失败时返回结构化错误提示 (含降级建议), 不抛异常阻断流水线。
++"""
++
++from __future__ import annotations
++
++import json
++import logging
++import os
++import subprocess
++from pathlib import Path
++from typing import Any, List
++
++from openjiuwen.core.foundation.tool import LocalFunction, Tool, ToolCard
++
++logger = logging.getLogger(__name__)
++
++_DEFAULT_TIMEOUT_SEC = 900
++
++
++class DeepSearchToolkit:
++    """Wrap the openJiuwen-DeepSearch CLI as a member-callable tool."""
++
++    def __init__(
++        self,
++        repo_dir: str = "",
++        python_exe: str = "",
++        extra_args: List[str] | None = None,
++        timeout_sec: int = _DEFAULT_TIMEOUT_SEC,
++        workspace_dir: str = "",
++    ) -> None:
++        self.repo_dir = repo_dir or ""
++        self.python_exe = python_exe or os.sys.executable
++        self.extra_args = list(extra_args or [])
++        self.timeout_sec = int(timeout_sec or _DEFAULT_TIMEOUT_SEC)
++        self.workspace_dir = workspace_dir or os.getcwd()
++
++    # ------------------------------------------------------------------
++    def _run_query(self, query: str, top_k: int) -> dict[str, Any]:
++        if not self.repo_dir:
++            return {
++                "ok": False,
++                "error": "research_tools.deepsearch.repo_dir 未配置; "
++                "请在 config.yaml research_tools 段配置 DeepSearch 仓库路径后重试, "
++                "或改用 web_search 工具完成本轮文献检索。",
++            }
++        entry = Path(self.repo_dir) / "deepsearch" / "main.py"
++        if not entry.exists():
++            return {"ok": False, "error": f"DeepSearch 入口不存在: {entry}"}
++
++        out_dir = Path(self.workspace_dir) / "deepsearch_results"
++        out_dir.mkdir(parents=True, exist_ok=True)
++        stamp = str(int(__import__("time").time()))
++        report_path = out_dir / f"ds_{stamp}.md"
++
++        cmd = [
++            self.python_exe,
++            str(entry),
++            "--query",
++            query,
++            "--output_dir",
++            str(out_dir),
++        ] + self.extra_args
++        try:
++            proc = subprocess.run(  # noqa: S603 - cmd 由配置白名单参数拼接
++                cmd,
++                cwd=str(Path(self.repo_dir) / "deepsearch"),
++                capture_output=True,
++                text=True,
++                timeout=self.timeout_sec,
++            )
++        except subprocess.TimeoutExpired:
++            return {"ok": False, "error": f"DeepSearch 超时 ({self.timeout_sec}s)"}
++
++        if proc.returncode != 0:
++            return {
++                "ok": False,
++                "error": "DeepSearch 退出码 "
++                + str(proc.returncode)
++                + "; stderr 尾部: "
++                + (proc.stderr or "")[-500:],
++            }
++        report_path.write_text(proc.stdout or "", encoding="utf-8", errors="ignore")
++        digest = (proc.stdout or "")[:4000]
++        return {
++            "ok": True,
++            "query": query,
++            "report_path": str(report_path),
++            "digest": digest,
++            "note": "完整报告已落盘; 引用其内容时请标注 report_path 以便溯源核查。",
++        }
++
++    # ------------------------------------------------------------------
++    def get_tools(self) -> List[Tool]:
++        """Return tools for registration in Runner."""
++
++        def make_tool(name: str, description: str, input_params: dict, func) -> Tool:
++            card = ToolCard(name=name, description=description, input_params=input_params)
++            return LocalFunction(card=card, func=func)
++
++        toolkit = self
++
++        def deepsearch_literature(query: str, top_k: int = 10) -> str:
++            """文献调研: 调用 DeepSearch 检索并返回报告摘录与落盘路径。"""
++            result = toolkit._run_query(query, top_k)
++            return json.dumps(result, ensure_ascii=False)
++
++        return [
++            make_tool(
++                name="deepsearch_literature",
++                description=(
++                    "【深度文献检索工具】调用 openJiuwen-DeepSearch 引擎执行文献调研,"
++                    "返回检索报告的内容摘录(digest)与完整报告落盘路径(report_path)。"
++                    "适用于: 相关工作调研、研究假设的证据检索、论文引用核查。"
++                    "参数: query 为检索问题(建议英文学术表述); top_k 预留。"
++                    "失败时返回 ok=false 与降级建议(改用 web_search)。"
++                ),
++                input_params={
++                    "type": "object",
++                    "properties": {
++                        "query": {
++                            "type": "string",
++                            "description": "文献检索问题, 例如 'hierarchical memory mechanisms for LLM agents on LongMemEval'",
++                        },
++                        "top_k": {
++                            "type": "integer",
++                            "description": "期望保留的检索结果条数(预留参数, 默认 10)",
++                        },
++                    },
++                    "required": ["query"],
++                },
++                func=deepsearch_literature,
++            ),
++        ]
++
++
++__all__ = ["DeepSearchToolkit"]
+diff --git a/jiuwenswarm/agents/harness/common/tools/memory_eval_tools.py b/jiuwenswarm/agents/harness/common/tools/memory_eval_tools.py
+new file mode 100644
+index 0000000..567c07d
+--- /dev/null
++++ b/jiuwenswarm/agents/harness/common/tools/memory_eval_tools.py
+@@ -0,0 +1,167 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""Memory Eval Toolkit
++
++提供 ``run_memory_eval`` 工具: 将 LongMemEval 记忆策略评测 harness 封装为
++JiuwenSwarm 成员可调度的执行能力。科研流水线 (SwarmFlow) 的 Experiment
++模块通过本工具发起评测, 结果流水落盘 (results.jsonl), 每条记录含
++token 用量与延迟, 供资源报告从框架侧聚合与追溯。
++
++使用方式:
++1. config.yaml ``research_tools.memory_eval`` 段配置 harness_dir
++2. ``MemoryEvalToolkit(...).get_tools()`` 注册到 Runner
++"""
++
++from __future__ import annotations
++
++import json
++import logging
++import os
++import subprocess
++from pathlib import Path
++from typing import Any, List
++
++from openjiuwen.core.foundation.tool import LocalFunction, Tool, ToolCard
++
++logger = logging.getLogger(__name__)
++
++_DEFAULT_TIMEOUT_SEC = 7200
++
++
++class MemoryEvalToolkit:
++    """Run the LongMemEval memory-policy benchmark as a member tool."""
++
++    def __init__(
++        self,
++        harness_dir: str = "",
++        python_exe: str = "",
++        timeout_sec: int = _DEFAULT_TIMEOUT_SEC,
++    ) -> None:
++        self.harness_dir = harness_dir or ""
++        self.python_exe = python_exe or os.sys.executable
++        self.timeout_sec = int(timeout_sec or _DEFAULT_TIMEOUT_SEC)
++
++    # ------------------------------------------------------------------
++    def _run(self, mode: str, policies: str, n: int, budgets: str) -> dict[str, Any]:
++        if not self.harness_dir:
++            return {
++                "ok": False,
++                "error": "research_tools.memory_eval.harness_dir 未配置; "
++                "请在 config.yaml 指向 paper-lab/experiments/longmemeval 后重试。",
++            }
++        script = Path(self.harness_dir) / "run.py"
++        if not script.exists():
++            return {"ok": False, "error": f"评测入口不存在: {script}"}
++
++        cmd = [self.python_exe, str(script)]
++        if mode == "full":
++            cmd.append("--full")
++        else:
++            cmd += ["--n", str(max(1, int(n)))]
++        if policies:
++            cmd += ["--policies", policies]
++        try:
++            proc = subprocess.run(  # noqa: S603 - 参数经白名单校验后拼接
++                cmd,
++                cwd=str(self.harness_dir),
++                capture_output=True,
++                text=True,
++                timeout=self.timeout_sec,
++            )
++        except subprocess.TimeoutExpired:
++            return {"ok": False, "error": f"评测超时 ({self.timeout_sec}s)"}
++        if proc.returncode != 0:
++            return {
++                "ok": False,
++                "error": "评测退出码 "
++                + str(proc.returncode)
++                + "; stderr 尾部: "
++                + (proc.stderr or "")[-800:],
++            }
++
++        # 从 harness 输出目录读取增量结果流水 (含逐题 token/延迟)
++        results_jsonl = (
++            Path(self.harness_dir).resolve().parents[2]
++            / "output" / "longmemeval" / "results.jsonl"
++        )
++        records: List[dict] = []
++        if results_jsonl.exists():
++            lines = results_jsonl.read_text(encoding="utf-8").splitlines()
++            records = [json.loads(x) for x in lines if x.strip()]
++        total_pt = sum(r.get("prompt_tokens", 0) for r in records)
++        total_ct = sum(r.get("completion_tokens", 0) for r in records)
++        summary_lines = [
++            x for x in (proc.stdout or "").splitlines()
++            if x.startswith(("sliding", "retrieval", "full", "compression", "hierarchical"))
++        ]
++        return {
++            "ok": True,
++            "mode": mode,
++            "policies": policies or "all",
++            "records": len(records),
++            "total_prompt_tokens": total_pt,
++            "total_completion_tokens": total_ct,
++            "summary": summary_lines[:30],
++            "results_path": str(results_jsonl),
++        }
++
++    # ------------------------------------------------------------------
++    def get_tools(self) -> List[Tool]:
++        """Return tools for registration in Runner."""
++
++        def make_tool(name: str, description: str, input_params: dict, func) -> Tool:
++            card = ToolCard(name=name, description=description, input_params=input_params)
++            return LocalFunction(card=card, func=func)
++
++        toolkit = self
++
++        def run_memory_eval(
++            mode: str = "smoke",
++            policies: str = "",
++            n_questions: int = 10,
++            budgets: str = "",
++        ) -> str:
++            """执行记忆策略评测并返回汇总。"""
++            result = toolkit._run(mode, policies, n_questions, budgets)
++            return json.dumps(result, ensure_ascii=False)
++
++        return [
++            make_tool(
++                name="run_memory_eval",
++                description=(
++                    "【记忆策略评测工具】在 LongMemEval 上执行预算受控的 LLM Agent "
++                    "记忆策略评测 (6 策略 x 512/1024/2048/4096 token 预算), "
++                    "返回 EM/F1 汇总、逐题结果路径与 token 用量。"
++                    "参数: mode='smoke'(小样本) 或 'full'(120 题全量); "
++                    "policies 逗号分隔策略子集(空=全部): "
++                    "full_context,sliding_window,retrieval,retrieval_recency,compression,hierarchical; "
++                    "n_questions 为 smoke 模式题数。"
++                    "结果流水含逐题 token/延迟, 支持断点续跑。"
++                ),
++                input_params={
++                    "type": "object",
++                    "properties": {
++                        "mode": {
++                            "type": "string",
++                            "description": "smoke 或 full",
++                        },
++                        "policies": {
++                            "type": "string",
++                            "description": "逗号分隔的策略子集, 空串表示全部",
++                        },
++                        "n_questions": {
++                            "type": "integer",
++                            "description": "smoke 模式的题目数 (默认 10)",
++                        },
++                        "budgets": {
++                            "type": "string",
++                            "description": "逗号分隔的预算子集(cl100k token), 空串表示全部档位",
++                        },
++                    },
++                },
++                func=run_memory_eval,
++            ),
++        ]
++
++
++__all__ = ["MemoryEvalToolkit"]
+diff --git a/jiuwenswarm/agents/swarm/config_specs.py b/jiuwenswarm/agents/swarm/config_specs.py
+index 424c2a6..bba8a09 100644
+--- a/jiuwenswarm/agents/swarm/config_specs.py
++++ b/jiuwenswarm/agents/swarm/config_specs.py
+@@ -97,6 +97,7 @@ _COMMON_RAIL_NAMES: tuple[str, ...] = (
+     registry.TASK_PLANNING,
+     registry.SECURITY,
+     registry.MODEL_ANOMALY_DETECTION,
++    registry.PAPER_GUARD,
+     registry.HEARTBEAT,
+     registry.AVATAR_PROMPT,
+     registry.MULTIMODAL_IMAGE,
+@@ -129,6 +130,8 @@ _COMMON_TOOL_NAMES: tuple[str, ...] = (
+     registry.XIAOYI_PHONE,
+     registry.CRON_TOOLS,
+     registry.SEND_FILE,
++    registry.DEEPSEARCH_TOOLS,
++    registry.MEMORY_EVAL_TOOLS,
+ )
+ 
+ # Parameterless code-profile rails (the code variant of the common rails plus
+@@ -184,6 +187,8 @@ _CODE_TOOL_NAMES: tuple[str, ...] = (
+     registry.CODE_EXTRA_TOOLS,
+     registry.CRON_TOOLS,
+     registry.SEND_FILE,
++    registry.DEEPSEARCH_TOOLS,
++    registry.MEMORY_EVAL_TOOLS,
+ )
+ 
+ # code_agent sub-agents are always-on (explore / plan) or config-gated.
+@@ -404,6 +409,13 @@ def _model_anomaly_detection_params(config: dict[str, Any]) -> dict[str, Any]:
+     }
+ 
+ 
++def _paper_guard_params(config: dict[str, Any]) -> dict[str, Any]:
++    """Attribute params for the research-paper guard rails."""
++    return {
++        "paper_guard_config": _config_section(config, "paper_guard"),
++    }
++
++
+ def _permission_params(config: dict[str, Any]) -> dict[str, Any]:
+     """Attribute params for the permission-interrupt rail."""
+     return {
+@@ -431,6 +443,7 @@ def _member_evolution_rail_params(config: dict[str, Any]) -> dict[str, Any]:
+ _RAIL_PARAM_BUILDERS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
+     registry.CONTEXT_PROCESSOR: _context_processor_params,
+     registry.MODEL_ANOMALY_DETECTION: _model_anomaly_detection_params,
++    registry.PAPER_GUARD: _paper_guard_params,
+     registry.CODE_PROJECT_MEMORY: lambda c: {
+         "additional_directories": _additional_directories(c)
+     },
+@@ -462,11 +475,23 @@ def _audio_tool_params(config: dict[str, Any]) -> dict[str, Any]:
+     }
+ 
+ 
++def _research_tool_params(config: dict[str, Any]) -> dict[str, Any]:
++    """Attribute params for the research-pipeline tools (deepsearch / memory_eval)."""
++    section = _config_section(config, "research_tools")
++    return {
++        "enabled": bool(section.get("enabled", False)),
++        "deepsearch_config": section.get("deepsearch", {}) or {},
++        "memory_eval_config": section.get("memory_eval", {}) or {},
++    }
++
++
+ _TOOL_PARAM_BUILDERS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
+     registry.SEND_FILE: lambda c: {"channels_config": _config_section(c, "channels")},
+     registry.CODE_EXTRA_TOOLS: lambda c: {"acp_enabled": _acp_enabled(c)},
+     registry.VISION: _vision_tool_params,
+     registry.AUDIO: _audio_tool_params,
++    registry.DEEPSEARCH_TOOLS: _research_tool_params,
++    registry.MEMORY_EVAL_TOOLS: _research_tool_params,
+ }
+ 
+ 
+diff --git a/jiuwenswarm/agents/swarm/providers/member_rails.py b/jiuwenswarm/agents/swarm/providers/member_rails.py
+index ef7ea0c..81901b3 100644
+--- a/jiuwenswarm/agents/swarm/providers/member_rails.py
++++ b/jiuwenswarm/agents/swarm/providers/member_rails.py
+@@ -70,6 +70,8 @@ TEAM_SKILL_LIBRARY_RELOAD = "swarm.team_skill_library_reload"
+ TEAM_WORKSPACE_REPORT_PATH = "swarm.team_workspace_report_path"
+ CONTEXT_PROCESSOR = "swarm.context_processor"
+ MODEL_ANOMALY_DETECTION = "swarm.model_anomaly_detection"
++# Research-paper quality guard (hallucination check + academic format).
++PAPER_GUARD = "swarm.paper_guard"
+ PLUGIN_RAILS = "swarm.plugin_rails"
+ SKILL_RETRIEVAL_PROMPT = "swarm.skill_retrieval_prompt"
+ SYMPHONY_ORCHESTRATION_PROMPT = "swarm.symphony_orchestration_prompt"
+@@ -517,6 +519,51 @@ def _build_plugin_rails(
+     return rails
+ 
+ 
++class PaperGuardInput(ConstructionInput):
++    """Construction inputs for the paper-guard rails."""
++
++    paper_guard_config: dict[str, Any] = param_field(
++        default_factory=dict,
++        description="paper_guard config section.",
++    )
++
++
++@harness_element(
++    kind=ElementKind.RAIL,
++    name=PAPER_GUARD,
++    description="Research-paper quality guard: hallucination check + academic "
++    "format rails. Mounted when paper_guard.enabled is true; validates "
++    "quantitative claims against ground-truth results and enforces complete "
++    "paper sections.",
++    input_model=PaperGuardInput,
++)
++def _build_paper_guard_rails(
++    params: dict[str, Any],
++    context: SwarmBuildContext,
++) -> list[Any] | None:
++    """Build paper-guard rails (hallucination + academic format) per member."""
++    from jiuwenswarm.agents.harness.common.rails.paper_guard import (
++        AcademicFormatRail,
++        HallucinationCheckRail,
++    )
++
++    inp = PaperGuardInput.resolve(params, context)
++    cfg = inp.paper_guard_config if isinstance(inp.paper_guard_config, dict) else {}
++    if cfg.get("enabled", False) is not True:
++        return None
++    rails: list[Any] = []
++    results_path = cfg.get("results_path") or None
++    try:
++        rails.append(HallucinationCheckRail(results_path=results_path))
++    except Exception as exc:
++        logger.warning("[SwarmRails] HallucinationCheckRail create failed: %s", exc)
++    try:
++        rails.append(AcademicFormatRail())
++    except Exception as exc:
++        logger.warning("[SwarmRails] AcademicFormatRail create failed: %s", exc)
++    return rails or None
++
++
+ __all__ = [
+     "RUNTIME_PROMPT",
+     "TEAM_SKILL_STORAGE_POLICY",
+@@ -524,6 +571,7 @@ __all__ = [
+     "TEAM_WORKSPACE_REPORT_PATH",
+     "CONTEXT_PROCESSOR",
+     "MODEL_ANOMALY_DETECTION",
++    "PAPER_GUARD",
+     "PLUGIN_RAILS",
+     "SKILL_RETRIEVAL_PROMPT",
+     "SYMPHONY_ORCHESTRATION_PROMPT",
+diff --git a/jiuwenswarm/agents/swarm/providers/research_tools.py b/jiuwenswarm/agents/swarm/providers/research_tools.py
+new file mode 100644
+index 0000000..f8a495d
+--- /dev/null
++++ b/jiuwenswarm/agents/swarm/providers/research_tools.py
+@@ -0,0 +1,98 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2026. All rights reserved.
++
++"""Research tool providers for swarm provider-based team assembly.
++
++为科研论文自动生成流水线 (FARS 式四模块) 提供两个框架级工具:
++
++* ``deepsearch_tools`` — openJiuwen-DeepSearch 文献检索工具 (Ideation/Writing
++  模块的证据检索, 报告落盘可溯源)。
++* ``memory_eval`` — LongMemEval 记忆策略评测执行工具 (Experiment 模块,
++  逐题 token/延迟流水落盘, 支持断点续跑)。
++
++两个 provider 均由 ``research_tools.enabled`` 门控 (默认 false, 不影响现有
++部署), 参数从 config.yaml 的 ``research_tools`` 段烘焙。
++"""
++
++from __future__ import annotations
++
++import logging
++from typing import Any
++
++from openjiuwen.agent_teams.harness.manifest import (
++    ElementKind,
++    harness_element,
++)
++
++from jiuwenswarm.agents.harness.common.tools.deepsearch_tools import DeepSearchToolkit
++from jiuwenswarm.agents.harness.common.tools.memory_eval_tools import MemoryEvalToolkit
++from jiuwenswarm.agents.swarm.context import SwarmBuildContext
++
++logger = logging.getLogger(__name__)
++
++# Provider name constants; namespaced under the shared "swarm." prefix.
++DEEPSEARCH_TOOLS = "swarm.deepsearch_tools"
++MEMORY_EVAL_TOOLS = "swarm.memory_eval_tools"
++
++
++@harness_element(
++    kind=ElementKind.TOOL,
++    name=DEEPSEARCH_TOOLS,
++    description="DeepSearch literature-research tool for the research pipeline "
++    "(gated by research_tools.enabled + research_tools.deepsearch).",
++)
++def build_deepsearch_tools(params: dict[str, Any], ctx: SwarmBuildContext) -> list[Any]:
++    """Build the DeepSearch literature tool from the config source."""
++    if not params.get("enabled", False):
++        return []
++    ds = params.get("deepsearch_config", {}) or {}
++    if not ds.get("repo_dir"):
++        logger.info("[swarm.deepsearch_tools] skipped: repo_dir not configured")
++        return []
++    try:
++        tools = DeepSearchToolkit(
++            repo_dir=str(ds.get("repo_dir", "")),
++            python_exe=str(ds.get("python", "")),
++            extra_args=list(ds.get("extra_args", []) or []),
++            timeout_sec=int(ds.get("timeout_sec", 900)),
++        ).get_tools()
++        logger.info("[swarm.deepsearch_tools] built %d tools", len(tools))
++        return list(tools)
++    except Exception as exc:  # noqa: BLE001 - 工具构建失败不阻断团队装配
++        logger.warning("[swarm.deepsearch_tools] construction failed: %s", exc)
++        return []
++
++
++@harness_element(
++    kind=ElementKind.TOOL,
++    name=MEMORY_EVAL_TOOLS,
++    description="LongMemEval memory-policy benchmark tool for the research "
++    "pipeline's Experiment phase (gated by research_tools.enabled + "
++    "research_tools.memory_eval).",
++)
++def build_memory_eval_tools(params: dict[str, Any], ctx: SwarmBuildContext) -> list[Any]:
++    """Build the memory-eval execution tool from the config source."""
++    if not params.get("enabled", False):
++        return []
++    me = params.get("memory_eval_config", {}) or {}
++    if not me.get("harness_dir"):
++        logger.info("[swarm.memory_eval_tools] skipped: harness_dir not configured")
++        return []
++    try:
++        tools = MemoryEvalToolkit(
++            harness_dir=str(me.get("harness_dir", "")),
++            python_exe=str(me.get("python", "")),
++            timeout_sec=int(me.get("timeout_sec", 7200)),
++        ).get_tools()
++        logger.info("[swarm.memory_eval_tools] built %d tools", len(tools))
++        return list(tools)
++    except Exception as exc:  # noqa: BLE001 - 工具构建失败不阻断团队装配
++        logger.warning("[swarm.memory_eval_tools] construction failed: %s", exc)
++        return []
++
++
++__all__ = [
++    "DEEPSEARCH_TOOLS",
++    "MEMORY_EVAL_TOOLS",
++    "build_deepsearch_tools",
++    "build_memory_eval_tools",
++]
+diff --git a/jiuwenswarm/agents/swarm/registry.py b/jiuwenswarm/agents/swarm/registry.py
+index 310d205..b646dd5 100644
+--- a/jiuwenswarm/agents/swarm/registry.py
++++ b/jiuwenswarm/agents/swarm/registry.py
+@@ -51,6 +51,7 @@ from jiuwenswarm.agents.swarm.providers import (
+     code_subagents as _code_subagents,
+     evolution_rails as _evolution_rails,
+     member_rails as _member_rails,
++    research_tools as _research_tools,
+     runtime_tools as _runtime_tools,
+     skills as _skills,
+     tools as _tools,
+@@ -68,6 +69,8 @@ XIAOYI_PHONE = _tools.XIAOYI_PHONE
+ SYMPHONY_TOOLKIT = _tools.SYMPHONY_TOOLKIT
+ CRON_TOOLS = _runtime_tools.CRON_TOOLS
+ SEND_FILE = _runtime_tools.SEND_FILE
++DEEPSEARCH_TOOLS = _research_tools.DEEPSEARCH_TOOLS
++MEMORY_EVAL_TOOLS = _research_tools.MEMORY_EVAL_TOOLS
+ MEMBER_SKILL_TOOLKIT = _skills.MEMBER_SKILL_TOOLKIT
+ # Generic tools provided + registered by openjiuwen (referenced by bare name).
+ WEB_SEARCH = _OJ_WEB_SEARCH
+@@ -81,6 +84,7 @@ TEAM_SKILL_LIBRARY_RELOAD = _member_rails.TEAM_SKILL_LIBRARY_RELOAD
+ TEAM_WORKSPACE_REPORT_PATH = _member_rails.TEAM_WORKSPACE_REPORT_PATH
+ CONTEXT_PROCESSOR = _member_rails.CONTEXT_PROCESSOR
+ MODEL_ANOMALY_DETECTION = _member_rails.MODEL_ANOMALY_DETECTION
++PAPER_GUARD = _member_rails.PAPER_GUARD
+ PLUGIN_RAILS = _member_rails.PLUGIN_RAILS
+ SKILL_RETRIEVAL_PROMPT = _member_rails.SKILL_RETRIEVAL_PROMPT
+ SYMPHONY_ORCHESTRATION_PROMPT = _member_rails.SYMPHONY_ORCHESTRATION_PROMPT
+@@ -195,6 +199,8 @@ __all__ = [
+     "AUDIO",
+     "CRON_TOOLS",
+     "SEND_FILE",
++    "DEEPSEARCH_TOOLS",
++    "MEMORY_EVAL_TOOLS",
+     "MEMBER_SKILL_TOOLKIT",
+     "RUNTIME_PROMPT",
+     "TEAM_SKILL_STORAGE_POLICY",
+@@ -202,6 +208,7 @@ __all__ = [
+     "TEAM_WORKSPACE_REPORT_PATH",
+     "CONTEXT_PROCESSOR",
+     "MODEL_ANOMALY_DETECTION",
++    "PAPER_GUARD",
+     "PLUGIN_RAILS",
+     "SKILL_RETRIEVAL_PROMPT",
+     "SYMPHONY_ORCHESTRATION_PROMPT",
+diff --git a/jiuwenswarm/resources/config.yaml b/jiuwenswarm/resources/config.yaml
+index 2bc1c3f..0256286 100644
+--- a/jiuwenswarm/resources/config.yaml
++++ b/jiuwenswarm/resources/config.yaml
+@@ -786,6 +786,30 @@ execution_guard:
+     # 未知/错误工具连续调用达到该次数时停止重试并中断
+     unknown_tool_threshold: 10
+ 
++# 科研论文护栏：幻觉校验 + 学术结构规范（科研论文自动生成场景）
++paper_guard:
++  # 总开关。开启后为每个团队成员挂载 HallucinationCheckRail + AcademicFormatRail
++  enabled: false
++  # 真实实验结果基准文件（JSON）。模型输出中的量化断言必须可溯源到该文件，
++  # 否则注入告警。留空时使用默认路径 ~/.jiuwenswarm/agent/workspace/output/results.json
++  # results_path: /path/to/results.json
++
++research_tools:
++  # 科研流水线工具总开关。开启后为团队成员挂载 deepsearch_literature 与
++  # run_memory_eval 两个工具 (paper-lab 科研论文流水线使用)
++  enabled: false
++  deepsearch:
++    # openJiuwen-DeepSearch 仓库路径 (https://atomgit.com/openJiuwen/deepsearch)
++    # repo_dir: D:/path/to/deepsearch
++    # python: python
++    # extra_args: []          # 追加到 DeepSearch CLI 的参数 (LLM 密钥等)
++    # timeout_sec: 900
++  memory_eval:
++    # LongMemEval 记忆策略评测 harness 目录 (paper-lab/experiments/longmemeval)
++    # harness_dir: D:/path/to/paper-lab/experiments/longmemeval
++    # python: python
++    # timeout_sec: 7200
++
+ channels:
+   web:
+     send_file_allowed: true

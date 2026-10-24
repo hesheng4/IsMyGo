@@ -1,0 +1,23 @@
+{
+ "reader": "deepseek-v4.1-flash",
+ "cells": {
+  "retrieval|4096": {
+   "n_correct": 182,
+   "verbatim_in_ctx": 155,
+   "not_in_ctx": 27,
+   "extractive_rate": 0.8516
+  },
+  "full_context|None": {
+   "n_correct": 185,
+   "verbatim_in_ctx": 169,
+   "not_in_ctx": 16,
+   "extractive_rate": 0.9135
+  },
+  "sliding_window|4096": {
+   "n_correct": 34,
+   "verbatim_in_ctx": 28,
+   "not_in_ctx": 6,
+   "extractive_rate": 0.8235
+  }
+ }
+}

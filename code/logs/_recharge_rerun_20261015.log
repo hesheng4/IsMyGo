@@ -1,0 +1,7 @@
+[model] 答题器 = mimo-v2.6-flash（随配置变化）
+[data] 题数=120  策略=['full_context']
+[run ] full_context|None 待跑 5 题
+
+=== 汇总 (耗时 68s) ===
+policy|budget                         EM      F1    e2e_ms  mem_tok
+full_context|None                 0.2667  0.3278   34604.5   104024

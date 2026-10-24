@@ -1,0 +1,174 @@
+{
+ "dataset": "LoCoMo (5 of 10 conversations; jsDelivr-truncated public file)",
+ "reader": "deepseek-v4.1-flash",
+ "cells": {
+  "retrieval|1024": {
+   "n": 999,
+   "relaxed_em": 0.1632,
+   "f1": 0.2675
+  },
+  "retrieval|2048": {
+   "n": 999,
+   "relaxed_em": 0.1652,
+   "f1": 0.2783
+  },
+  "retrieval|4096": {
+   "n": 999,
+   "relaxed_em": 0.1732,
+   "f1": 0.3021
+  },
+  "compression|1024": {
+   "n": 999,
+   "relaxed_em": 0.0791,
+   "f1": 0.1648
+  },
+  "compression|2048": {
+   "n": 999,
+   "relaxed_em": 0.1341,
+   "f1": 0.2369
+  },
+  "compression|4096": {
+   "n": 999,
+   "relaxed_em": 0.1612,
+   "f1": 0.2836
+  },
+  "hierarchical|1024": {
+   "n": 999,
+   "relaxed_em": 0.1461,
+   "f1": 0.2473
+  },
+  "hierarchical|2048": {
+   "n": 999,
+   "relaxed_em": 0.1722,
+   "f1": 0.292
+  },
+  "hierarchical|4096": {
+   "n": 999,
+   "relaxed_em": 0.1992,
+   "f1": 0.3308
+  }
+ },
+ "ordering": {
+  "1024": [
+   "retrieval",
+   "hierarchical",
+   "compression"
+  ],
+  "2048": [
+   "hierarchical",
+   "retrieval",
+   "compression"
+  ],
+  "4096": [
+   "hierarchical",
+   "retrieval",
+   "compression"
+  ]
+ },
+ "paired": {
+  "retrieval_vs_compression@1024": {
+   "n": 999,
+   "retrieval": 0.1632,
+   "compression": 0.0791,
+   "delta": 0.0841,
+   "ci": [
+    0.0611,
+    0.1081
+   ],
+   "p": 3.2064017750873968e-12,
+   "n10": 117,
+   "n01": 33
+  },
+  "retrieval_vs_hierarchical@1024": {
+   "n": 999,
+   "retrieval": 0.1632,
+   "hierarchical": 0.1461,
+   "delta": 0.017,
+   "ci": [
+    0.001,
+    0.033
+   ],
+   "p": 0.053289363816513634,
+   "n10": 43,
+   "n01": 26
+  },
+  "retrieval_vs_compression@2048": {
+   "n": 999,
+   "retrieval": 0.1652,
+   "compression": 0.1341,
+   "delta": 0.031,
+   "ci": [
+    0.008,
+    0.0531
+   ],
+   "p": 0.009030490687219986,
+   "n10": 82,
+   "n01": 51
+  },
+  "retrieval_vs_hierarchical@2048": {
+   "n": 999,
+   "retrieval": 0.1652,
+   "hierarchical": 0.1722,
+   "delta": -0.007,
+   "ci": [
+    -0.024,
+    0.01
+   ],
+   "p": 0.49989687686032663,
+   "n10": 36,
+   "n01": 43
+  },
+  "retrieval_vs_compression@4096": {
+   "n": 999,
+   "retrieval": 0.1732,
+   "compression": 0.1612,
+   "delta": 0.012,
+   "ci": [
+    -0.01,
+    0.033
+   ],
+   "p": 0.3112309933213218,
+   "n10": 65,
+   "n01": 53
+  },
+  "retrieval_vs_hierarchical@4096": {
+   "n": 999,
+   "retrieval": 0.1732,
+   "hierarchical": 0.1992,
+   "delta": -0.026,
+   "ci": [
+    -0.043,
+    -0.01
+   ],
+   "p": 0.0033722333341480717,
+   "n10": 24,
+   "n01": 50
+  }
+ },
+ "monotone": {
+  "retrieval": {
+   "em_by_budget": [
+    0.1632,
+    0.1652,
+    0.1732
+   ],
+   "monotone_nondecreasing": true
+  },
+  "compression": {
+   "em_by_budget": [
+    0.0791,
+    0.1341,
+    0.1612
+   ],
+   "monotone_nondecreasing": true
+  },
+  "hierarchical": {
+   "em_by_budget": [
+    0.1461,
+    0.1722,
+    0.1992
+   ],
+   "monotone_nondecreasing": true
+  }
+ }
+}
