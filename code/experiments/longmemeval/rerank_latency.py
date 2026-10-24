@@ -26,7 +26,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from common import load_questions  # noqa: E402
+from common import load_questions, require_model  # noqa: E402
 from policies import _bm25_rank  # noqa: E402
 
 OUT = HERE.parents[1] / "output" / "longmemeval"
@@ -44,6 +44,7 @@ def main() -> None:
     print("[lat] 加载 bge-reranker-base (CPU) ...", flush=True)
     from sentence_transformers import CrossEncoder
     import torch
+    require_model(RERANK_MODEL, "bge-reranker")
     ce = CrossEncoder(str(RERANK_MODEL))
     torch.set_num_threads(8)  # 与 rerank_eval.py 同设置
 

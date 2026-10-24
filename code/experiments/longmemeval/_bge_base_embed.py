@@ -11,7 +11,7 @@ import json
 import time
 from pathlib import Path
 
-from common import load_questions
+from common import load_questions, require_model
 
 HERE = Path(__file__).resolve().parent
 CACHE = HERE.parents[1] / "output" / "longmemeval" / "cache"
@@ -40,6 +40,7 @@ def main() -> None:
     print(f"[bge-base] 待向量化: passages={len(todo_passages)} queries={len(todo_queries)}", flush=True)
 
     t0 = time.perf_counter()
+    require_model(MODEL_PATH, "bge-base")
     model = SentenceTransformer(str(MODEL_PATH))
     # 线程配置：8 线程 fp32 为本地 CPU 向量化的最优点（更多线程无增益，
     # 更少线程吞吐减半；bf16 autocast 显著更慢），故钉死 8 线程 fp32。

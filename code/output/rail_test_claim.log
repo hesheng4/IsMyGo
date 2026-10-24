@@ -695,3 +695,17 @@
 2026-10-24T18:59:58 | claim_alignment.after_model_call | WARN | 1 issue(s): 相关工作过少
 2026-10-24T18:59:58 | claim_alignment.after_model_call | PASS | claims aligned
 2026-10-24T18:59:58 | claim_alignment.after_model_call | WARN | 2 issue(s): 不公平对照; 复现要素缺失
+2026-10-24T19:47:59 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:47:59 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:47:59 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:47:59 | claim_alignment.after_model_call | WARN | 2 issue(s): 不公平对照; 复现要素缺失
+2026-10-24T19:47:59 | claim_alignment.after_model_call | WARN | 2 issue(s): 不公平对照; 复现要素缺失
+2026-10-24T19:47:59 | claim_alignment.before_tool_call | WARN | tool=write_file 2 issue(s)
+2026-10-24T19:47:59 | claim_alignment.after_model_call | WARN | 2 issue(s): 统计置信缺失; 复现要素缺失
+2026-10-24T19:47:59 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:47:59 | claim_alignment.after_model_call | WARN | 1 issue(s): 指标口径缺失
+2026-10-24T19:47:59 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:48:00 | claim_alignment.after_model_call | WARN | 1 issue(s): 复现要素缺失
+2026-10-24T19:48:00 | claim_alignment.after_model_call | WARN | 1 issue(s): 相关工作过少
+2026-10-24T19:48:00 | claim_alignment.after_model_call | PASS | claims aligned
+2026-10-24T19:48:00 | claim_alignment.after_model_call | WARN | 2 issue(s): 不公平对照; 复现要素缺失

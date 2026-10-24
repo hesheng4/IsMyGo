@@ -126,7 +126,15 @@ python -c "import json;d=json.load(open('data/longmemeval-cleaned/longmemeval_s_
 
 2. **三个本地编码/重排模型**——仅第 6 节 Table 9 与 Table 12 的消融需要，**主表（Table 1–5）不需要**。
    其中 **`models/bge-reranker-base` 已随包附带**（1.1 GiB），无需再下载；
-   `bge-small-en-v1.5` 与 `bge-base-en-v1.5` 两个编码器不在包内：
+   `bge-small-en-v1.5` 与 `bge-base-en-v1.5` 两个编码器不在包内。**推荐一条命令获取**：
+
+   ```bash
+   python code/scripts/fetch_models.py            # 下载全部缺失模型（幂等，已存在即跳过）
+   python code/scripts/fetch_models.py --check    # 只校验
+   python code/scripts/fetch_models.py --only bge-small   # 只下某一个
+   ```
+
+   或手工 git 克隆（等效）：
 
    ```bash
    mkdir -p models
@@ -137,6 +145,9 @@ python -c "import json;d=json.load(open('data/longmemeval-cleaned/longmemeval_s_
    ```
 
    各目录需 `config.json` + 权重文件 + `tokenizer.json`；详见 `data/README.md` §2.2。
+   **运行时预检**：四个加载点（`local_embed.py` / `_bge_base_embed.py` / `rerank_eval.py` /
+   `rerank_latency.py`）经 `common.require_model()` 预检，模型缺失时打印修复命令后退出，
+   不会再抛出晦涩的网络异常。
 
 3. **LLM 凭据**——见第 4 节。
 

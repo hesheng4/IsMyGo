@@ -17,7 +17,7 @@ import sys
 import time
 from pathlib import Path
 
-from common import load_questions
+from common import load_questions, require_model
 
 HERE = Path(__file__).resolve().parent
 CACHE = HERE.parents[1] / "output" / "longmemeval" / "cache"
@@ -45,6 +45,7 @@ def embed_all() -> None:
     todo_passages = [t for t in turn_texts if _key(t) not in cached]
     todo_queries = [t for t in q_texts if _key(QUERY_PREFIX + t) not in cached]
 
+    require_model(MODEL_PATH, "bge-small")
     model = SentenceTransformer(str(MODEL_PATH))
     t0 = time.perf_counter()
     n = 0

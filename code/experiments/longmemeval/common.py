@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import random
+import sys
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
@@ -149,6 +150,47 @@ def unique_sessions(questions: list[Question]) -> dict[str, list[Turn]]:
     for sid in sessions:
         sessions[sid].sort(key=lambda t: (t.session_idx, t.turn_idx))
     return sessions
+
+
+# 本地模型登记表: key -> (ModelScope 仓库名, 用途)。供 require_model 预检与
+# code/scripts/fetch_models.py 下载器共用同一口径。
+LOCAL_MODELS = {
+    "bge-small": ("BAAI/bge-small-en-v1.5", "dense 检索基线 / hybrid 融合 (Table 12)"),
+    "bge-base": ("BAAI/bge-base-en-v1.5", "dense 升级消融腿 (Table 9)"),
+    "bge-reranker": ("BAAI/bge-reranker-base", "交叉编码器重排探针 (Table 9)"),
+}
+
+
+def require_model(model_dir, key: str) -> None:
+    """加载本地模型前的存在性预检: 缺失时给出明确指引并退出, 而不是让
+    sentence-transformers 把绝对路径当 HuggingFace 模型 ID 抛出晦涩网络错误。
+
+    判定标准: 目录存在 + config.json + 权重 (model.safetensors 或
+    pytorch_model.bin) + tokenizer.json。满足即放行, 交由加载器做完整校验。
+    """
+    model_dir = Path(model_dir)
+    repo, usage = LOCAL_MODELS[key]
+    missing = []
+    if not model_dir.is_dir():
+        missing.append(str(model_dir) + "/ (整个目录)")
+    else:
+        if not (model_dir / "config.json").is_file():
+            missing.append("config.json")
+        if not any((model_dir / w).is_file()
+                   for w in ("model.safetensors", "pytorch_model.bin")):
+            missing.append("model.safetensors / pytorch_model.bin (权重)")
+        if not (model_dir / "tokenizer.json").is_file():
+            missing.append("tokenizer.json")
+    if missing:
+        pkg_root = Path(__file__).resolve().parents[3]
+        print(f"[模型缺失] {key} ({repo}) —— {usage}", file=sys.stderr)
+        print(f"  路径: {model_dir}", file=sys.stderr)
+        print("  缺失: " + ", ".join(missing), file=sys.stderr)
+        print("  修复(任选其一):", file=sys.stderr)
+        print(f"    1) python {pkg_root / 'code' / 'scripts' / 'fetch_models.py'} --only {key}", file=sys.stderr)
+        print(f"    2) git -c http.sslBackend=openssl clone --depth 1 "
+              f"https://www.modelscope.cn/{repo}.git  {model_dir}", file=sys.stderr)
+        raise SystemExit(2)
 
 
 def load_model_config() -> dict:

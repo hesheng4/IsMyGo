@@ -25,7 +25,7 @@ import sys
 import time
 from pathlib import Path
 
-from common import BUDGETS, format_context, load_questions, ntokens
+from common import BUDGETS, format_context, load_questions, ntokens, require_model
 from llm import MODEL_MAIN, answer_with_memory
 from policies import _bm25_rank, _dense_rank, _fill_from_ranked, _turn_segments
 from score import em, relaxed_em, token_f1
@@ -83,6 +83,7 @@ async def main() -> None:
     offline_only = "--offline-only" in sys.argv
     print("[rr] 加载 bge-reranker-base (CPU) ...", flush=True)
     from sentence_transformers import CrossEncoder
+    require_model(RERANK_MODEL, "bge-reranker")
     ce = CrossEncoder(str(RERANK_MODEL))
     import torch
     torch.set_num_threads(8)  # 与 _bge_base_embed 同: 8 线程实测最优
