@@ -28,3 +28,6 @@ output/final/b*.log
 # 系统杂项
 Thumbs.db
 .DS_Store
+
+# 测试运行时追加写写的产物日志（避免每次 pytest 弄脏工作区）
+code/output/rail_test_claim.log
