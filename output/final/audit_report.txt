@@ -150,12 +150,3 @@ fc 排序是唯一读者依赖结论需随规模复检); §4 增 Evidence base �
 vs n=120 由 tab:map 汇总); at-a-glance caption 补证据口径; Limitations 增
 read-time 摘要索引仅 BM25 + turn 级金标靠抽样(瓶颈为有界非精确)两点。
 pdflatex 15 页/0 错误/0 未定义引用/0 overfull, 同步提交位。
-
---- 附注（2026-10-25 第四轮评审回应，零 API 消耗） ---
-§7.3 补端到端判分修正 EM(E4 为全量 read-fail 扫描, 逐格可算): 语义判分把检索族
-格子抬升 +0.21-0.28 而策略排序在每个预算下保持不变(2048 的换位在三重平局内),
-压缩仍居末位、滑窗垫底 —— 回应"semantic scoring 下端到端精度如何移动";
-表 caption 与附录 (iv) 口径同步(原"512/1024 不变序"扩为全预算); Limitations 增:
-解码固定贪心(temperature 0, self-consistency 未测——作用于成本轴非记忆机理)、
-GPU 重排器可缩墙钟但不改零效应(CPU 15.5s/题已排除在线使用)。
-pdflatex 15 页/0 错误/0 未定义引用/0 overfull, 同步提交位。
