@@ -16,7 +16,7 @@
 
 | 文件 | 说明 |
 |---|---|
-| `paper.pdf` | 定稿 PDF（**184,362 字节**，tectonic 0.17 编译，**15 页**，见下「页数口径」） |
+| `paper.pdf` | 定稿 PDF（**200,010 字节**，10-18 构建，tectonic 0.17 编译，**15 页**，见下「页数口径」） |
 | `paper.tex` | 可独立重编译的 LaTeX 源（全新 11 章结构） |
 | `paper.bib` / `paper.bbl` | 参考文献（**23 条**，natbib + iclr2025_conference.bst） |
 | `iclr2025_conference.{sty,bst}` | ICLR 2025 模板 |

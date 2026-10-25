@@ -417,7 +417,8 @@ Leader: swarmflow(script_path=".../swarmflow/research_pipeline.py",
    LaTeX 源为 `output/final/paper.tex`（+ `paper.bib`/`.bbl` + `iclr2025_conference.{sty,bst}` +
    `output/final/tables/`）。
    > 注（2026-10-16 全新结构重写轮）：`paper/paper.pdf` 现为**重写稿**（11 章结构，
-   > **184,362 字节**，本机 tectonic 0.17 编译 **15 页**）。重写时 `logs/run.json` 记录的仍是原
+   > 10-16 重写轮为 184,362 字节；**10-18 主网格升级轮构建后为 200,010 字节（deepseek 主读者、
+   > 35 篇文献，tectonic 编译 15 页），并于 2026-10-25 同步至提交位 `paper/paper.pdf`**）。重写时 `logs/run.json` 记录的仍是原
    > `paper-gen-15p-20261016` 写作段那次运行（其当时产物为 384,597 字节的 9 章 pdflatex 稿）；
    > 本轮重写为零 API 消耗的确定性编辑 + 离线重聚合 + 本地编译，token 对账（113,530）不变。
    > ⚠ 该原始日志次日（2026-10-17）被 full500 复跑覆盖，见上节披露。
