@@ -223,7 +223,13 @@ scoring. Recent compressors add machinery we hold fixed---iterative verification
 (BudgetMem \citep{zhang2026budgetmem}). We instantiate individual \emph{ingredients} of these
 systems in isolation---relevance-ranked digest indexing, one-hop traversal, read-time digest
 selection (\S\ref{sec:ablation})---but do not re-implement the systems themselves and claim no
-head-to-head comparison (\S\ref{sec:limits}).
+head-to-head comparison (\S\ref{sec:limits}). For that line of work our
+envelope yields a falsifiable prediction: under fixed budgets, ranking-side interventions
+(denser encoders, cross-encoder reranking, query expansion) moved answer accuracy by
+at most n.s.\ amounts here, while the one composition-side intervention---fetch-then-
+summarize at read time---gained $+0.150$. Learned budget routers and read-time curation
+should therefore route \emph{between composition modes and budget tiers}, not toward
+better ranking; that is where our measurements localize the remaining headroom.
 
 \section{Study Design: Six Policies, One Budget, Four Readers}
 \label{sec:design}
@@ -413,6 +419,10 @@ sandbox run reports \texttt{deterministic: true}.
 
 \section{The Accuracy--Cost--Latency Frontier}
 \label{sec:frontier}
+\noindent\emph{Evidence base.} Headline, cost, statistical and type-level tables rest on
+the full $n{=}500$ primary grid; ablation and plug-in probes run on the stratified
+$120$-question subset with their own readers---Table~\ref{tab:map} consolidates which claim
+rests on which base, and every table caption states its $n$.
 \subsection{Main comparison}
 Table~\ref{tab:main} reports EM, relaxed EM, and token-F1 per policy and budget, and
 Figure~\ref{fig:takeaway} plots the relaxed-EM trajectory with per-cell bootstrap 95\% CIs;
@@ -942,7 +952,8 @@ under this protocol:
 
 \begin{table}[h]
 \centering\scriptsize
-\caption{Selection at a glance (relaxed EM unless noted; evidence pointers in parentheses).}
+\caption{Selection at a glance (relaxed EM unless noted; evidence pointers in
+parentheses; all rows cite full-set $n{=}500$ evidence).}
 \label{tab:atglance}
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -979,6 +990,19 @@ answer-accuracy gain at this answerer scale (\S\ref{sec:reading}); invest in how
 selected and \emph{composed}---ordering, aggregation, fetch-then-summarize---not in a
 larger $k$.
 \end{itemize}
+
+\paragraph{When does full-context win?} On the primary reader it already does not:
+full-context scores $0.370$ relaxed EM at $104{,}160$ mean tokens and $10.7$\,s per
+question, while the hierarchy reaches $0.372$ at $3{,}817$ tokens and $4.1$\,s---parity
+at $1/27$ the tokens and $2.6	imes$ lower latency. At uniform token pricing there is
+therefore \emph{no} price at which the $27	imes$ premium buys accuracy; cheaper
+long-context architectures ($\geq$128k--1M) remove the cost objection but only turn a
+loss into a tie, on this reader scale. The remaining case for verbatim full-context is
+operational: it needs no write pass (no $pprox$57\,k/question digest investment,
+\S\ref{sec:cost}), no index and no retrieval stack. Against that, memory strategies keep
+the latency floor and---per the cross-reader replication (\S\ref{sec:crossreader}), where the
+full-context \emph{ranking} was the one reader-dependent statement---the parity claim
+itself should be re-checked whenever the answerer scale changes materially.
 
 \section{Limitations}
 \label{sec:limits}
@@ -1032,7 +1056,11 @@ subset only (bge-small/bge-base); the reranker probe bounds what retrieval-side 
 contribute at fixed budget (offline session recall saturates near $0.98$ with no significant
 answer gain). Retrieval operates at turn granularity with whitespace tokenization; temporal
 query expansion, sentence/entity-level indexing, and full graph traversal remain untested---
-the one-hop traversal we did test degraded accuracy.
+the one-hop traversal we did test degraded accuracy. Read-time digest selection likewise
+ranks digests with plain BM25---dense or learned digest indexing is untested, though the
+retriever-family ablation bounds the analogous gains on turns. Turn-level gold
+identification rests on audit sampling rather than exhaustive annotation, so the
+turn-selection bottleneck is bounded, not exactly measured.
 \item \textbf{Proxy scope.} The 3-tier hierarchy in the main grid is a deliberately simplified
 proxy: a fixed $25/50/25$ tier split, no event anchoring, and no multi-hop traversal---best-in-class
 hierarchical systems with learned or per-query adaptive allocations, event-anchored indices or

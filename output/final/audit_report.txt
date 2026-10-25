@@ -139,3 +139,14 @@ judge_type.py 复算: 翻转率按预算恒定 0.33-0.35, 按型 0.17-0.79, 对�
 utilization 任务(Q2轮弱点); Intro 贡献列表加 at-a-glance 指针。
 linespread 0.91->1.0(移除 tectonic 时代压缩), pdflatex 15 页/0 错误/0 未定义
 引用/0 overfull。同步提交位 paper/paper.pdf。
+
+--- 附注（2026-10-25 第三轮评审回应，零 API 消耗） ---
+§2 增 budget-routing/read-time curation 桥接段(可证伪预测: 增益在组合模式与
+预算档间路由, 非更好排序——排序侧干预全部 n.s. vs fetch-then-summarize +0.150);
+§9 增 When does full-context win? 段(主读者下 fc 0.370@104,160tok/10.7s 已被
+hier@4096 0.372@3,817tok/4.1s 追平反超, 27x token 无任何价格下买到准确率,
+≥128k-1M 架构只把亏损变平局; fc 的剩余价值=免写入通道/免索引; 跨读者中
+fc 排序是唯一读者依赖结论需随规模复检); §4 增 Evidence base 总览句(n=500
+vs n=120 由 tab:map 汇总); at-a-glance caption 补证据口径; Limitations 增
+read-time 摘要索引仅 BM25 + turn 级金标靠抽样(瓶颈为有界非精确)两点。
+pdflatex 15 页/0 错误/0 未定义引用/0 overfull, 同步提交位。
