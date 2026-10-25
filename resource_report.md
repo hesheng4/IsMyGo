@@ -1,4 +1,45 @@
-# openJiuwen科研Agent 资源消耗报告
+# 资源报告
+
+本报告只统计提交论文对应的那一次运行。数字与 `logs/run.json`、`logs/calls.jsonl` 使用同一个 `run_id`。与日志对不上的数字无效。
+
+- run_id：`agent-sci-2026-full500-015`
+- 日志：`logs/run.json`、`logs/calls.jsonl`
+- 产物：`output/`（`output/results.jsonl` 含本批补齐记录；论文主表数字 = deepseek-v4.1-flash 全量 500 题主网格）
+- 模型：`deepseek-v4.1-flash`
+- 题目：`W1批2 终扫补齐 (deepseek)`——LongMemEval-S 全量 500 题主网格的终扫批（compression / hierarchical 补齐）
+- 开始：`2026-10-17T21:49:00+08:00`
+- 结束：`2026-10-17T21:50:48+08:00`
+
+## 指标
+
+| 指标 | 数值 | 在日志中的位置 |
+|------|------|----------------|
+| Token 消耗数量 | 2,632 | `logs/run.json` 的 `token_total`；等于 `calls.jsonl` 各行 `total_tokens` 之和（2,175 + 457） |
+| 论文生成总耗时 | 108 秒 | `logs/run.json` 的 `wall_seconds`（21:49:00 → 21:50:48 +08:00） |
+
+其中输入 token 2,628，输出 token 4。分项（每行可在 `calls.jsonl` 找到）：
+
+| 调用 | 输入 Token | 输出 Token | 总 Token | 对应日志 |
+|------|------------|------------|----------|----------|
+| 答题Agent(记忆策略评测) · 第 1 次 | 2,172 | 3 | 2,175 | `calls.jsonl` 第 1 行 |
+| 答题Agent(记忆策略评测) · 第 2 次 | 456 | 1 | 457 | `calls.jsonl` 第 2 行 |
+| 合计 | 2,628 | 4 | 2,632 | 与 `run.json` 的 `token_total` 相同 |
+
+## 统计说明
+
+- 本 run 为 full500 复跑的**终扫批**（断点续跑只补缺失题，故仅 2 次调用）；论文主表数字来自
+  full500 全轮累计记录（`output/results.jsonl` 中 deepseek 的 10,500 条），全轮消耗
+  （29,695 次调用 / 125,460,134 token）逐项对账见下方 §1.2；逐题用量内嵌于
+  `results.jsonl` 的 `prompt_tokens`/`completion_tokens` 字段，可复算。
+- Token 按模型接口返回的 usage 累加；缓存命中与断点已完成的题不发起调用、不计入。
+- 论文写作段（`paper-gen-15p-20261016`，17 次调用 / 113,530 token）的原始日志已被本次
+  复跑覆盖，其账目作为历史记录保留于 §1.1；全项目开发期累计 ≈2.05 亿 token 见 §1。
+- 现场复现更换为统一 LLM，再运行 `code/README.md` 第 6 节的命令。新的 token 数量和总耗时
+  以新日志为准，算法和数据与本次提交相同。
+
+---
+
+# 补充口径：全项目消耗与历史轮次（不与 `logs/` 的 run_id 直接对账）
 
 > ⚠️ **代际与口径说明（2026-10-16 更新；2026-10-24 口径裁定）**：本项目主数据以
 > **deepseek-v4.1-flash 全量 500 题复跑**为准（**主读者**），**mimo-v2.6-flash 为副读者**

@@ -406,27 +406,17 @@ Leader: swarmflow(script_path=".../swarmflow/research_pipeline.py",
 
 ## 8. 与资源报告核对
 
-> **两段式流水线**：①**实验段** `run.py --full` 跑出 `results.jsonl`（论文全部数字来源）；
-> ②**论文写作段** `paper_gen_llm.py` 依据实验段数据用真实 LLM 逐章生成 15 页定稿并编译 PDF。
-> 按样例口径，`logs/run.json`+`calls.jsonl` 原应记录**产生论文的写作段**那次运行；⚠ 该原始
-> 文件已于 2026-10-17 被 full500 复跑覆盖且无备份（详见下节披露与 `logs/README.md`）。
+按样例口径逐项核对 `logs/` 所记录的那一次运行（run_id `agent-sci-2026-full500-015`，
+即产生论文主网格数字的 full500 复跑终扫批；`verify_logs` 8 项断言全过）：
 
-以下 1–4 的等式原可对 `logs/run.json`+`calls.jsonl` 逐行机器复核（verify_logs 8 项全过）；
-该文件被覆盖后，数字为覆盖前记录的历史真值（来源见 `resource_report.md` §1.1）：
-1. 原 `run.json` 的 `run_id` 与 `resource_report.md` §1.1 一致：均为 `paper-gen-15p-20261016`。
-2. `resource_report.md` §1.1 的 token 总量等于原 `run.json` 的 `token_total`，也等于原
-   `calls.jsonl` 里各次 `total_tokens` 之和：**113,530**。
-3. 论文生成总耗时等于原 `run.json` 的 `ended_at - started_at`（秒）：**847.0**（约 14 分钟）。
-4. 原 `run.json` 的 `output_paper` = `paper/paper.pdf`，即提交包 `paper/` 下的成稿；其可重编译
-   LaTeX 源为 `output/final/paper.tex`（+ `paper.bib`/`.bbl` + `iclr2025_conference.{sty,bst}` +
+1. `logs/run.json` 的 `run_id` 与 `resource_report.md` 主表一致：均为 `agent-sci-2026-full500-015`。
+2. 资源报告主表的 token 总量等于 `run.json` 的 `token_total`，也等于 `calls.jsonl` 里各次
+   `total_tokens` 之和：**2,632**（2,175 + 457）。
+3. 总耗时等于 `run.json` 的 `ended_at - started_at`（= `wall_seconds`）：**108 秒**。
+4. `run.json` 的 `output_paper` = `paper/paper.pdf`，即提交包 `paper/` 下的成稿；其数字依据为
+   `output/results.jsonl`（deepseek 全量 500 题主网格记录），可重编译 LaTeX 源为
+   `output/final/paper.tex`（+ `paper.bib`/`.bbl` + `iclr2025_conference.{sty,bst}` +
    `output/final/tables/`）。
-   > 注（2026-10-16 全新结构重写轮）：`paper/paper.pdf` 现为**重写稿**（11 章结构，
-   > 10-16 重写轮为 184,362 字节；**10-18 主网格升级轮构建后为 200,010 字节（deepseek 主读者、
-   > 35 篇文献，tectonic 编译 15 页），并于 2026-10-25 同步至提交位 `paper/paper.pdf`**）。重写时 `logs/run.json` 记录的仍是原
-   > `paper-gen-15p-20261016` 写作段那次运行（其当时产物为 384,597 字节的 9 章 pdflatex 稿）；
-   > 本轮重写为零 API 消耗的确定性编辑 + 离线重聚合 + 本地编译，token 对账（113,530）不变。
-   > ⚠ 该原始日志次日（2026-10-17）被 full500 复跑覆盖，见上节披露。
-   > 详见 `output/final/audit_report.txt` 与 `resource_report.md` 头部注。
 
 一条命令核对 `logs/` 的同一次运行（8 项断言，实测 `passed: true`）：
 
@@ -434,13 +424,11 @@ Leader: swarmflow(script_path=".../swarmflow/research_pipeline.py",
 python -c "import sys;sys.path.insert(0,'code/scripts');from run_logger import verify_logs;print(verify_logs('logs'))"
 ```
 
-### 本次提交的对账口径
+### 补充：论文写作段的历史账目（原始日志已被覆盖，不与 logs/ 对账）
 
-> ⚠ **核查披露（2026-10-24）**：`logs/` 现放 full500 终扫批 `agent-sci-2026-full500-015` 的
-> 真实程序日志（2 次调用 / 2,632 token，按样例「产生论文结果的那次运行」口径归位；
-> full500 分批各轮的累计对账见 `resource_report.md` §1.2）。写作段原始日志（下表）已于
-> 2026-10-17 被该复跑覆盖且无备份，其逐次调用记录不可恢复，账目以
-> `resource_report.md` §1.1 的记录为准。
+> ⚠ 披露：写作段 `paper-gen-15p-20261016` 的原始 `run.json`/`calls.jsonl` 已于 2026-10-17
+> 被 full500 复跑的 `--log-run` 覆盖且无备份，逐次调用记录不可恢复；下表为覆盖前记录的
+> 历史真值，账目见 `resource_report.md` §1.1。full500 分批各轮的累计对账见 §1.2。
 
 写作段那一次运行（`paper_gen_llm.py`，真实 LLM 逐章生成 15 页定稿）的账目如下：
 
@@ -453,20 +441,18 @@ python -c "import sys;sys.path.insert(0,'code/scripts');from run_logger import v
 | `wall_seconds` | 847.0（2026-10-16 01:19:10 → 01:33:17 +08:00） |
 | `command` | `python paper_gen_llm.py`（cwd=`code/experiments/longmemeval`，`RUN_LOG_DIR=logs`） |
 
-三点口径说明：
+补充口径说明：
 
-1. **`logs/` 是写作段、不是实验段**：样例要求 `logs/` 放「产生提交论文那一次运行」的日志。
-   本项目论文由 `paper_gen_llm.py` 逐章 LLM 生成（17 次调用：12 次 `论文生成Agent(章节)` +
-   5 次 `论文修订Agent(章节)`，对应页数迭代与数字纪律修复），故 `calls.jsonl` 为这 17 行。
-2. **实验段（产生论文数字）另行披露**：mimo 主网格实验段单次运行实测 **23,194,392 token /
-   7,290 次调用**（`run.py --full --log-run --fresh`，2026-10-15，墙钟 10,728 s），其逐题用量
-   内嵌在 `output/results.jsonl` 的 `prompt_tokens`/`completion_tokens` 字段（可直接复算）；
-   该实验段 run.json 的备份目录未随包提交，逐项对账见 `resource_report.md` §1.2/§1.3。
-3. **与 `resource_report.md` 累计口径不同**：报告 §1 的「累计 ≈2.05 亿 token」是**全项目开发总消耗**
-   （GLM 代际、mimo 代际与 deepseek 全量 500 题主网格、各轮消融、跨读者复跑、修订轮 E1–E4、论文写作段）。
-   本节第 2 条
-   要求的等号在「写作段同一次运行」范围内严格成立（`run.json` × `calls.jsonl`，已由 `verify_logs()`
-   逐项验证）；跨到全项目累计口径则无法直接相等。
+1. **`logs/` 现为实验段终扫批**：按样例「产生论文**结果**的那次运行」，`logs/` 放 full500
+   复跑终扫批（deepseek 主读者全量 500 题主网格的最后一批）的真实程序日志；上表写作段
+   （17 次调用：12 次 `论文生成Agent(章节)` + 5 次 `论文修订Agent(章节)`）为被覆盖前的历史账目。
+2. **各代际实验消耗另行披露**：mimo 120 题初网格实测 **23,194,392 token / 7,290 次调用**
+   （2026-10-15，墙钟 10,728 s）；deepseek full500 全轮 **125,460,134 token / 29,695 次调用**。
+   两者逐题用量均内嵌于 `output/results.jsonl` 的 `prompt_tokens`/`completion_tokens` 字段
+   （可直接复算）；逐项对账见 `resource_report.md` §1.2/§1.3。
+3. **与累计口径的关系**：`resource_report.md` 补充口径 §1 的「累计 ≈2.05 亿 token」为全项目
+   开发总消耗（GLM/mimo/deepseek 各代际、消融、跨读者、修订轮与写作段），不与 `logs/` 的
+   单次 run_id 对账；单次对账等号（`run.json` × `calls.jsonl`）已由 `verify_logs()` 逐项验证。
 
 ---
 

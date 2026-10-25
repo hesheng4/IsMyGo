@@ -1,5 +1,21 @@
 # 运行产物
 
+本目录放 `logs/run.json` 那一次运行（run_id `agent-sci-2026-full500-015`）所依托的论文数字
+结果文件，`run_id` 与日志、资源报告相同；`paper/paper.pdf` 是提交论文。按样例格式说明本次产物：
+
+## 本次产物
+
+- run_id：`agent-sci-2026-full500-015`（full500 复跑终扫批；论文主表数字 = 该轮全量 500 题累计）
+- 生成稿：`final/paper.tex`（+ `final/paper.bib` / `.bbl` / `iclr2025_conference.{sty,bst}` / `final/tables*/`）
+- 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 tectonic 0.17 编译为 `final/paper.pdf`（15 页），
+  同步至提交位 `paper/paper.pdf`；正文数字全部来自下方结果文件，可重编译、可逐格复算
+- 结果文件：`results.jsonl`（14,066 条逐题记录；**主读者 deepseek-v4.1-flash 10,500 条 / 500 题 × 21 格**，
+  副读者 mimo-v2.6-flash 2,520 条，弃用代际 glm5.3-flash 1,046 条）、`tables/`（论文全部表格的 tex/json 源）
+- 中间结果：`run_manifest.json`（实验段产物清单与 SHA256）、`glm_supplementary/`（第二/第三读者补充证据）、
+  `archive/`（历史归档：GLM-4-Flash 主网格、引擎运行时日志）
+
+> 以下为各目录的历史口径与详细说明（含 10-16 重写轮与 10-18 主网格升级轮的沿革）：
+
 > **2026-10-16 全新结构重写（mimo 主数据 + GLM 补充）**：`final/` 已更新为**全新 11 章结构定稿**
 > （章节由 9 → 11：原 Method+Setup 合并为 §3 Study Design；原 Analysis 拆为 §5 机制解读 +
 > §6「读侧瓶颈」独立章；选型规则升为 §9 独立章。主数据 mimo-v2.6-flash 2,520 条；GLM-4-Flash
