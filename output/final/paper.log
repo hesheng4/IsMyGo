@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  25 OCT 2026 17:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  25 OCT 2026 18:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -707,7 +707,7 @@ Underfull \vbox (badness 1558) has occurred while \output is active []
 ! Extra }, or forgotten $.
 <template> \unskip \hfil }
                           \endtemplate 
-l.968 n
+l.976 n
        ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -718,7 +718,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.968 n
+l.976 n
        ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -726,7 +726,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.968 n
+l.976 n
        ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -743,7 +743,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1001 ...ational: it needs no write pass (no $^^G
+l.1009 ...ational: it needs no write pass (no $^^G
                                                   pprox$57\,k/question diges...
 
 You may provide a definition with
@@ -752,7 +752,7 @@ You may provide a definition with
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1049 \approx
+l.1059 \approx
               $4$\,h wall-clock, \approx$57$\,k tokens per freshly-digested ...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -764,7 +764,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1054 \item
+l.1064 \item
              \textbf{Retrieval scope.} Dense and hybrid retrieval were teste...
 
 Try typing  <return>  to proceed.
@@ -773,33 +773,33 @@ If that doesn't work, type  X <return>  to quit.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.1054 \item \textbf
+l.1064 \item \textbf
                     {Retrieval scope.} Dense and hybrid retrieval were teste...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 1142) in paragraph at lines 1044--1054
+Underfull \hbox (badness 1142) in paragraph at lines 1054--1064
 []\OT1/ptm/b/n/7 (+20) Accounting, cost, la-tency. \OT1/ptm/m/n/7 (+20) Bud-get
 s count mem-ory to-kens pre-sented to the an-swerer (\OT1/pcr/m/n/7 cl100k[]bas
 e\OT1/ptm/m/n/7 (+20) ); the $\OMS/cmsy/m/n/7 ^^X$\OT1/ptm/m/n/7 (+20) 145-
  []
 
 
-Underfull \hbox (badness 3942) in paragraph at lines 1044--1054
+Underfull \hbox (badness 3942) in paragraph at lines 1054--1064
 \OT1/ptm/m/n/7 (+20) token tem-plate over-head is ex-cluded by con-struc-tion. 
 Com-par-isons are answer-side only---the write-side cost
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 1044--1054
+Underfull \hbox (badness 2846) in paragraph at lines 1054--1064
 \OT1/ptm/m/n/7 (+20) of di-gests ($\OT1/cmr/m/n/7 19[]195$ \OT1/ptm/m/n/7 (+20)
  ses-sions) is one-shot, frozen, and amor-tized across the 25 cells; its con-cr
 ete one-time ac-
  []
 
 
-Underfull \hbox (badness 4266) in paragraph at lines 1044--1054
+Underfull \hbox (badness 4266) in paragraph at lines 1054--1064
 \OT1/ptm/m/n/7 (+20) count-ing is quan-ti-fied in \TS1/ptm/m/n/7 (+20) §[]\OT1/
 ptm/m/n/7 (+20) 4.2[] ($\OT1/cmr/m/n/7 54\OML/cmm/m/it/7 :\OT1/cmr/m/n/7 7$\OT1
 /ptm/m/n/7 (+20) M to-kens corpus-total, $\OMS/cmsy/m/n/7 ^^Y$\OT1/ptm/m/n/7 (+
@@ -809,7 +809,7 @@ sy/m/n/7 ^^@
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1044--1054
+Underfull \hbox (badness 10000) in paragraph at lines 1054--1064
 \OML/cmm/m/it/7 digestedquestion\OT1/cmr/m/n/7 )\OML/cmm/m/it/7 :Accesslatencyi
 smeasuredofflineover$\OT1/ptm/m/n/7 (+20) 500$\OML/cmm/m/it/7 assemblies\OT1/cm
 r/m/n/7 ; \OML/cmm/m/it/7 end \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 to \OMS/cmsy/
@@ -817,25 +817,25 @@ m/n/7 ^^@
  []
 
 
-Overfull \hbox (4.59961pt too wide) in paragraph at lines 1044--1054
+Overfull \hbox (4.59961pt too wide) in paragraph at lines 1054--1064
 \OML/cmm/m/it/7 endlatencyisasingle \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 streamc
 alibration\OT1/cmr/m/n/7 ($\OT1/ptm/m/n/7 (-20) n=30$\OT1/cmr/m/n/7 )\OML/cmm/m
 /it/7 becausethefullgridranatbatchconcurrency; wherewall \OMS/cmsy/m/n/7 ^^@
  []
 
 
-Overfull \hbox (4.18147pt too wide) in paragraph at lines 1044--1054
+Overfull \hbox (4.18147pt too wide) in paragraph at lines 1054--1064
 \OML/cmm/m/it/7 clockisqueue \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 dominated\OT1/
 cmr/m/n/7 ; \OML/cmm/m/it/7 batchingeffects; provider \OMS/cmsy/m/n/7 ^^@ \OML/
 cmm/m/it/7 sidevarianceandconcurrencyscalingofthe$\OT1/ptm/m/n/7 (-20) 104$\OML
 /cmm/m/it/7 k \OMS/cmsy/m/n/7 ^^@
  []
 
-(paper.bbl [13])
+(paper.bbl [13]) [14]
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 1118.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 1131.
 
- [14] [15] (paper.aux)
+ [15] (paper.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
@@ -844,13 +844,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 8EABDA971895A03BB716D41AEAEFB8BC;5517.
  ) 
 Here is how much of TeX's memory you used:
- 14264 strings out of 467441
- 217288 string characters out of 5424496
- 712772 words of memory out of 5000000
+ 14279 strings out of 467441
+ 217423 string characters out of 5424496
+ 712821 words of memory out of 5000000
  42625 multiletter control sequences out of 15000+600000
- 685917 words of font info for 471 fonts, out of 8000000 for 9000
+ 686591 words of font info for 481 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,12n,90p,1004b,610s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,12n,90p,1004b,566s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/MikTex/fonts/type1/p
 ublic/amsfonts/cm/cmmi7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi9.pfb
 ><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/MikTex/fonts/type1/pub
@@ -863,7 +863,7 @@ ex/fonts/type1/urw/courier/ucrr8a.pfb><D:/MikTex/fonts/type1/urw/courier/ucrro8
 a.pfb><D:/MikTex/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/MikTex/fonts/type1/urw
 /times/utmb8a.pfb><D:/MikTex/fonts/type1/urw/times/utmr8a.pfb><D:/MikTex/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (15 pages, 422560 bytes).
+Output written on paper.pdf (15 pages, 423438 bytes).
 PDF statistics:
  680 PDF objects out of 1000 (max. 8388607)
  130 named destinations out of 1000 (max. 500000)

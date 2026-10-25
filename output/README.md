@@ -176,7 +176,7 @@ pass 重构为「mimo 主数据 + GLM 补充」并定稿：
 
 | 文件 | 说明 |
 |---|---|
-| `final/paper.pdf` | 定稿 PDF（**422,560 字节**，10-25 第三轮评审回应构建，pdflatex 编译 **15 页**，行距 1.0）= `paper/paper.pdf` |
+| `final/paper.pdf` | 定稿 PDF（**423,438 字节**，10-25 第四轮评审回应构建，pdflatex 编译 **15 页**，行距 1.0）= `paper/paper.pdf` |
 | `final/paper.tex` + `paper.bbl` + `paper.bib` + `iclr2025_conference.{sty,bst}` + `final/tables/` | 可独立重编译源（tectonic 实测 **15 页** / 0 错误 / 0 未定义引用 / 0 overfull；pdflatex ×3 + bibtex 亦可，页数口径见 `final/audit_report.txt`） |
 | `final/audit_report.txt` | 验收审计（页数、引用、GLM 仅作补充、数字溯源） |
 | `final/README.md` | 数据口径与 `tables/` 清单 |
