@@ -121,3 +121,11 @@
 10-18 主网格升级轮重新构建后 final/paper.pdf 为 200,010 字节（deepseek 主读者、
 35 篇文献、15 页）。提交位 paper/paper.pdf 当日同步为该版本；上行 184,362 字节
 为本报告所记录的 10-16 重写轮当时状态，保留作历史。
+
+--- 附注（2026-10-25 评审回应优化轮，零 API 消耗） ---
+应用户提交的外部评审意见离线优化论文并重编译：新增 per-type×per-budget 配对表
+(tables500/type_paired.tex, 由 type_paired.py 从 results.jsonl 复算)、write-side 构造
+token 账目段(54.7M 总量/57k 每题/4h, 见 §4.2)、Selection-at-a-glance 表(§9)、
+Proxy-scope 局限项(§10)。全部数字源自落盘文件，无新增 LLM 调用。本机 pdflatex
+(MiKTeX 26.5) 编译：13 页 / 0 错误 / 0 未定义引用 / 0 overfull（此前 tectonic 构建为 15 页）。
+同步至提交位 paper/paper.pdf。

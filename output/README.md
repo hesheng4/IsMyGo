@@ -7,7 +7,7 @@
 
 - run_id：`agent-sci-2026-full500-015`（full500 复跑终扫批；论文主表数字 = 该轮全量 500 题累计）
 - 生成稿：`final/paper.tex`（+ `final/paper.bib` / `.bbl` / `iclr2025_conference.{sty,bst}` / `final/tables*/`）
-- 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 tectonic 0.17 编译为 `final/paper.pdf`（15 页），
+- 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 pdflatex 编译为 `final/paper.pdf`（13 页，≤15 上限），
   同步至提交位 `paper/paper.pdf`；正文数字全部来自下方结果文件，可重编译、可逐格复算
 - 结果文件：`results.jsonl`（14,066 条逐题记录；**主读者 deepseek-v4.1-flash 10,500 条 / 500 题 × 21 格**，
   副读者 mimo-v2.6-flash 2,520 条，弃用代际 glm5.3-flash 1,046 条）、`tables/`（论文全部表格的 tex/json 源）
@@ -26,7 +26,8 @@
 > mimo 单读者版备份同未随包）。GLM 补充证据原始记录见 `glm_supplementary/`。
 > 编译：本机以 **tectonic 0.17（XeTeX）** 编译得 **15 页 / 0 错误 / 0 未定义引用 / 0 overfull / 23 文献**
 > （重写轮当轮口径；10-18 轮主网格升级后扩至 35 篇，见 `resource_report.md` 更新注）；
-> **交付的 `paper.pdf` 实测即为 15 页**（满足硬性页数要求）。本机无 pdflatex；为在 tectonic（度量比
+> **2026-10-25 评审回应优化轮**：本机 MiKTeX pdflatex 重编译（13 页，满足 ≤15 页要求，含评审回应的
+> per-type 配对表/构造 token 账目/at-a-glance 表/Proxy-scope 局限；零 API 消耗）。早期记录：交付 PDF 曾为 15 页。本机无 pdflatex；为在 tectonic（度量比
 > pdflatex 长约 1 页）上守住 15 页，源文件含两处轻微排版压缩（`\linespread{0.97}`+`\arraystretch{0.94}`），
 > 若改用 pdflatex 复现去掉这两行即可（详见 `final/audit_report.txt`「页数口径」）。
 > 验收见 `final/audit_report.txt`（含「页数口径」「代际隔离核查」诚实披露）。
@@ -175,7 +176,7 @@ pass 重构为「mimo 主数据 + GLM 补充」并定稿：
 
 | 文件 | 说明 |
 |---|---|
-| `final/paper.pdf` | 定稿 PDF（**200,010 字节**，10-18 构建，tectonic 编译 **15 页**）= `paper/paper.pdf` |
+| `final/paper.pdf` | 定稿 PDF（**411,912 字节**，10-25 评审回应优化轮构建，pdflatex 编译 **13 页**，≤15 页上限）= `paper/paper.pdf` |
 | `final/paper.tex` + `paper.bbl` + `paper.bib` + `iclr2025_conference.{sty,bst}` + `final/tables/` | 可独立重编译源（tectonic 实测 **15 页** / 0 错误 / 0 未定义引用 / 0 overfull；pdflatex ×3 + bibtex 亦可，页数口径见 `final/audit_report.txt`） |
 | `final/audit_report.txt` | 验收审计（页数、引用、GLM 仅作补充、数字溯源） |
 | `final/README.md` | 数据口径与 `tables/` 清单 |
