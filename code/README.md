@@ -5,16 +5,20 @@
 本文与提交样例说明的八节一一对应。第 6 节的命令在本包根目录 `IsMyGo/` 下执行。
 本项目为**两段式流水线**：①实验段（run_id `agent-sci-2026-comp-001`，`run.py --full` 产出
 `output/results.jsonl`，即论文全部数字来源）；②论文写作段（run_id `paper-gen-15p-20261016`，
-`paper_gen_llm.py` 产出 15 页定稿 `paper/paper.pdf`）。按样例口径，`logs/run.json`+`calls.jsonl`
-原应记录**产生论文的写作段**那次运行；⚠ 该原始文件已于 2026-10-17 被 full500 复跑覆盖且无备份
-（披露见 `logs/README.md` 与本文 §8，账目以 `resource_report.md` §1.1 为准）。
+`paper_gen_llm.py` 产出 15 页定稿 `paper/paper.pdf`）。按样例口径「产生论文**结果**的那次运行」，
+`logs/run.json`+`calls.jsonl` 记录**实验段 full500 复跑**（run_id `agent-sci-2026-full500-015`，
+deepseek-v4.1-flash 主读者全量 500 题的终扫批，2026-10-24 结构优化时归位于此）。
+⚠ 写作段 `paper-gen-15p-20261016` 的原始日志曾于 2026-10-17 被该复跑覆盖且无备份，
+其账目以 `resource_report.md` §1.1 为准（披露见 `logs/README.md`）。
 
 ---
 
 ## 1. 对应的运行
 
-- run_id：**论文写作段** `paper-gen-15p-20261016`（原始 run.json 已覆盖，账目见 `resource_report.md` §1.1、本文 §8）；
-  **实验段** `agent-sci-2026-comp-001`（= `output/run_manifest.json`、`output/results.jsonl` 的来源运行）
+- run_id：**logs/ 所记录的运行** `agent-sci-2026-full500-015`（full500 终扫批，= `logs/run.json`+`calls.jsonl`，
+  `verify_logs` 8 项断言通过）；**论文数字来源链** `agent-sci-2026-comp-001`（mimo 120 题初网格）→
+  `agent-sci-2026-full500-011/013/015`（deepseek 全量 500 题主网格，= `output/results.jsonl`）；
+  **论文写作段** `paper-gen-15p-20261016`（原始日志已覆盖，账目见 `resource_report.md` §1.1）
 - 论文中要复现的结果：**第 5 节 Table 1–5 与 Figure 1**（论文数字的全部来源），延伸到第 6 节 Table 6–13。
 
 | 论文位置 | 内容 | 生成文件（`output/tables/`） |
@@ -424,20 +428,19 @@ Leader: swarmflow(script_path=".../swarmflow/research_pipeline.py",
    > ⚠ 该原始日志次日（2026-10-17）被 full500 复跑覆盖，见上节披露。
    > 详见 `output/final/audit_report.txt` 与 `resource_report.md` 头部注。
 
-一条命令完成核对（8 项检查；⚠ 2026-10-24 起指向归档目录——写作段原始日志已被
-2026-10-17 的 full500 复跑覆盖，见下节披露与 `logs/README.md`）：
+一条命令核对 `logs/` 的同一次运行（8 项断言，实测 `passed: true`）：
 
 ```bash
-python -c "import sys;sys.path.insert(0,'code/scripts');from run_logger import verify_logs;print(verify_logs('output/archive/full500_run_logs_20261017'))"
+python -c "import sys;sys.path.insert(0,'code/scripts');from run_logger import verify_logs;print(verify_logs('logs'))"
 ```
 
 ### 本次提交的对账口径
 
-> ⚠ **2026-10-24 核查披露**：`logs/run.json`+`calls.jsonl` 原为下表写作段运行，但已于
-> 2026-10-17 第二轮全量 500 题复跑（W1，`--log-run`）时被**意外覆盖**且无备份，包内不可
-> 恢复；覆盖时写入的真实记录（full500 终扫 `agent-sci-2026-full500-015`，2 次调用 /
-> 2,632 token）存档于 `output/archive/full500_run_logs_20261017/`。下表数字以
-> `resource_report.md` §1.1 的记录为准，不再有逐次调用的机器可读原件。
+> ⚠ **核查披露（2026-10-24）**：`logs/` 现放 full500 终扫批 `agent-sci-2026-full500-015` 的
+> 真实程序日志（2 次调用 / 2,632 token，按样例「产生论文结果的那次运行」口径归位；
+> full500 分批各轮的累计对账见 `resource_report.md` §1.2）。写作段原始日志（下表）已于
+> 2026-10-17 被该复跑覆盖且无备份，其逐次调用记录不可恢复，账目以
+> `resource_report.md` §1.1 的记录为准。
 
 写作段那一次运行（`paper_gen_llm.py`，真实 LLM 逐章生成 15 页定稿）的账目如下：
 
@@ -510,7 +513,7 @@ pytest 会话被其它 rail 测试的 openjiuwen 桩遮蔽时跳过，单独运�
 | `system/orchestrator.py` | 四模块编排层：agent-core `core.workflow` 组件图（Start→四模块→门控路由→End）+ stdlib 顺序回退 |
 | `skills/` | 5 个引擎侧 Agent 技能包（literature-review / hypothesis-filter / experiment-runner / paper-writer / paper-proofread，SKILL.md 提示词，需挂载到引擎工作区，见 §6.3） |
 | `swarmflow/` | SwarmFlow 多智能体流水线脚本（`research_pipeline.py`，引擎团队模式调度用，见 §6.3） |
-| `scripts/` | `fetch_data.py` 数据获取校验、`run_logger.py` 日志、`populate_output.py` 成稿、`sandbox_runner.py` 沙箱执行 |
+| `scripts/` | `fetch_data.py` 数据获取校验、`fetch_models.py` 模型获取校验、`make_submission.py` 按样例结构打包 zip、`run_logger.py` 日志、`populate_output.py` 成稿、`sandbox_runner.py` 沙箱执行 |
 | `deploy/` | 引擎 agentic 路径（SwarmFlow 流水线、E2E 检查、Rail 判定） |
 | `extensions/` | 三个 Rail 扩展（academic_format / hallucination_check / claim_alignment） |
 | `framework-contribution/` | 上游补丁 `paper_guard.patch` 与逐文件副本 |
