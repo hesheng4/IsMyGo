@@ -1,0 +1,301 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(paper.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-08-10>
+(D:\MikTex\tex/latex/base\article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(D:\MikTex\tex/latex/base\size10.clo)) (iclr2025_conference.sty
+(D:\MikTex\tex/latex/eso-pic\eso-pic.sty
+(D:\MikTex\tex/latex/graphics\keyval.sty)
+(D:\MikTex\tex/latex/xcolor\xcolor.sty
+(D:\MikTex\tex/latex/graphics-cfg\color.cfg)
+(D:\MikTex\tex/latex/graphics-def\pdftex.def)
+(D:\MikTex\tex/latex/graphics\mathcolor.ltx)))
+(D:\MikTex\tex/latex/fancyhdr\fancyhdr.sty)
+(D:\MikTex\tex/latex/natbib\natbib.sty)) (D:\MikTex\tex/latex/psnfss\times.sty)
+ (D:\MikTex\tex/latex/hyperref\hyperref.sty
+(D:\MikTex\tex/generic/iftex\iftex.sty)
+(D:\MikTex\tex/latex/kvsetkeys\kvsetkeys.sty)
+(D:\MikTex\tex/generic/kvdefinekeys\kvdefinekeys.sty)
+(D:\MikTex\tex/generic/pdfescape\pdfescape.sty
+(D:\MikTex\tex/generic/ltxcmds\ltxcmds.sty)
+(D:\MikTex\tex/generic/pdftexcmds\pdftexcmds.sty
+(D:\MikTex\tex/generic/infwarerr\infwarerr.sty)))
+(D:\MikTex\tex/latex/hycolor\hycolor.sty)
+(D:\MikTex\tex/latex/hyperref\nameref.sty
+(D:\MikTex\tex/latex/refcount\refcount.sty)
+(D:\MikTex\tex/generic/gettitlestring\gettitlestring.sty
+(D:\MikTex\tex/latex/kvoptions\kvoptions.sty)))
+(D:\MikTex\tex/latex/etoolbox\etoolbox.sty)
+(D:\MikTex\tex/generic/stringenc\stringenc.sty)
+(D:\MikTex\tex/latex/hyperref\pd1enc.def)
+(D:\MikTex\tex/generic/intcalc\intcalc.sty)
+(D:\MikTex\tex/latex/hyperref\puenc.def) (D:\MikTex\tex/latex/url\url.sty)
+(D:\MikTex\tex/generic/bitset\bitset.sty
+(D:\MikTex\tex/generic/bigintcalc\bigintcalc.sty)))
+(D:\MikTex\tex/latex/hyperref\hpdftex.def
+(D:\MikTex\tex/latex/rerunfilecheck\rerunfilecheck.sty
+(D:\MikTex\tex/generic/uniquecounter\uniquecounter.sty)))
+(D:\MikTex\tex/latex/booktabs\booktabs.sty)
+(D:\MikTex\tex/latex/graphics\graphicx.sty
+(D:\MikTex\tex/latex/graphics\graphics.sty
+(D:\MikTex\tex/latex/graphics\trig.sty)
+(D:\MikTex\tex/latex/graphics-cfg\graphics.cfg)))
+(D:\MikTex\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(D:\MikTex\tex/latex/amsmath\amstext.sty
+(D:\MikTex\tex/latex/amsmath\amsgen.sty))
+(D:\MikTex\tex/latex/amsmath\amsbsy.sty)
+(D:\MikTex\tex/latex/amsmath\amsopn.sty))
+(D:\MikTex\tex/latex/amsfonts\amssymb.sty
+(D:\MikTex\tex/latex/amsfonts\amsfonts.sty))
+(D:\MikTex\tex/latex/microtype\microtype.sty
+(D:\MikTex\tex/latex/microtype\microtype-pdftex.def)
+(D:\MikTex\tex/latex/microtype\microtype.cfg)) (tables500/headline.tex)
+(tables/fc_archive_absolutes.tex) (D:\MikTex\tex/latex/psnfss\ot1ptm.fd)
+(D:\MikTex\tex/latex/l3kernel\l3backend-pdftex.def) (paper.aux)
+(D:\MikTex\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (D:\MikTex\tex/latex/epstopdf-pkg\epstopdf-base.sty
+(D:\MikTex\tex/latex/00miktex\epstopdf-sys.cfg)) (paper.out) (paper.out)
+(D:\MikTex\tex/latex/microtype\mt-ptm.cfg)
+(D:\MikTex\tex/latex/microtype\mt-cmr.cfg)
+(D:\MikTex\tex/latex/amsfonts\umsa.fd)
+(D:\MikTex\tex/latex/microtype\mt-msa.cfg)
+(D:\MikTex\tex/latex/amsfonts\umsb.fd)
+(D:\MikTex\tex/latex/microtype\mt-msb.cfg)
+(D:\MikTex\tex/latex/psnfss\ot1pcr.fd) (D:\MikTex\tex/latex/psnfss\ts1ptm.fd)
+[1{C:/Users/yangy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{D:/MikTex/f
+onts/enc/dvips/base/8r.enc}] [2] [3] [4 <./tables/fig_policy_anatomy.pdf>]
+[5] (tables500/main.tex) [6 <./tables/fig_takeaway.pdf>] (tables500/latency.tex
+)
+! Missing $ inserted.
+<inserted text> 
+                $
+l.497 sessions on average, i.e.\ \approx
+                                        $57\,k$ tokens of one-time write---a...
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.498 $14\times
+               $ the largest read budget. Once built, digests are frozen and...
+
+[7] (tables500/stats.tex) (tables500/bytype.tex)
+
+! LaTeX Error: Unicode character ^^H (U+0008)
+               not set up for use with LaTeX.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.568 ^^H
+         egin{table}[h]
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.570 \caption
+              {Per-type, per-budget paired comparison, hierarchical minus re...
+
+(tables500/type_paired.tex
+! Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.10 \bottomrule
+                
+! Missing } inserted.
+<inserted text> 
+                }
+l.11 \end
+         {tabular}
+! Missing } inserted.
+<inserted text> 
+                }
+l.11 \end
+         {tabular}
+! Missing } inserted.
+<inserted text> 
+                }
+l.11 \end
+         {tabular}
+! Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.11 \end
+         {tabular}
+! Missing { inserted.
+<inserted text> 
+                {
+l.11 \end
+         {tabular}
+! Undefined control sequence.
+\@BTrule ...\doublerulesep \fi \fi \fi \@BTswitch 
+                                                  
+l.11 \end
+         {tabular}
+! Misplaced \crcr.
+<recently read> \crcr 
+                      
+l.11 \end{tabular}
+                  
+! Extra }, or forgotten \endgroup.
+\endtabular ->\crcr \egroup \egroup \egroup 
+                                            
+l.11 \end{tabular}
+                  
+)
+! Too many }'s.
+\@endfloatbox ...pagefalse \outer@nobreak \egroup 
+                                                  \color@endbox 
+l.578 \end{table}
+                 
+! Extra \endgroup.
+\color@endgroup ...ode \@endpefalse \fi \endgroup 
+                                                  
+l.578 \end{table}
+                 
+! Too many }'s.
+\color@endbox ->\color@endgroup \egroup 
+                                        
+l.578 \end{table}
+                 
+
+! LaTeX Error: \begin{document} ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.578 \end{table}
+                 
+! Extra \endgroup.
+\end  ...end#1\endcsname \@checkend {#1}\endgroup 
+                                                  \UseHook {env/#1/after}\if...
+l.578 \end{table}
+                 
+[8] (tables500/diag.tex) (tables500/tight.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9]
+Underfull \hbox (badness 3229) in paragraph at lines 794--794
+\OT1/ptm/b/n/10 (+20) (b) \OT1/ptm/m/n/10 (+20) Hi-er-ar-chi-cal tier al-lo-ca-
+tion (\OT1/pcr/m/n/10 ablation[]allocation.tex\OT1/ptm/m/n/10 (+20) ). \OT1/ptm
+/b/n/10 (+20) (c) \OT1/ptm/m/n/10 (+20) Re-triever fam-ily
+(tables/ablation_summary_len.tex) (tables/ablation_allocation.tex)
+(tables/ablation_retrieval.tex) (tables/plug_baselines.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(tables500/probes.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[10] (tables500/cross.tex) (tables500/reader_comparison.tex)
+(tables/judge_type.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[11]
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \endtemplate 
+l.957 n
+       ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.957 n
+       ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.957 n
+       ever & sliding window & multi-session $0.000$, temporal $0.096$ (Tab....
+
+[12]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1025 \approx
+              $4$\,h wall-clock, \approx$57$\,k tokens per freshly-digested ...
+
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1030 \item
+             \textbf{Retrieval scope.} Dense and hybrid retrieval were teste...
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1030 \item \textbf
+                    {Retrieval scope.} Dense and hybrid retrieval were teste...
+
+
+Underfull \hbox (badness 1142) in paragraph at lines 1020--1030
+[]\OT1/ptm/b/n/7 (+20) Accounting, cost, la-tency. \OT1/ptm/m/n/7 (+20) Bud-get
+s count mem-ory to-kens pre-sented to the an-swerer (\OT1/pcr/m/n/7 cl100k[]bas
+e\OT1/ptm/m/n/7 (+20) ); the $\OMS/cmsy/m/n/7 ^^X$\OT1/ptm/m/n/7 (+20) 145-
+
+Underfull \hbox (badness 3942) in paragraph at lines 1020--1030
+\OT1/ptm/m/n/7 (+20) token tem-plate over-head is ex-cluded by con-struc-tion. 
+Com-par-isons are answer-side only---the write-side cost
+
+Underfull \hbox (badness 2846) in paragraph at lines 1020--1030
+\OT1/ptm/m/n/7 (+20) of di-gests ($\OT1/cmr/m/n/7 19[]195$ \OT1/ptm/m/n/7 (+20)
+ ses-sions) is one-shot, frozen, and amor-tized across the 25 cells; its con-cr
+ete one-time ac-
+
+Underfull \hbox (badness 4266) in paragraph at lines 1020--1030
+\OT1/ptm/m/n/7 (+20) count-ing is quan-ti-fied in \TS1/ptm/m/n/7 (+20) §[]\OT1/
+ptm/m/n/7 (+20) 4.2[] ($\OT1/cmr/m/n/7 54\OML/cmm/m/it/7 :\OT1/cmr/m/n/7 7$\OT1
+/ptm/m/n/7 (+20) M to-kens corpus-total, $\OMS/cmsy/m/n/7 ^^Y$\OT1/ptm/m/n/7 (+
+20) 4$ \OML/cmm/m/it/7 hwall \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 clock; \OMS/cm
+sy/m/n/7 ^^Y$\OT1/ptm/m/n/7 (+20) 57$ \OML/cmm/m/it/7 ktokensperfreshly \OMS/cm
+sy/m/n/7 ^^@
+
+Underfull \hbox (badness 10000) in paragraph at lines 1020--1030
+\OML/cmm/m/it/7 digestedquestion\OT1/cmr/m/n/7 )\OML/cmm/m/it/7 :Accesslatencyi
+smeasuredofflineover$\OT1/ptm/m/n/7 (+20) 500$\OML/cmm/m/it/7 assemblies\OT1/cm
+r/m/n/7 ; \OML/cmm/m/it/7 end \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 to \OMS/cmsy/
+m/n/7 ^^@
+
+Overfull \hbox (4.59961pt too wide) in paragraph at lines 1020--1030
+\OML/cmm/m/it/7 endlatencyisasingle \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 streamc
+alibration\OT1/cmr/m/n/7 ($\OT1/ptm/m/n/7 (-20) n=30$\OT1/cmr/m/n/7 )\OML/cmm/m
+/it/7 becausethefullgridranatbatchconcurrency; wherewall \OMS/cmsy/m/n/7 ^^@
+
+Overfull \hbox (4.18147pt too wide) in paragraph at lines 1020--1030
+\OML/cmm/m/it/7 clockisqueue \OMS/cmsy/m/n/7 ^^@ \OML/cmm/m/it/7 dominated\OT1/
+cmr/m/n/7 ; \OML/cmm/m/it/7 batchingeffects; provider \OMS/cmsy/m/n/7 ^^@ \OML/
+cmm/m/it/7 sidevarianceandconcurrencyscalingofthe$\OT1/ptm/m/n/7 (-20) 104$\OML
+/cmm/m/it/7 k \OMS/cmsy/m/n/7 ^^@
+(paper.bbl [13]) [14] [15] (paper.aux) )
+(see the transcript file for additional information)<D:/MikTex/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/MikTex/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr5.pfb><D:/
+MikTex/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/MikTex/fonts/type1/public/am
+sfonts/cm/cmr7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/MikTe
+x/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/MikTex/fonts/type1/public/amsfo
+nts/cm/cmsy5.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmsy7.pfb><D:/MikTex
+/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/MikTex/fonts/type1/urw/courier/uc
+rr8a.pfb><D:/MikTex/fonts/type1/urw/courier/ucrro8a.pfb><D:/MikTex/fonts/type1/
+urw/helvetic/uhvb8a.pfb><D:/MikTex/fonts/type1/urw/times/utmb8a.pfb><D:/MikTex/
+fonts/type1/urw/times/utmr8a.pfb><D:/MikTex/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (15 pages, 420277 bytes).
+Transcript written on paper.log.

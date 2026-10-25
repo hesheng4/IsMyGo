@@ -17,7 +17,7 @@
 \setlength{\parskip}{0pt plus 0.4pt}
 % Hold the 15-page review window under the local XeTeX/tectonic engine (font metrics
 % run ~1 page longer than pdflatex); 0.97 baselineskip is visually near-identical.
-\linespread{0.91}
+\linespread{1.0}
 \renewcommand{\arraystretch}{0.88}
 \setcounter{topnumber}{4}
 \setcounter{bottomnumber}{2}
@@ -148,6 +148,10 @@ budget (\S\ref{sec:reading}).
 \item A cross-reader replication across two further full grids and a frozen-artifact probe
 that separates the \emph{robust} budgeted-policy ordering from the \emph{reader-dependent}
 full-context ranking (\S\ref{sec:robust}, Appendix~\ref{app:secondreader}).
+\item A budget-conditioned selection rule summarized in one at-a-glance table
+(Tab.~\ref{tab:atglance}), with per-type and per-budget paired evidence
+(Tab.~\ref{tab:typepaired}) and a full write-side token accounting
+(\S\ref{sec:cost}).
 \item A released harness, per-question records, and token/latency logs that make every
 number traceable to \texttt{results.jsonl} (Appendix~\ref{app:provenance}).
 \end{itemize}
@@ -752,7 +756,9 @@ and the 120-word variant dips below 60 at $\leq 2048$: the deficit is not a gran
 artifact. \textbf{Tier allocation (Table~\ref{tab:ablations}b).} Moving the $25/50/25$ split to
 $15/70/15$ or $40/20/40$ leaves the default near-optimal at $4096$ ($0.305$ vs.\
 $0.292$/$0.275$), and all three improve with budget, so the monotone scaling is a property of
-the structure, not of one split.
+the structure, not of one split. These two perturbations are exactly the rule-based form
+of adaptive allocation (summary-heavy vs.\ evidence-heavy); both directions degrade,
+leaving learned per-query allocation as the untested stronger version of the idea.
 \textbf{Retriever family (Table~\ref{tab:ablations}c).} Dense bge-small beats BM25 at every
 budget ($0.283$--$0.325$ vs.\ $0.258$--$0.297$); hybrid adds nothing consistent; the recency
 half-budget is worst ($0.211$--$0.281$). Dense ties hierarchical at $4096$ ($0.328$ vs.\
@@ -762,6 +768,11 @@ sparse-vs-dense gaps are small next to the read-side gap (\S\ref{sec:reading}).
 instead of recency adds $+0.138/+0.120/+0.076$ at $512/1024/2048$ (all $p\leq0.001$) and
 $-0.010$ at $4096$ ($p{=}0.63$), so selection matters exactly where the digest tier is small;
 \S\ref{sec:frontier} carries the comparison against retrieval.
+Disaggregated by type, the near-parity with retrieval at $B{=}1024$ ($-0.020$, $p{=}0.36$)
+is a \emph{cancellation}: multi-session questions tilt toward selection ($+0.060$,
+$p{=}0.24$) while knowledge-update tilts hard toward retrieval ($-0.154$, $p{=}0.03$ at
+$1024$; $-0.256$, $p{<}0.01$ at $4096$)---write-time digests evict superseded values, and
+query-time selection over digests cannot recover what was never written.
 \textbf{Stronger hierarchy (Table~\ref{tab:probes}).} Adding a digest index to the
 retrieval tier nudges the hierarchy at both budgets ($+0.017$ at $4096$, $p{=}0.79$;
 $+0.025$ at $1024$, $p{=}0.58$) without closing the gap to retrieval, while 1-hop
@@ -852,6 +863,38 @@ interest is the ordering \emph{across} columns. Sources: \texttt{tables500/} and
 Appendix~\ref{app:secondreader}.}
 \label{tab:reader}
 \input{tables500/reader_comparison.tex}
+\end{table}
+
+\subsection{Judge-based semantic corroboration}
+\label{sec:judge}
+Relaxed EM could under-credit semantically correct paraphrases, which would matter most
+wherever strict and relaxed EM diverge. We therefore re-judged every \emph{read failure}
+(gold evidence covered, answer marked wrong) across the $28$ budgeted cells with a semantic
+judge (GLM-4.7-Flash, thinking off; $1{,}746$ judgments on $110$ unique questions), with
+$210$ already-correct answers as specificity controls ($0$ false flips).
+Table~\ref{tab:judgetype} gives the structure. The flip rate is \emph{flat across
+budgets} ($0.35/0.34/0.34/0.33$ at $512$--$4096$): the strict-vs-relaxed divergence at
+$4096$ is not a scoring artefact that grows with budget---under-credited paraphrases are
+budget-independent. The rate is, however, strongly type-structured: single-session and
+knowledge-update read failures flip at $0.48$--$0.79$, while multi-session ($0.17$) and
+temporal ($0.27$) failures mostly stay wrong. Read together, the two panels characterize
+the residual reader-side failures: where the answer is a localized fact or preference,
+``wrong'' often means phrasing; where it requires cross-session aggregation or temporal
+reconciliation, wrong is wrong. The judge thus corroborates both the relaxed-EM headline
+and the reading-bottleneck attribution of \S\ref{sec:reading}; judge error is
+bounded at $7/1{,}956$ calls. (A full-set judge pass on the primary reader's records
+remains future work; this sweep covers the harness read-failure population.)
+
+\begin{table}[h]
+\centering\scriptsize
+\caption{Semantic judge on read failures (E4): flips to ``semantically correct'' by
+question type (top) and by budget across all types (bottom); controls never flip.
+Judge-corrected EM lifts every cell by $+0.02$--$0.28$ \emph{without reordering} the
+$512$/$1024$ policy ranking (App.~\ref{app:rebuttal}). Source
+\texttt{tables/judge\_type.tex} (regenerated by \texttt{judge\_type.py}
+from \texttt{judge\_full.json}).}
+\label{tab:judgetype}
+\input{tables/judge_type.tex}
 \end{table}
 
 \section{Negative Results}
@@ -945,16 +988,21 @@ headline and type-level contrasts are tested at $n{=}500$ (CI half-width $0.02$-
 per-type $0.05$--$0.08$). Mechanism probes that could not be run at full scale use the
 stratified $120$-question subset and are labelled as such; a LoCoMo check confirms the budget
 scaling on another corpus (App.~\ref{app:full500}). MSC, adversarial-session, multilingual and
-open-domain corpora are untested.
+open-domain corpora are untested, as are long-form utilization tasks (composition-heavy
+outputs rather than extractive QA); whether the observed trade-offs persist there is open.
 \item \textbf{Answerers.} Four readers are tested, but none is frontier-scale: the primary
 grid uses DeepSeek-V4.1-Flash, and the two full replications (mimo-v2.6-flash, GLM-4-Flash)
 plus a frozen-artifact probe (GLM-4.7-Flash) show the \emph{budgeted-policy ordering} is
 robust, while the full-context ranking is not. The read-side residual is an answerer-scale
 statement: a stronger reader could in principle close it, and our oracle bound
-(\S\ref{sec:diag}) is measured on these readers only.
+(\S\ref{sec:diag}) is measured on these readers only. Digests were written by the
+same model family as the primary reader (the cross-reader replication re-generated digests
+per reader, partially decoupling this); systematic cross-writer/\slash-reader
+combinations remain untested.
 \item \textbf{Scoring.} Headline metrics are relaxed EM and token-F1 (substring overlap),
 not LLM-judged, avoiding judge circularity; a semantic judge appears only as a robustness
-check. Strict and relaxed EM agree at $512$--$2048$ but diverge at $4096$ (\S\ref{sec:frontier}),
+check---run on the harness read-failure population ($1{,}746$ judgments,
+\S\ref{sec:judge}), not on the primary reader's full $500$-question grid. Strict and relaxed EM agree at $512$--$2048$ but diverge at $4096$ (\S\ref{sec:frontier}),
 so every paired test is reported under both metrics (Table~\ref{tab:stats}) and the divergence
 is disclosed rather than resolved by picking a metric. Bootstrap CIs and McNemar tests quantify run-level uncertainty but not judge-version
 drift; a response-period probe shows the strict copy-exact-phrase template itself costs a
@@ -977,7 +1025,8 @@ one-time accounting is quantified in \S\ref{sec:cost} ($54.7$M tokens corpus-tot
 \approx$4$\,h wall-clock, \approx$57$\,k tokens per freshly-digested question). Access latency
 is measured offline over $500$ assemblies; end-to-end latency is a single-stream calibration
 ($n{=}30$) because the full grid ran at batch concurrency, where wall-clock is
-queue-dominated.
+queue-dominated; batching effects, provider-side variance and concurrency scaling of the
+$104$k-token full-context calls are not characterized beyond that calibration.
 \item \textbf{Retrieval scope.} Dense and hybrid retrieval were tested on the $120$-question
 subset only (bge-small/bge-base); the reranker probe bounds what retrieval-side gains
 contribute at fixed budget (offline session recall saturates near $0.98$ with no significant

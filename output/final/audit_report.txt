@@ -129,3 +129,13 @@ token 账目段(54.7M 总量/57k 每题/4h, 见 §4.2)、Selection-at-a-glance �
 Proxy-scope 局限项(§10)。全部数字源自落盘文件，无新增 LLM 调用。本机 pdflatex
 (MiKTeX 26.5) 编译：13 页 / 0 错误 / 0 未定义引用 / 0 overfull（此前 tectonic 构建为 15 页）。
 同步至提交位 paper/paper.pdf。
+
+--- 附注（2026-10-25 第二轮评审回应，零 API 消耗） ---
+新增: §7.3 Judge-based semantic corroboration(tables/judge_type.tex +
+judge_type.py 复算: 翻转率按预算恒定 0.33-0.35, 按型 0.17-0.79, 对照 0/210) ——
+回应 Q1(4096 分歧非评分假象)与 Q5(读取失败按型刻画); §7.1 compselect 按型分解
+(多会话 +0.06 vs knowledge-update -0.154*/-0.256**, 回应 Q6); 分配变体显式
+链接 adaptive allocation(Q4); Limitations 增补 cross-writer/latency 范围/长文
+utilization 任务(Q2轮弱点); Intro 贡献列表加 at-a-glance 指针。
+linespread 0.91->1.0(移除 tectonic 时代压缩), pdflatex 15 页/0 错误/0 未定义
+引用/0 overfull。同步提交位 paper/paper.pdf。

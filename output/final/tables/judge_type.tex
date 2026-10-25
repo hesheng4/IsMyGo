@@ -1,0 +1,18 @@
+\begin{tabular}{lccc}
+\toprule
+Group & judged & flip to correct & rate \\
+\midrule
+single-assistant & 113 & 89 & $0.79$ \\
+single-user & 116 & 73 & $0.63$ \\
+single-preference & 132 & 66 & $0.50$ \\
+knowledge-update & 243 & 116 & $0.48$ \\
+temporal & 572 & 154 & $0.27$ \\
+multi-session & 570 & 96 & $0.17$ \\
+\midrule
+$B{=}512$ (all types) & 366 & 128 & $0.35$ \\
+$B{=}1024$ (all types) & 407 & 140 & $0.34$ \\
+$B{=}2048$ (all types) & 469 & 158 & $0.34$ \\
+$B{=}4096$ (all types) & 504 & 168 & $0.33$ \\
+controls (already correct) & 210 & incorrect: 0 & $0.00$ \\
+\bottomrule
+\end{tabular}
