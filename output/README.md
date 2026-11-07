@@ -10,7 +10,7 @@
 > **当前口径（2026-11-07 复核）**：定稿标题为 *The Memory Trilemma Under a Fixed Token Budget*，
 > 主网格为 deepseek-v4.1-flash 500 题 / 25 格 / 12,500 条（`code/output/longmemeval/results.jsonl` 的 21 格 10,500 条
 > + `results_r8.jsonl` / `results_r9.jsonl` 的读时压缩 4 格）；修复排版故障后 `final/paper.pdf` 为 **18 页 /
-> 424,732 字节**（旧版 15 页 / 422,560 字节，其 p9 起因 `\scriptsize` 泄漏把正文压成小字，非正常排版）。
+> 423,892 字节**（旧版 15 页 / 422,560 字节，其 p9 起因 `\scriptsize` 泄漏把正文压成小字，非正常排版）。
 > 本文件下面各节是历史沿革，凡与本节冲突处以本节为准。
 
 - 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 pdflatex ×3 + bibtex 编译为 `final/paper.pdf`（18 页），
