@@ -154,7 +154,7 @@ def test_reviewer_language_agnostic_iclr_tex():
     （实测均值 3.87、覆盖 48/99，判定为不及格）。评测须度量内容而非语言与排版。
     """
     import json
-    TEX = os.path.join(ROOT, "iclr", "iclr_paper.tex")
+    TEX = os.path.join(ROOT, "iclr", "legacy_2026-10-16", "iclr_paper.tex")
     if not os.path.exists(TEX):
         import pytest
         pytest.skip("ICLR LaTeX 稿不存在")

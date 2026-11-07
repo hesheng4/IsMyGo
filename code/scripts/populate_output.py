@@ -27,13 +27,15 @@ OUTD = PKG / "output"
 PY = os.environ.get("PAPER_PY", sys.executable)
 
 ICLR = CODE / "iclr"
-if not (ICLR / "iclr_paper.tex").exists():
-    # 2026-10-16 旧代际清理: iclr_paper.tex 及旧成稿 (output/paper.*) 已移除,
-    # 本脚本的成稿/编译步骤随之失效; 当前论文定稿见 output/final/。
+# 旧论文源（2026-10-16 代际, mimo 120 题 / 2,520 条）已归档到 iclr/legacy_2026-10-16/。
+LEGACY_TEX = ICLR / "legacy_2026-10-16" / "iclr_paper.tex"
+# 当前定稿源：deepseek 500 题 / 25 格 / 12,500 条，主表在 output/final/tables500/。
+FINAL_DIR = OUTD / "final"
+FINAL_TEX = FINAL_DIR / "paper.tex"
+if not LEGACY_TEX.exists() and not FINAL_TEX.exists():
     sys.exit(
-        "[populate_output] 旧论文源 code/iclr/iclr_paper.tex 已随 2026-10-16 "
-        "旧代际清理移除, 本脚本成稿链失效。\n"
-        "  当前论文定稿: output/final/ (paper.tex + paper.pdf + final_paper.md)\n"
+        "[populate_output] 既无旧论文源 code/iclr/legacy_2026-10-16/iclr_paper.tex, "
+        "也无当前定稿 output/final/paper.tex, 成稿链失效。\n"
         "  论文实验表格仍可复现: run.py --full -> analyze.py")
 
 
@@ -134,18 +136,29 @@ def main() -> int:
 
     # ---------- 3) 生成稿 ----------
     step("3) 生成稿 paper.tex")
-    # 原稿 \input 指向 code/output/longmemeval/tables/（编译源目录）。复制进 output/
-    # 后改写成相对 output/ 自身的 tables/，使 output/ 成为自洽目录：
-    # PDF 由 output/tables/ 编译，与交付视图同一代际。
-    _tex_src = (ICLR / "iclr_paper.tex").read_text(encoding="utf-8")
-    _n_path = _tex_src.count("../output/longmemeval/tables/")
-    (OUTD / "paper.tex").write_text(
-        _tex_src.replace("../output/longmemeval/tables/", "tables/"), encoding="utf-8")
-    print("paper.tex <- code/iclr/iclr_paper.tex (改写 %d 处路径为相对 output/)  sha256=%s"
-          % (_n_path, sha(OUTD / "paper.tex")))
-    for _f in ("iclr2025_conference.sty", "iclr2025_conference.bst", "iclr_paper.bib"):
-        if (ICLR / _f).exists():
-            shutil.copyfile(ICLR / _f, OUTD / _f)
+    if LEGACY_TEX.exists():
+        # 旧代际：原稿 \input 指向 code/output/longmemeval/tables/（编译源目录）。
+        # 复制进 output/ 后改写成相对 output/ 自身的 tables/，使 output/ 自洽。
+        _tex_src = LEGACY_TEX.read_text(encoding="utf-8")
+        _n_path = _tex_src.count("../output/longmemeval/tables/")
+        (OUTD / "paper.tex").write_text(
+            _tex_src.replace("../output/longmemeval/tables/", "tables/"), encoding="utf-8")
+        print("paper.tex <- code/iclr/legacy_2026-10-16/iclr_paper.tex "
+              "(改写 %d 处路径为相对 output/)  sha256=%s" % (_n_path, sha(OUTD / "paper.tex")))
+        for _f in ("iclr2025_conference.sty", "iclr2025_conference.bst", "iclr_paper.bib"):
+            if (ICLR / _f).exists():
+                shutil.copyfile(ICLR / _f, OUTD / _f)
+    else:
+        # 当前代际：定稿源直接取自 output/final/，连表格目录一起拷成自洽视图。
+        shutil.copyfile(FINAL_TEX, OUTD / "paper.tex")
+        for _d in ("tables500", "tables"):
+            if (FINAL_DIR / _d).is_dir():
+                shutil.copytree(FINAL_DIR / _d, OUTD / _d, dirs_exist_ok=True)
+        for _f in ("iclr2025_conference.sty", "iclr2025_conference.bst", "paper.bib"):
+            if (FINAL_DIR / _f).exists():
+                shutil.copyfile(FINAL_DIR / _f, OUTD / _f)
+        print("paper.tex <- output/final/paper.tex (含 tables500/ + tables/)  sha256=%s"
+              % sha(OUTD / "paper.tex"))
 
     # ---------- 4) 编译 PDF ----------
     step("4) 编译 paper.pdf")
@@ -182,18 +195,20 @@ def main() -> int:
                         _log.read_text(encoding="utf-8", errors="replace"))
         if _m:
             _pages = int(_m.group(1))
-    REQUIRED_PAGES = 15
+    # 旧代际排版故障被修复后，诚实排版为 18 页（旧 15 页是 \scriptsize 泄漏压出来的）。
+    REQUIRED_PAGES = 15 if LEGACY_TEX.exists() else 18
     if _pages != REQUIRED_PAGES:
         print("!! 页数硬性校验失败：实测 %d 页，要求正好 %d 页" % (_pages, REQUIRED_PAGES))
         print("   请调整正文篇幅（加深分析补页 / 压缩冗余减页）后重跑本脚本。")
         return 1
-    print("页数校验通过：15 页")
+    print("页数校验通过：%d 页" % _pages)
 
     # ---------- 5) 中间结果（草稿/大纲） ----------
     step("5) 中间结果")
     draft = OUTD / "draft"
     # 5a) 论文大纲：从 tex 抽 \section 结构
-    texsrc = (ICLR / "iclr_paper.tex").read_text(encoding="utf-8")
+    texsrc = (LEGACY_TEX if LEGACY_TEX.exists() else OUTD / "paper.tex").read_text(
+        encoding="utf-8")
     import re
     outline = ["# 论文大纲（由 iclr_paper.tex 的章节结构抽取）", ""]
     for m in re.finditer(r"\\(section|subsection)\{([^}]+)\}", texsrc):

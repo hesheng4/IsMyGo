@@ -1,85 +1,61 @@
-# IsMyGo — 重构定稿（mimo 主数据 + GLM 补充；2026-10-16 全新结构重写）
+# output/final — 论文定稿（当前代际）
 
-按用户口径**全新结构重写**的 ICLR 论文：**以 mimo-v2.6-flash 全量复现为主数据**，
-**以 GLM 数据为补充（第二/第三读者鲁棒性）**，遵循项目内既有「论文链」
-（results.jsonl → analyze.py → tables/ → paper.tex → PDF）与「生成要求」
-（摘要 + 多章正文 + 参考文献 + 附录 A–E、数字全部可溯源）。
+**标题**：The Memory Trilemma Under a Fixed Token Budget: Accuracy, Cost, and Latency
+Trade-offs on LongMemEval-S
+**源文件**：`paper.tex`（1,180 行）；**构建产物**：`paper.pdf`（18 页）
+**打包副本**：`paper/paper.pdf`
 
-> 本轮（2026-10-16）重写要点：章节由 **9 → 11**（原 Method+Setup 合并为 §3 Study Design；
-> 原 Analysis 拆为 §5 机制解读 + §6「读侧瓶颈」独立章；选型规则升为 §9 独立章）；
-> 全部正文重写，数字与表格**未变**（离线重聚合三代际、逐格核验一致，见 `audit_report.txt`）。
-> 重写前的 9 章版与原始产物备份于工作区根 `_backup_qwenwork_20261016/`。
+## 1. 数据口径（2026-11-07 校准）
 
----
+主网格 = **deepseek-v4.1-flash，500 题，25 格 × 500 = 12,500 条习题级记录**，分布在三个文件：
 
-## 成品 / Deliverable
-
-| 文件 | 说明 |
-|---|---|
-| `paper.pdf` | 定稿 PDF（**422,560 字节**，10-25 第三轮评审回应构建，pdflatex 编译，**15 页**（行距 1.0），见下「页数口径」） |
-| `paper.tex` | 可独立重编译的 LaTeX 源（全新 11 章结构） |
-| `paper.bib` / `paper.bbl` | 参考文献（**23 条**，natbib + iclr2025_conference.bst） |
-| `iclr2025_conference.{sty,bst}` | ICLR 2025 模板 |
-| `tables/` | 论文 `\input` 的全部表格与图件（见下） |
-| `audit_report.txt` | 验收审计：0 错误 / 0 未定义引用 / 0 overfull / GLM 仅作补充 / 数字全部可溯源 |
-
-## 重编译 / Recompile
-
-**本机实际使用（tectonic 0.17，自包含引擎；交付 `paper.pdf` 实测 = 15 页）**：
-
-```bash
-cd output/final
-tectonic --keep-logs --keep-intermediates paper.tex   # -> paper.pdf (15 pages, 0 errors)
-```
-
-**pdflatex 备选口径**——本机未安装 pdflatex；如在具备 TeX Live/MiKTeX 的环境复现：
-
-```bash
-cd output/final
-pdflatex -interaction=nonstopmode paper.tex
-bibtex   paper
-pdflatex -interaction=nonstopmode paper.tex
-pdflatex -interaction=nonstopmode paper.tex
-```
-
-> **页数口径**：tectonic(XeTeX) 字体度量比 pdflatex 长约 1 页（重写前 9 章版：pdflatex 15 / tectonic 16）。
-> 为把**交付 PDF 守到 15 页**，本源文件含两处轻微排版压缩 `\linespread{0.97}` + `\arraystretch{0.94}`
-> （视觉几乎无差）。若改用 pdflatex 编译，度量更紧会再少约 1 页（~14）；如需 pdflatex 权威 15 页，
-> 删除这两行压缩即可。无论哪种引擎，**当前交付的 `paper.pdf` 均为 15 页**。详见 `audit_report.txt`「页数口径」。
-
----
-
-## 数据口径 / Data provenance
-
-**主数据（primary）— mimo-v2.6-flash**：21 格 × n=120 = 2,520 条逐题记录，零空预测。
-正文 Table 1–5、Figure 1、Appendix B 全网格聚合，以及 headline 宏
-（`\fcDoneEM=0.4750`、`\fcFoot=104,024` 等）全部来自 mimo 运行的 `tables/`。
-
-**补充数据（supplementary）— GLM**，仅用于跨读者鲁棒性，**从不与主网格混用**：
-- **第二读者 GLM-4-Flash**：整张 21 格主网格的独立复现 → `tables/second_reader_glm.tex`
-  （Appendix C 全表）+ `tables/reader_comparison.tex`（§7 跨读者 mimo vs GLM 并列对比）。
-- **第三读者 GLM-4.7-Flash**：冻结记忆产物的 60 题探针 → `tables/robustness_model.tex`。
-
-**诊断/消融/归档表为冻结产物**：`struct_compressor`、`rerank_eval`、`retrieval_*`、
-`ablation_*`、`plug_baselines`、`fc_archive_absolutes` 来自修订轮/归档代际，其基线
-（freeform/retrieval/hierarchical）为 GLM 代际而非 mimo，**只能表内比对**，不可对当前
-mimo `results.jsonl` 重算（否则代际混算，见 `audit_report.txt`「代际隔离核查」）。
-
-**跨读者结论**：受限策略排序稳健（compression 每档劣于 retrieval；hierarchical 单调且在
-4096 最强；window 近地板），而 full-context 的精度领先**读者依赖**（mimo 0.475 领先；
-GLM-4-Flash 0.292 反低于 hierarchical 0.325）。
-
----
-
-## tables/ 清单
-
-| 文件 | 角色 | 来源 |
+| 文件 | 内容 | 行数 |
 |---|---|---|
-| `headline.tex`、`fc_archive_absolutes.tex` | 头条宏 / 归档绝对数 | mimo / 归档（冻结） |
-| `main.tex`、`consolidated_emrel.tex`、`bytype.tex`、`latency.tex`、`stats.tex` | 主结果 Table 1–5 | **mimo（主）** |
-| `fig_accuracy_vs_budget.pdf`、`fig_latency_vs_budget.pdf` | Figure 1 | mimo |
-| `retrieval_diagnosis.tex`、`retrieval_ranking.tex`、`rerank_eval.tex`、`struct_compressor.tex` | 诊断 Table 6–9 | 修订轮（表内比对，冻结） |
-| `ablation_summary_len.tex`、`ablation_allocation.tex`、`ablation_retrieval.tex`、`plug_baselines.tex` | 敏感性消融 Table 10–11 | 修订轮/归档（冻结） |
-| `reader_comparison.tex` | 跨读者对比 Table 12 | mimo vs GLM |
-| `robustness_model.tex` | 第三读者探针 Table 13 | GLM-4.7-Flash（冻结） |
-| `second_reader_glm.tex` | 第二读者全网格（Appendix C） | GLM-4-Flash（补充） |
+| `code/output/longmemeval/results.jsonl` | 21 格 × 500（5 策略 × 4 预算 + full-context 1 格） | 10,500 |
+| `results_r8.jsonl` | 读时压缩变体 `compression_select` 的 1024 / 4096 两格 | 1,000 |
+| `results_r9.jsonl` | 读时压缩变体 `compression_select` 的 512 / 2048 两格 | 1,000 |
+
+`results.jsonl` 内另有 mimo-v2.6-flash 120 题 21 格（2,520 条）与 glm5.3-flash 未跑完的 1,046 条，
+**它们不参与正文主表**，只在与 `results_glm*` 相关的补充段落里使用。
+
+上一代（mimo 120 题 / 21 格 / 2,520 条）的表格已冻结到 `tables/legacy_120q/`，见该目录 `NOTE.md`。
+
+## 2. 目录结构
+
+| 路径 | 角色 |
+|---|---|
+| `paper.tex` | 唯一论文源；主表全部来自 `tables500/` |
+| `tables500/` | **当前代际**主表（11 个 `\input`：headline, main, latency, stats, bytype, type_paired, diag, tight, probes, cross, reader_comparison） |
+| `tables/` | 6 个仍被引用的**冻结消融件**（fc_archive_absolutes, ablation_summary_len, ablation_allocation, ablation_retrieval, plug_baselines, judge_type）+ `legacy_120q/` |
+| `paper.bib` / `paper.bbl` | 参考文献；`iclr2025_conference.{sty,bst}` ICLR 模板 |
+| `reviewer_response_r9.md` | 对审稿意见的答复（含 21→25 格扩容说明，§327） |
+| `audit_report.txt` | 2026-10 的旧审计快照；其「0 errors」结论**只对旧构建成立**，见 §4 |
+
+## 3. 构建
+
+```
+pdflatex -interaction=nonstopmode paper.tex
+bibtex paper
+pdflatex -interaction=nonstopmode paper.tex
+pdflatex -interaction=nonstopmode paper.tex
+```
+
+- pdflatex：`D:\MikTex\miktex\bin\x64\pdflatex.exe`（本机已装，`output/final/README` 旧版「本机未安装 pdflatex」为误记）。
+- **不要**加 `-halt-on-error`：源码里 `\approx` 等历史残留会让首轮中断并留下半截 `.aux`，
+  随后 `bibtex` 报 `I found no \bibstyle command` 并级联出 27 个假错误。
+- 期望结果：`Output written on paper.pdf (18 pages, ...)`，`^!` 计数 0，未定义引用 0。
+
+## 4. 2026-11-07 修复记录
+
+| 位置 | 缺陷 | 处理 |
+|---|---|---|
+| `tables500/type_paired.tex` | 每行之间夹空行（`tabular` 被提前结束）→ `Misplaced \noalign`、`\begin{document} ended by \end{table}` 等 25 个错误；末行缺 `\\` | 去空行、补行尾 `\\` |
+| `paper.tex`（行 ~590） | `<0x08>egin{table}` 控制字节，`\begin{table}` 丢失 → `\centering\scriptsize` 泄漏到正文，第 9 页起整段变 6–8 千字符/页的小字 | 恢复为 `\begin{table}[htbp]` |
+| `paper.tex` | `$<0x07>pprox$57`、`i.e.\ \approx$57\,k$`、`\approx$4$\,h`、`\approx$57$\,k` | 统一为 `$\approx 57\,k$` 等规范写法 |
+| `paper.tex` | `Table~` + 换行 + `ef{tab:typepaired}`（`\r` 吞掉 `\ref` 的反斜杠） | 恢复 `Table~\ref{tab:typepaired}` |
+| 附录 D 溯源段 | 声称「The main grid is results.jsonl (12,500 rows)」——没有文件有 12,500 行 | 改为 21 格 × 500 = 10,500 在 results.jsonl，读时压缩 4 格在 r8/r9，合计 25 格 / 12,500 行跨三个文件 |
+
+**页数变化 15 → 18**：旧 PDF 的 15 页是靠上述 `\scriptsize` 泄漏「压」出来的
+（旧构建 p9–p15 每页 6,619–8,258 字符，新构建 4,413–5,103 字符；两版提取文本总量
+82,354 vs 83,475 字符，内容未增删）。新构建是同一份论文的诚实排版。
+若提交确需 15 页，应删减附录而非恢复故障排版。

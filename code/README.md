@@ -5,7 +5,7 @@
 本文与提交样例说明的八节一一对应。第 6 节的命令在本包根目录 `IsMyGo/` 下执行。
 本项目为**两段式流水线**：①实验段（run_id `agent-sci-2026-comp-001`，`run.py --full` 产出
 `output/results.jsonl`，即论文全部数字来源）；②论文写作段（run_id `paper-gen-15p-20261016`，
-`paper_gen_llm.py` 产出 15 页定稿 `paper/paper.pdf`）。按样例口径「产生论文**结果**的那次运行」，
+`paper_gen_llm.py` 产出定稿 `paper/paper.pdf`）。按样例口径「产生论文**结果**的那次运行」，
 `logs/run.json`+`calls.jsonl` 记录**实验段 full500 复跑**（run_id `agent-sci-2026-full500-015`，
 deepseek-v4.1-flash 主读者全量 500 题的终扫批，2026-10-24 结构优化时归位于此）。
 ⚠ 写作段 `paper-gen-15p-20261016` 的原始日志曾于 2026-10-17 被该复跑覆盖且无备份，
@@ -32,7 +32,7 @@ deepseek-v4.1-flash 主读者全量 500 题的终扫批，2026-10-24 结构优�
 | §6 Table 6–9 | 结构化逐字压缩器 / 失败定位 / 会话级排序 / 重排探针 | `struct_compressor.tex`、`retrieval_diagnosis.tex`、`retrieval_ranking.tex`、`rerank_eval.tex` + 同名 `.json` |
 | §6 Table 10–12 | 摘要词长消融 / 分层分配消融 / 检索器家族 | `ablation_summary_len.tex`、`ablation_allocation.tex`、`ablation_retrieval.tex` |
 | §6 Table 13 | 跨读者复跑（GLM-4.7-Flash） | `robustness_model.tex` |
-| 成稿 | 论文定稿（15 页，mimo 主数据 + GLM 补充） | `output/final/`（`paper.tex` + `paper.pdf` + `tables/`）= `paper/paper.pdf` |
+| 成稿 | 论文定稿（18 页，deepseek 500 题主网格 + GLM 补充） | `output/final/`（`paper.tex` + `paper.pdf` + `tables500/` + `tables/`）= `paper/paper.pdf` |
 
 > 复现第 5 节主表即第 6.1 节的一条命令；第 6 节 Table 6–13 需要额外子命令（`run.py --ablate` / `--robustness`
 > 与 `data/README.md` §1.2 列出的证据文件），不是主表的必要条件。

@@ -504,7 +504,7 @@ accuracy for $25\times$ the tokens.
 construction cost of write-time digests completes the trilemma. Digest generation averaged
 $2{,}849$ tokens per session ($54.7$M tokens for all $19{,}195$ sessions, $\approx$4\,h
 wall-clock for the summary pass, primary reader); a freshly-digested question draws $20.1$
-sessions on average, i.e.\ \approx$57\,k$ tokens of one-time write---about
+sessions on average, i.e.\ $\approx 57\,k$ tokens of one-time write---about
 $14\times$ the largest read budget. Once built, digests are frozen and reused across questions
 and cells, and read-side cost is at parity with retrieval ($4{,}197$ vs.\ $3{,}989$ mean
 prompt tokens at $B{=}4096$). Retrieval, hierarchical and full-context incur zero LLM write
@@ -575,7 +575,7 @@ $+0.036$ (single-assistant), $-0.053$ (multi-session), $-0.023$ (temporal) and $
 of $0.05$--$0.08$ EM. The family-level ordering is a budget effect, not a type effect.
 \end{itemize}
 
-egin{table}[h]
+\begin{table}[htbp]
 \centering\scriptsize
 \caption{Per-type, per-budget paired comparison, hierarchical minus retrieval (relaxed EM,
 exact McNemar; $^{**}p{<}0.01$, $^{*}p{<}0.05$; primary reader, full set). The significant
@@ -587,8 +587,7 @@ hierarchical at $4096$. Source 	exttt{tables500/type\_paired.tex}
 \input{tables500/type_paired.tex}
 \end{table}
 
-Table~
-ef{tab:typepaired} adds the budget dimension to the pairing. Retrieval's overall
+Table~\ref{tab:typepaired} adds the budget dimension to the pairing. Retrieval's overall
 edge is a small-budget effect ($-0.064^{**}$ at $512$) concentrated in single-session
 ($-0.115^{**}$) and multi-session ($-0.075^{*}$) questions; it decays monotonically and no
 family differs significantly from $B{=}2048$ on, with hierarchical numerically ahead on
@@ -964,7 +963,7 @@ $B = 2048$ (tie) & retrieval over hierarchical & equal accuracy, $30$ vs.\ $52\,
 $B = 4096$ & hierarchical $\approx$ retrieval & $0.372$ vs.\ $0.364$, $p{=}0.90$; $1/25$ full-context tokens \\
 single-session-heavy & retrieval, any $B$ & $-0.058^{**}$ pooled for hierarchy (Tab.~\ref{tab:typepaired}) \\
 multi/temporal-heavy, $B \geq 2048$ & either; hierarchy tilts n.s. & no significant family gap from $2048$ \\
-write-time non-negligible & retrieval / hierarchical & zero LLM write vs.\ $\approx$57\,k$/question digests (\S\ref{sec:cost}) \\
+write-time non-negligible & retrieval / hierarchical & zero LLM write vs.\ $\approx 57$\,k/question digests (\S\ref{sec:cost}) \\
 never & sliding window & multi-session $0.000$, temporal $0.096$ (Tab.~\ref{tab:bytype}) \\
 \bottomrule
 \end{tabular}
@@ -998,7 +997,7 @@ at $1/27$ the tokens and $2.6	imes$ lower latency. At uniform token pricing ther
 therefore \emph{no} price at which the $27	imes$ premium buys accuracy; cheaper
 long-context architectures ($\geq$128k--1M) remove the cost objection but only turn a
 loss into a tie, on this reader scale. The remaining case for verbatim full-context is
-operational: it needs no write pass (no $pprox$57\,k/question digest investment,
+operational: it needs no write pass (no $\approx$57\,k/question digest investment,
 \S\ref{sec:cost}), no index and no retrieval stack. Against that, memory strategies keep
 the latency floor and---per the cross-reader replication (\S\ref{sec:crossreader}), where the
 full-context \emph{ranking} was the one reader-dependent statement---the parity claim
@@ -1046,7 +1045,7 @@ answerer (\texttt{cl100k\_base}); the $\sim$145-token template overhead is exclu
 construction. Comparisons are answer-side only---the write-side cost of digests
 ($19{,}195$ sessions) is one-shot, frozen, and amortized across the 25 cells; its concrete
 one-time accounting is quantified in \S\ref{sec:cost} ($54.7$M tokens corpus-total,
-\approx$4$\,h wall-clock, \approx$57$\,k tokens per freshly-digested question). Access latency
+$\approx 4$\,h wall-clock, $\approx 57$\,k tokens per freshly-digested question). Access latency
 is measured offline over $500$ assemblies; end-to-end latency is a single-stream calibration
 ($n{=}30$) because the full grid ran at batch concurrency, where wall-clock is
 queue-dominated; batching effects, provider-side variance and concurrency scaling of the
@@ -1167,10 +1166,12 @@ tokens.
 
 \section{Data Provenance and Reproducibility}
 \label{app:provenance}
-The main grid is \texttt{results.jsonl}
-($12{,}500$ rows, $25$ cells $\times\,500$) and each probe file---\texttt{results\_r8.jsonl},
-\texttt{results\_r9.jsonl}, \texttt{results\_oracle*.jsonl}, \texttt{results\_locomo.jsonl},
-\texttt{results\_iter.jsonl}, \texttt{results\_qexp.jsonl}---is named beside its table.
+The main grid is \texttt{results.jsonl} ($21$ cells $\times\,500$ = $10{,}500$ rows); the
+read-time compression variant ($4$ cells) was run in a second sweep and is archived in
+\texttt{results\_r8.jsonl} and \texttt{results\_r9.jsonl}, so the grid totals $25$ cells /
+$12{,}500$ rows across those three files. Each further probe file---\texttt{results\_oracle*.jsonl},
+\texttt{results\_locomo.jsonl}, \texttt{results\_iter.jsonl}, \texttt{results\_qexp.jsonl}---is
+named beside its table.
 Per-question predictions, golds and token usage are released, so every metric recomputes
 offline (\texttt{pytest} 69 passed / 1 skipped). All citations were resolved against arXiv or
 publisher pages on 18 October 2026.

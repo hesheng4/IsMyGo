@@ -3,18 +3,19 @@
 CCF BDCI 2026 华为 openJiuwen 赛题三「Agent 科研短论文自动生成」参赛项目。
 选题方向：**Agent 记忆引擎设计**——长程流式任务中的记忆策略权衡。
 
-论文：*When Does Memory Compression Pay Off? A Budget-Controlled Study of Memory
-Policies for LLM Agents on LongMemEval*（ICLR 模板，15 页，`paper/paper.pdf`）
+论文：*The Memory Trilemma Under a Fixed Token Budget: Accuracy, Cost, and Latency
+Trade-offs on LongMemEval-S*（ICLR 模板，18 页，`paper/paper.pdf`）
 
 ## 这是什么
 
 一套**两段式科研流水线**：实验段在 LongMemEval-S 上对 6 种记忆策略
 （full-context / 滑窗 / BM25 检索 / recency 检索 / 压缩 / 分层）做同预算受控对比，
 写作段依据实验落盘数据生成零幻觉论文。数字纪律是核心约束：无论哪条成稿路径，
-论文数字必须溯源到 `output/results.jsonl` 的逐题记录。
+论文数字必须溯源到逐题记录：主网格在 `code/output/longmemeval/results.jsonl`
+（21 格 × 500 = 10,500 条），读时压缩变体的 4 格在 `results_r8.jsonl` / `results_r9.jsonl`。
 
-**主数据口径**：deepseek-v4.1-flash 全量 500 题主网格（10,500 条）为主读者，
-mimo-v2.6-flash（120 题整网格）为副读者。
+**主数据口径**：deepseek-v4.1-flash 全量 500 题主网格（25 格 × 500 = 12,500 条，跨上述三个文件）
+为主读者，mimo-v2.6-flash（120 题整网格，2,520 条）为副读者。
 
 **核心发现**：预算受限下无全能策略——小预算检索领先、分层策略随预算单调上升、
 压缩单独使用劣于 BM25；瓶颈在**读取侧**而非检索排序（重排器把离线 Recall@5 从
@@ -25,13 +26,13 @@ mimo-v2.6-flash（120 题整网格）为副读者。
 ```
 IsMyGo/
 ├── Agentic Reviewer/        # PaperReview access token（有意公开，供评审验证）
-├── paper/paper.pdf          # 提交论文（15 页，ICLR 模板）
+├── paper/paper.pdf          # 提交论文（18 页，ICLR 模板）
 ├── code/                    # 源码；复现说明见 code/README.md（八节，与样例对应）
 ├── data/                    # 数据说明与获取方式（数据集 264.5 MiB 可重获）
 ├── logs/                    # 产生论文结果那次运行的程序日志（run.json + calls.jsonl）
-├── output/                  # 运行产物：results.jsonl（14,066 条）、表格、定稿源
+├── output/                  # 运行产物：定稿源与表格；results.jsonl 为上一代 120 题（2,520 条）
 ├── docs/                    # 架构设计 / 模块调用 / 创新点
-├── resource_report.md       # 资源报告（主表与 logs 同一 run_id 逐项对账）
+├── resource_report.md       # 资源报告（按 终扫批 run_id 逐项对账；披露写作段日志被覆盖）
 └── framework_contribution.md # openJiuwen 框架贡献（paper_guard Rails，MR !5577）
 ```
 
@@ -44,7 +45,7 @@ pip install -r code/requirements.txt
 python code/main.py
 
 # ② 离线测试套件（不访问网络）
-python -m pytest code/tests -q        # 69 passed / 1 skipped
+python -m pytest code/tests -q        # 69 passed / 1 skipped（需先装 requirements）
 
 # ③ 完整复现（真实 LLM，两段式）——命令与环境见 code/README.md §6
 python code/main.py --paper-run
