@@ -157,6 +157,8 @@ def main() -> int:
         for _f in ("iclr2025_conference.sty", "iclr2025_conference.bst", "paper.bib"):
             if (FINAL_DIR / _f).exists():
                 shutil.copyfile(FINAL_DIR / _f, OUTD / _f)
+        if (FINAL_DIR / "supplementary.tex").exists():
+            shutil.copyfile(FINAL_DIR / "supplementary.tex", OUTD / "supplementary.tex")
         print("paper.tex <- output/final/paper.tex (含 tables500/ + tables/)  sha256=%s"
               % sha(OUTD / "paper.tex"))
 
@@ -186,6 +188,18 @@ def main() -> int:
         return 1
     print("paper.pdf: %.0f KB  sha256=%s" % (pdf.stat().st_size / 1024, sha(pdf)))
 
+    # ---------- 4a) 补充材料：与正文共用表格宏，2 遍编译，无 bibtex ----------
+    if (OUTD / "supplementary.tex").exists():
+        for _i in (1, 2):
+            subprocess.run(["pdflatex", "-interaction=nonstopmode", "supplementary.tex"],
+                           cwd=str(OUTD), env=env, capture_output=True,
+                           text=True, errors="replace")
+        _sp = OUTD / "supplementary.pdf"
+        if _sp.exists():
+            print("supplementary.pdf: %.0f KB" % (_sp.stat().st_size / 1024))
+        else:
+            print("!! 补充材料 PDF 未生成")
+
     # ---------- 4b) 页数硬性校验（必须 15 页） ----------
     import re as _re
     _pages = 0
@@ -196,7 +210,7 @@ def main() -> int:
         if _m:
             _pages = int(_m.group(1))
     # 旧代际排版故障被修复后，诚实排版为 18 页（旧 15 页是 \scriptsize 泄漏压出来的）。
-    REQUIRED_PAGES = 15 if LEGACY_TEX.exists() else 18
+    REQUIRED_PAGES = 15
     if _pages != REQUIRED_PAGES:
         print("!! 页数硬性校验失败：实测 %d 页，要求正好 %d 页" % (_pages, REQUIRED_PAGES))
         print("   请调整正文篇幅（加深分析补页 / 压缩冗余减页）后重跑本脚本。")

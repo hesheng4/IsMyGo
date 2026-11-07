@@ -2,8 +2,9 @@
 
 **标题**：The Memory Trilemma Under a Fixed Token Budget: Accuracy, Cost, and Latency
 Trade-offs on LongMemEval-S
-**源文件**：`paper.tex`（1,179 行）；**构建产物**：`paper.pdf`（18 页 / 423,892 字节 / 0 错误）
-**打包副本**：`paper/paper.pdf`
+**源文件**：`paper.tex`（1,017 行）+ `supplementary.tex`；**构建产物**：`paper.pdf`（15 页 / 345,891 字节 / 0 错误）
++ `supplementary.pdf`（3 页 / 174,106 字节 / 0 错误）
+**打包副本**：`paper/paper.pdf`、`paper/supplementary.pdf`
 
 ## 1. 数据口径（2026-11-07 校准）
 
@@ -19,6 +20,22 @@ Trade-offs on LongMemEval-S
 **它们不参与正文主表**，只在与 `results_glm*` 相关的补充段落里使用。
 
 上一代（mimo 120 题 / 21 格 / 2,520 条）的表格已冻结到 `tables/legacy_120q/`，见该目录 `NOTE.md`。
+
+## 1b. 正文 / 补充材料分工（2026-11-07 拆分）
+
+评审窗口只读前 15 页，因此把两类内容移入 `supplementary.tex` 并在正文留一句指路：
+
+| 位置 | 章节 |
+|---|---|
+| 正文 | §1–§7 正文 + §8 Limitations + §9 Conclusion + 参考文献（共 15 页，无附录） |
+| 补充材料 A | Negative Results（负结果清单） |
+| 补充材料 B | A Practical Selection Guideline（含 at-a-glance 表） |
+| 补充材料 C | Instruction Template and Reader Configuration |
+| 补充材料 D | Second-Reader Replication: GLM-4-Flash Full Grid |
+| 补充材料 E | Budget Accounting and Token-Cost Linearity |
+| 补充材料 F | Data Provenance and Reproducibility（逐文件行数、21 格 + r8/r9 读时 4 格、逐表命令） |
+
+正文已无附录；补充材料与正文共用同一份 `tables500/` 宏与同一 43 行导言区，可独立编译。
 
 ## 2. 目录结构
 
@@ -38,6 +55,10 @@ pdflatex -interaction=nonstopmode paper.tex
 bibtex paper
 pdflatex -interaction=nonstopmode paper.tex
 pdflatex -interaction=nonstopmode paper.tex
+
+# 补充材料（无 \cite，2 遍即可）
+pdflatex -interaction=nonstopmode supplementary.tex
+pdflatex -interaction=nonstopmode supplementary.tex
 ```
 
 - pdflatex：`D:\MikTex\miktex\bin\x64\pdflatex.exe`（本机已装，`output/final/README` 旧版「本机未安装 pdflatex」为误记）。

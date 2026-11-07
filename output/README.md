@@ -9,12 +9,13 @@
 - 生成稿：`final/paper.tex`（+ `final/paper.bib` / `.bbl` / `iclr2025_conference.{sty,bst}` / `final/tables*/`）
 > **当前口径（2026-11-07 复核）**：定稿标题为 *The Memory Trilemma Under a Fixed Token Budget*，
 > 主网格为 deepseek-v4.1-flash 500 题 / 25 格 / 12,500 条（`code/output/longmemeval/results.jsonl` 的 21 格 10,500 条
-> + `results_r8.jsonl` / `results_r9.jsonl` 的读时压缩 4 格）；修复排版故障后 `final/paper.pdf` 为 **18 页 /
-> 423,892 字节**（旧版 15 页 / 422,560 字节，其 p9 起因 `\scriptsize` 泄漏把正文压成小字，非正常排版）。
+> + `results_r8.jsonl` / `results_r9.jsonl` 的读时压缩 4 格）；修复排版故障后 `final/paper.pdf` 为 **15 页 / 345,891 字节**，并另出**补充材料 3 页 / 174,106 字节**
+> （`final/supplementary.pdf`）：评审窗口只读前 15 页，故 §8 Negative Results、§9 Selection Guideline
+> 与 4 个实现细节附录移入补充材料；更早的 18 页版本是修复 8 处控制字符后的诚实排版。
 > 本文件下面各节是历史沿革，凡与本节冲突处以本节为准。
 
-- 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 pdflatex ×3 + bibtex 编译为 `final/paper.pdf`（18 页），
-  同步至提交位 `paper/paper.pdf`；正文数字全部来自下方结果文件，可重编译、可逐格复算
+- 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 pdflatex ×3 + bibtex 编译为 `final/paper.pdf`（15 页）+ `final/supplementary.pdf`（3 页），
+  同步至提交位 `paper/paper.pdf` / `paper/supplementary.pdf`；正文数字全部来自下方结果文件，可重编译、可逐格复算
 - 结果文件：本目录 `results.jsonl` 为**上一代** mimo-v2.6-flash 120 题 / 21 格 / 2,520 条；
   论文主网格的 14,066 条逐题记录在 `code/output/longmemeval/results.jsonl`
   （deepseek-v4.1-flash 10,500 + mimo 2,520 + 弃用代际 glm5.3-flash 1,046）、`tables/`（论文全部表格的 tex/json 源）

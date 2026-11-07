@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  7 NOV 2026 18:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  7 NOV 2026 18:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -479,7 +479,7 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 onts/enc/dvips/base/8r.enc}
 
 ] [2] [3]
-<tables/fig_policy_anatomy.pdf, id=283, 448.07399pt x 68.6565pt>
+<tables/fig_policy_anatomy.pdf, id=253, 448.07399pt x 68.6565pt>
 File: tables/fig_policy_anatomy.pdf Graphic file (type pdf)
 <use tables/fig_policy_anatomy.pdf>
 Package pdftex.def Info: tables/fig_policy_anatomy.pdf  used on input line 295.
@@ -487,23 +487,18 @@ Package pdftex.def Info: tables/fig_policy_anatomy.pdf  used on input line 295.
 (pdftex.def)             Requested size: 349.78873pt x 53.59688pt.
  [4 <./tables/fig_policy_anatomy.pdf>]
 [5] (tables500/main.tex)
-<tables/fig_takeaway.pdf, id=380, 466.89244pt x 199.69789pt>
+<tables/fig_takeaway.pdf, id=346, 466.89244pt x 199.69789pt>
 File: tables/fig_takeaway.pdf Graphic file (type pdf)
 <use tables/fig_takeaway.pdf>
 Package pdftex.def Info: tables/fig_takeaway.pdf  used on input line 450.
 (pdftex.def)             Requested size: 325.9406pt x 139.41277pt.
-
+ [6 <./tables/fig_takeaway.pdf>] (tables500/latency.tex) [7] (tables500/stats.t
+ex) (tables500/bytype.tex) (tables500/type_paired.tex)
+[8] (tables500/diag.tex)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(tables500/latency.tex) [6]
-Underfull \vbox (badness 1297) has occurred while \output is active []
-
- [7 <./tables/fig_takeaway.pdf>] (tables500/stats.tex) (tables500/bytype.tex)
-(tables500/type_paired.tex) [8] [9] (tables500/diag.tex) (tables500/tight.tex)
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [10]
+[9] (tables500/tight.tex) [10]
 Underfull \hbox (badness 3229) in paragraph at lines 803--803
 \OT1/ptm/b/n/10 (+20) (b) \OT1/ptm/m/n/10 (+20) Hi-er-ar-chi-cal tier al-lo-ca-
 tion (\OT1/pcr/m/n/10 ablation[]allocation.tex\OT1/ptm/m/n/10 (+20) ). \OT1/ptm
@@ -511,11 +506,7 @@ tion (\OT1/pcr/m/n/10 ablation[]allocation.tex\OT1/ptm/m/n/10 (+20) ). \OT1/ptm
  []
 
 (tables/ablation_summary_len.tex) (tables/ablation_allocation.tex)
-(tables/ablation_retrieval.tex)
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-(tables/plug_baselines.tex)
+(tables/ablation_retrieval.tex) (tables/plug_baselines.tex)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -523,57 +514,35 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-Underfull \vbox (badness 1990) has occurred while \output is active []
-
- [11]
-(tables500/cross.tex)
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-(tables500/reader_comparison.tex)
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[12] (tables/judge_type.tex) [13]
-Underfull \vbox (badness 1472) has occurred while \output is active []
-
- [14]
-[15] (paper.bbl [16])
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 1117.
-
- [17] [18] (paper.aux)
+[11] (tables500/cross.tex) (tables500/reader_comparison.tex) [12]
+(tables/judge_type.tex) [13] (paper.bbl [14]) [15] (paper.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 8EABDA971895A03BB716D41AEAEFB8BC;5517.
+(rerunfilecheck)             Checksum: 69B2A22A6DC9F7D5CFB1D99403D9821D;4105.
  ) 
 Here is how much of TeX's memory you used:
- 14253 strings out of 467441
- 217163 string characters out of 5424496
- 707313 words of memory out of 5000000
- 42623 multiletter control sequences out of 15000+600000
- 685206 words of font info for 460 fonts, out of 8000000 for 9000
+ 14091 strings out of 467441
+ 215385 string characters out of 5424496
+ 696873 words of memory out of 5000000
+ 42573 multiletter control sequences out of 15000+600000
+ 673625 words of font info for 382 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,12n,90p,1004b,654s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,12n,90p,1004b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/MikTex/fonts/type1/p
-ublic/amsfonts/cm/cmmi7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/MikTex/fonts/type1/pub
-lic/amsfonts/cm/cmr5.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:
-/MikTex/fonts/type1/public/amsfonts/cm/cmr7.pfb><D:/MikTex/fonts/type1/public/a
-msfonts/cm/cmr9.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Mi
-kTex/fonts/type1/public/amsfonts/cm/cmsy5.pfb><D:/MikTex/fonts/type1/public/ams
-fonts/cm/cmsy7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/MikT
-ex/fonts/type1/urw/courier/ucrr8a.pfb><D:/MikTex/fonts/type1/urw/courier/ucrro8
-a.pfb><D:/MikTex/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/MikTex/fonts/type1/urw
-/times/utmb8a.pfb><D:/MikTex/fonts/type1/urw/times/utmr8a.pfb><D:/MikTex/fonts/
-type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (18 pages, 423892 bytes).
+ublic/amsfonts/cm/cmmi7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr10.pfb
+><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr5.pfb><D:/MikTex/fonts/type1/publ
+ic/amsfonts/cm/cmr7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D
+:/MikTex/fonts/type1/public/amsfonts/cm/cmsy5.pfb><D:/MikTex/fonts/type1/public
+/amsfonts/cm/cmsy7.pfb><D:/MikTex/fonts/type1/urw/courier/ucrr8a.pfb><D:/MikTex
+/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/MikTex/fonts/type1/urw/times/utmb8a.pf
+b><D:/MikTex/fonts/type1/urw/times/utmr8a.pfb><D:/MikTex/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on paper.pdf (15 pages, 345891 bytes).
 PDF statistics:
- 696 PDF objects out of 1000 (max. 8388607)
- 135 named destinations out of 1000 (max. 500000)
- 69843 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 600 PDF objects out of 1000 (max. 8388607)
+ 123 named destinations out of 1000 (max. 500000)
+ 57507 words of extra memory for PDF output out of 61914 (max. 10000000)
 

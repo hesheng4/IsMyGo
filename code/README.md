@@ -32,7 +32,7 @@ deepseek-v4.1-flash 主读者全量 500 题的终扫批，2026-10-24 结构优�
 | §6 Table 6–9 | 结构化逐字压缩器 / 失败定位 / 会话级排序 / 重排探针 | `struct_compressor.tex`、`retrieval_diagnosis.tex`、`retrieval_ranking.tex`、`rerank_eval.tex` + 同名 `.json` |
 | §6 Table 10–12 | 摘要词长消融 / 分层分配消融 / 检索器家族 | `ablation_summary_len.tex`、`ablation_allocation.tex`、`ablation_retrieval.tex` |
 | §6 Table 13 | 跨读者复跑（GLM-4.7-Flash） | `robustness_model.tex` |
-| 成稿 | 论文定稿（18 页，deepseek 500 题主网格 + GLM 补充） | `output/final/`（`paper.tex` + `paper.pdf` + `tables500/` + `tables/`）= `paper/paper.pdf` |
+| 成稿 | 论文定稿（正文 15 页 + 补充材料 3 页，deepseek 500 题主网格 + GLM 补充） | `output/final/`（`paper.tex` + `paper.pdf` + `tables500/` + `tables/`）= `paper/paper.pdf` |
 
 > 复现第 5 节主表即第 6.1 节的一条命令；第 6 节 Table 6–13 需要额外子命令（`run.py --ablate` / `--robustness`
 > 与 `data/README.md` §1.2 列出的证据文件），不是主表的必要条件。
