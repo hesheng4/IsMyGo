@@ -35,10 +35,9 @@
 > 编译：本机以 **tectonic 0.17（XeTeX）** 编译得 **15 页 / 0 错误 / 0 未定义引用 / 0 overfull / 23 文献**
 > （重写轮当轮口径；10-18 轮主网格升级后扩至 35 篇，见 `resource_report.md` 更新注）；
 > **2026-10-25 两轮评审回应**：pdflatex 重编译（第二轮后 15 页整，含 per-type 配对表/构造 token 账目/
-> at-a-glance 表/Proxy-scope 局限/judge 按型表/compselect 按型分解；零 API 消耗）。早期记录见 git 历史。为在 tectonic（度量比
-> pdflatex 长约 1 页）上守住 15 页，源文件含两处轻微排版压缩（`\linespread{0.97}`+`\arraystretch{0.94}`），
-> 若改用 pdflatex 复现去掉这两行即可（详见 `final/audit_report.txt`「页数口径」）。
-> 验收见 `final/audit_report.txt`（含「页数口径」「代际隔离核查」诚实披露）。
+> at-a-glance 表/Proxy-scope 局限/judge 按型表/compselect 按型分解；零 API 消耗）。早期记录见 git 历史。正文 15 页现由 **pdflatex 实测**得到（不再有 tectonic 推断成分）：
+> `\linespread{0.97}`，正文已无附录，§8/§9 与 4 个实现细节附录移入 `final/supplementary.pdf`（3 页）。
+> 验收见 `final/audit_report.txt`（2026-11-08 重写：§3 编译实测 / §4 修复清单 / §5 页数口径）。
 >
 > 以下为重构前的历史说明（`run_manifest.json` 为 2026-10-15 运行时点清单）。
 
@@ -184,8 +183,8 @@ pass 重构为「mimo 主数据 + GLM 补充」并定稿：
 
 | 文件 | 说明 |
 |---|---|
-| `final/paper.pdf` | 定稿 PDF（**422,560 字节**，10-25 第三轮评审回应构建，pdflatex 编译 **15 页**，行距 1.0）= `paper/paper.pdf` |
-| `final/paper.tex` + `paper.bbl` + `paper.bib` + `iclr2025_conference.{sty,bst}` + `final/tables/` | 可独立重编译源（tectonic 实测 **15 页** / 0 错误 / 0 未定义引用 / 0 overfull；pdflatex ×3 + bibtex 亦可，页数口径见 `final/audit_report.txt`） |
+| `final/paper.pdf` | 定稿正文 PDF（**345,891 字节**，2026-11-08 构建，pdflatex 编译 **15 页**）= `paper/paper.pdf` |
+| `final/paper.tex` + `paper.bbl` + `paper.bib` + `iclr2025_conference.{sty,bst}` + `final/tables/` | 可独立重编译源（pdflatex ×3 + bibtex 实测 **15 页** / 0 错误 / 0 未定义引用 / 0 overfull；补充材料另 3 页，页数口径见 `final/audit_report.txt` §5） |
 | `final/audit_report.txt` | 验收审计（页数、引用、GLM 仅作补充、数字溯源） |
 | `final/README.md` | 数据口径与 `tables/` 清单 |
 

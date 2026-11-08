@@ -46,7 +46,7 @@ Trade-offs on LongMemEval-S
 | `tables/` | 6 个仍被引用的**冻结消融件**（fc_archive_absolutes, ablation_summary_len, ablation_allocation, ablation_retrieval, plug_baselines, judge_type）+ `legacy_120q/` |
 | `paper.bib` / `paper.bbl` | 参考文献；`iclr2025_conference.{sty,bst}` ICLR 模板 |
 | `reviewer_response_r9.md` | 对审稿意见的答复（含 21→25 格扩容说明，§327） |
-| `audit_report.txt` | 2026-10 的旧审计快照；其「0 errors」结论**只对旧构建成立**，见 §4 |
+| `audit_report.txt` | **2026-11-08 重写**的验收审计：§3 编译实测、§4 修复清单（含旧 15 页的 25 个错误）、§5 页数口径、§7 历史沿革 |
 
 ## 3. 构建
 
