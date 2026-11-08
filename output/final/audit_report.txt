@@ -1,152 +1,160 @@
 ========================================================================
-验收审计报告 / AUDIT REPORT — IsMyGo (mimo-primary + GLM-supplementary)
-生成时间: 2026-10-16 (全新结构重写轮 / full new-structure rewrite)
+验收审计报告 / AUDIT REPORT — IsMyGo（当前代际，2026-11-08 重写）
+论文: The Memory Trilemma Under a Fixed Token Budget:
+      Accuracy, Cost, and Latency Trade-offs on LongMemEval-S
 ========================================================================
 
-[本轮口径 / This-round spec]
-- 任务: 全面分析项目 → 离线重聚合所有代际数据 → 全新结构重写论文 → 更新核心文档。
-- 主数据 (primary): mimo-v2.6-flash 全量复现, results.jsonl 2,520 条 (21 格 × n=120, 零空预测)。
-- 补充数据 (supplementary): GLM-4-Flash 整张主网格 (第二读者) + GLM-4.7-Flash 冻结产物
-  60 题探针 (第三读者); 归档代际 results_archive.jsonl (7,399 条) 仅作 full-context 交付披露。
-- 论文链: results.jsonl → analyze.py → tables/ → paper.tex → PDF (数字全部可溯源, 零手工转录)。
+本报告 2026-11-08 全文重写。上一版（2026-10-16）记录的是 mimo 120 题代际，
+其「0 errors / 15 页」结论只对当时那次构建成立、且实际不成立（见 §4.3），
+历史口径压缩保留在文末 §7，不再作为当前状态的依据。
 
-[数据重聚合与核验 / Offline re-aggregation & verification]  ......... PASS
-- 主网格 (mimo): 重跑 analyze.py + _consolidated_table.py, 8 张主表 (main/bytype/latency/
-  stats/headline/stats.json/stats_strict.json/consolidated_emrel) 与重写前 **逐字节一致**
-  (SHA256 相同) → 聚合完全可复现。
-- 独立复算 (直接从原始 jsonl, 不经表格): 三代际头条数字全部与论文/README 吻合:
-    mimo  full-context 0.4750 (footprint 104,024; e2e 24.1s); retrieval 0.283/0.342/0.350/0.408;
-          hierarchical 0.150/0.258/0.333/0.417; compression 0.067/0.125/0.175/0.317;
-          window 0.025/0.025/0.058/0.050。
-    GLM-4-Flash  full-context 0.2917 (< hierarchical 0.3250); hierarchical 0.158→0.325 单调;
-          compression 0.067→0.150; retrieval 0.275→0.317。
-    archive  full-context done 36/120 (relaxed EM 0.3333), 84 空记录, 20 条 contentFilter(1301)。
-- 代际隔离核查 (关键): 诊断/消融/归档表 (struct_compressor, rerank_eval, retrieval_*,
-  ablation_*, plug_baselines, robustness_model, fc_archive_absolutes) 属 **修订轮/归档代际的
-  冻结产物**, 其 freeform/retrieval/hierarchical 基线来自 GLM 代际 (非 mimo)。本轮验证:
-  若误用 struct_summary.py 对当前 mimo results.jsonl 重算, 会把 mimo 基线 (freeform 0.317/
-  BM25 0.408) 与 GLM 代际 KV/EDU 混算, 得到错误 gap-closed (-190.9%); 正确冻结值为
-  KV -11.8% / EDU 0.0% (freeform 0.158, 同代际)。**已恢复冻结版, 论文沿用同代际表内比对。**
+------------------------------------------------------------------------
+[1] 本轮口径
+------------------------------------------------------------------------
+- 交付物：paper/paper.pdf（正文 15 页）+ paper/supplementary.pdf（补充材料 3 页）
+- 主网格（primary）：deepseek-v4.1-flash，LongMemEval-S 全量 500 题，
+  25 格 × 500 = 12,500 条逐题记录，分布在三个文件：
+    code/output/longmemeval/results.jsonl   21 格 × 500 = 10,500
+    results_r8.jsonl                        读时压缩 compression_select 1024/4096 = 1,000
+    results_r9.jsonl                        读时压缩 compression_select 512/2048 = 1,000
+- 副读者：mimo-v2.6-flash 120 题 21 格 2,520 条（上一代主数据，现仅作跨读者证据）
+- 第二读者：GLM-4-Flash 全网格 2,760 条（output/glm_supplementary/results_glm.jsonl，
+  23 格 × 120；非"待补 1,474 条"，该网格是完整的）
+- 弃用代际：glm5.3-flash 1,046 条（未跑完，留在 results.jsonl 内，无任何表引用）
 
-[编译 / Build]  (clean: tectonic 0.17.0 → BibTeX → 2× rerun → xdvipdfmx)
-- 编译引擎: tectonic 0.17.0 (XeTeX)。说明: 本机未安装 pdflatex/MiKTeX/TeXLive, 亦无
-  winget/choco/scoop; tectonic 为自包含引擎, 置于临时目录, 未做系统级安装。
-- 页数 (page count):            **15 页** (交付 PDF, tectonic 实测)  .... PASS (达标 15 页)
-- LaTeX 错误 (!):               0  ............. PASS
-- 未定义引用/citation:          0  ............. PASS
-- Overfull hbox:                0  ............. PASS
-- BibTeX 警告:                  0  ............. PASS
-- 参考文献条目 (\bibitem):      23  ............ PASS (全部 \citep 解析; 较上轮 +1:
-                                  新增 \citep{robertson2009bm25} 于检索器配置段)
-- PDF 字节:                     184,362 (final/paper.pdf = paper/paper.pdf)
+------------------------------------------------------------------------
+[2] 数字可溯源（表 → 源文件）
+------------------------------------------------------------------------
+正文 11 张表全部来自 tables500/（与补充材料共用同一份宏）：
+    headline.tex, main.tex, latency.tex, stats.tex, bytype.tex, type_paired.tex,
+    diag.tex, tight.tex, probes.tex, cross.tex, reader_comparison.tex
+冻结消融 6 张仍从 tables/ 引用（n=120 代际，表内同代际比对）：
+    fc_archive_absolutes.tex, ablation_summary_len.tex, ablation_allocation.tex,
+    ablation_retrieval.tex, plug_baselines.tex, judge_type.tex
+上一代 120 题主表 8 张已移入 tables/legacy_120q/（含 NOTE.md）：
+    main, headline, latency, stats, bytype, consolidated_emrel, reader_comparison,
+    retrieval_ranking —— 它们与 tables500/ 同名，留在原处会在重建时被误用。
+逐题复算抽查（n=500 格，EM / relaxed EM / F1）：
+    full-context        0.3420 / 0.3700 / 0.4651
+    retrieval @4096     0.3400 / 0.3640 / 0.4457
+    hierarchical @4096  0.3440 / 0.3720 / 0.4639
+    compression(write)  0.2860 / 0.3340 / 0.3992
+    compression(+read)  0.2800 / 0.3240 / 0.4131
+与 tables500/main.tex 逐格一致。resource_report.md §1.2 的 deepseek 账目
+（29,695 次调用 / 125,460,134 token，其中答题 10,500 次 = 70,771,336 token）
+与 10,500 条主网格行数互相对账，独立复算无差。
 
-[页数口径 / Page-count caliber]  (诚实披露)
-- **交付的 paper.pdf 实测为 15 页** (tectonic 0.17 / XeTeX 编译), 满足"论文 15 页"硬性要求。
-- 引擎差异: tectonic(XeTeX) 字体度量比 pdflatex 长约 1 页 (重写前 9 章版: pdflatex 15 页 /
-  tectonic 16 页)。为在 tectonic 上把交付 PDF 守到 15 页, 源文件加了两处**轻微排版压缩**
-  (\linespread{0.97} + \arraystretch{0.94}, 视觉几乎无差) 并紧凑化部分正文/附录措辞。
-- 若改用 pdflatex 编译同一源: 度量更紧, 页数会再少约 1 页 (~14); 如需 pdflatex 权威 15 页,
-  删除上述两行压缩即可 (pdflatex 下约回到 15)。无论哪种引擎, **交付 PDF 均为 15 页**。
-- 本机无 pdflatex, 故未做 pdflatex 实测; 上述 pdflatex 页数为基于引擎度量差的推断, 已如实标注。
+------------------------------------------------------------------------
+[3] 编译审计（2026-11-08 实测，MiKTeX pdflatex）
+------------------------------------------------------------------------
+引擎：D:\MikTex\miktex\bin\x64\pdflatex.exe
+命令：pdflatex -interaction=nonstopmode paper.tex → bibtex paper → pdflatex ×2
+      （补充材料：pdflatex ×2，无 \cite 故不走 bibtex）
 
-[结构 / Structure]  (全新结构: 摘要 + 11 章正文 + 参考文献 + 附录 A–E)
-- Abstract (memory trilemma 框架)
-- 1 Introduction (Q1/Q2 + 三发现 + 4 条 Contributions)
-- 2 Related Work and Positioning (基准 / 三机制族 / 层级系统 / 为何做受控研究 / 探针定位)
-- 3 Study Design: Six Policies, One Budget, Three Readers (合并原 Method+Setup:
-    数据与抽样 / 预算定义 / token 计费公平性 / 六策略 / 检索器 / 摘要 / 结构化压缩变体 /
-    答题器与读者 / 评分 / 统计与功效 / 延迟定义 / provider 失败披露 / 基础设施)
-- 4 The Accuracy--Cost--Latency Frontier (4 小节: 主对比 / 延迟与足迹 / 统计检验 / 分题型)
-- 5 Why No Strategy Dominates: Mechanistic Readings (C1–C4)
-- 6 The Bottleneck Is Reading, Not Retrieval (失败定位 / 排名质量 / 重排器探针 / 结构化压缩器)
-    ← 将"读侧天花板"这一核心洞见提升为独立顶级章
-- 7 Robustness: Sensitivity Analyses and Cross-Reader Replication (消融 / 插件基线 / 跨读者)
-- 8 Negative Results (N1–N6)
-- 9 A Practical Selection Guideline ← 将"选型规则"提升为独立顶级章
-- 10 Limitations (7 条)
-- 11 Conclusion
-- References (natbib / iclr2025_conference.bst, 23 条)
-- Appendix A Instruction Template and Reader Configuration
-- Appendix B Full Grid Aggregate (primary reader, 21 cells programmatic)
-- Appendix C Second-Reader Replication: GLM-4-Flash Full Grid  ← 补充数据
-- Appendix D Budget Accounting and Token-Cost Linearity
-- Appendix E Data Provenance and Reproducibility
-> 相对上轮 (9 章) 的结构变化: 原 §3 Method 与 §4 Setup 合并为新 §3 Study Design;
-> 原 §6 Analysis 拆分为新 §5 (机制解读) 与 §6 (读侧瓶颈); 原 §6.6 选型规则升为新 §9;
-> 章节由 9 → 11, 全部 \label/\ref 重映射且 0 未定义引用。
+正文 paper.pdf
+    页数 ................. 15            PASS
+    字节 ................. 345,891
+    LaTeX 错误 (!) ....... 0             PASS
+    未定义引用 ........... 0             PASS
+    Overfull hbox ........ 0             PASS
+    Underfull hbox ....... 1（badness 3229，第 803 行段落，无视觉影响）
+    参考文献 \bibitem ..... 35            PASS（BibTeX 警告 0）
 
-[GLM 口径核查 / GLM-as-supplementary check]  ......... PASS
-- 主读者 (primary answerer) 全文一致为 mimo-v2.6-flash。
-- "GLM" 仅出现在第二读者 (GLM-4-Flash 全网格复现) 与第三读者 (GLM-4.7-Flash 冻结探针)
-  的补充语境, 以及 Appendix C / tables/second_reader_glm.tex / reader_comparison.tex。
-- 无任何位置把 GLM 当作主网格/主结论的数据来源 (0 处 GLM-as-primary 泄漏)。
+补充材料 supplementary.pdf
+    页数 ................. 3             PASS
+    字节 ................. 174,106
+    LaTeX 错误 (!) ....... 0             PASS
+    未定义引用 ........... 0             PASS
+    Overfull hbox ........ 1（10.1pt，第 100–113 行，表格轻微出界）
+    Underfull hbox ....... 3
 
-[数字可溯源 / Number traceability]  ......... PASS
-正文与附录全部数值逐格溯源到 tables/ 下的生成产物 (映射见 Appendix E):
-- 主网格 EM/EM_rel/F1 ............ tables/main.tex (mimo)
-- relaxed EM + bootstrap 95% CI .. tables/consolidated_emrel.tex (mimo)
-- 分题型 strict EM ............... tables/bytype.tex (mimo)
-- 延迟/足迹 ...................... tables/latency.tex (mimo)
-- 配对 McNemar / ΔEM ............. tables/stats.tex (mimo)
-- 失败定位 (read vs retrieval) ... tables/retrieval_diagnosis.tex (诊断轮, 表内比对)
-- session 排名 R@k/NDCG .......... tables/retrieval_ranking.tex (诊断轮)
-- 重排器探针 ..................... tables/rerank_eval.tex (诊断轮)
-- 结构化压缩器 ................... tables/struct_compressor.tex (诊断轮, 冻结同代际)
-- 敏感性消融 (a)(b)(c) ........... tables/ablation_{summary_len,allocation,retrieval}.tex
-- 插件基线 ....................... tables/plug_baselines.tex
-- 跨读者对比 (mimo vs GLM) ....... tables/reader_comparison.tex
-- 第二读者全网格 (GLM-4-Flash) ... tables/second_reader_glm.tex (补充)
-- 第三读者探针 (GLM-4.7-Flash) ... tables/robustness_model.tex
-- 归档 full-context 交付 ......... tables/fc_archive_absolutes.tex (冻结)
-- 头条宏 (\fcDoneEM 等) .......... tables/headline.tex (mimo: \fcDoneEM=0.4750)
-- token 成本线性 (slope 0.9997) .. token_accounting.json
+SHA256
+    paper.pdf          182288a5a1e6a6cc7313c1496a5d4a406eb2c6a971ef1951a7b134bfdda55c99
+    supplementary.pdf  ad157d4c63a442943d59af5068d109b7963460307cb6cd32153fb1c154a84f0f
+    paper/ 与 output/final/ 四份文件逐字节一致（已核）
+自洽性：仅用 paper.tex + supplementary.tex + tables500/ + tables/ + sty/bst/bib
+在空目录重建，同样 15 页 / 3 页、0 错误 —— 不依赖仓库其余部分。
 
-[核心结论一致性 / Core-claim consistency]  (与上轮一致, 数据未变)
-- 主读者 (mimo): full-context 精度领先 (0.475) 但 ~25× token / ~5× 延迟 → 参照上界, 非可部署;
-  受限策略无单一赢家 (retrieval 小预算领先, hierarchical 4096 单调升至 0.417 反超);
-  compression 单独使用每档劣于 retrieval (512–2048 p≤0.0002), 4096 与 retrieval 不可区分
-  (p=0.099) 但仍低于 hierarchical (p=0.036); 瓶颈在读而非检索 (gold recall 0.99,
-  acc|covered ~0.30, reranker Δ=-0.008 p=1.0)。
-- 第二读者 (GLM-4-Flash, 补充): 受限策略排序稳健; full-context 排序读者依赖 (0.292 <
-  hierarchical 0.325), 绝对水平整体下移 → "无单一赢家 + compression 单独失败"跨读者稳健,
-  "full-context 精度领先"读者依赖。
+------------------------------------------------------------------------
+[4] 2026-11-07/08 修复清单（本轮全部改动）
+------------------------------------------------------------------------
+[4.1] 控制字符损坏 8 处 —— 一次非 raw 的 Python 写入吃掉了反斜杠
+    0x08  \begin   → <BS>egin{table}：table 环境丢失，\centering\scriptsize 泄漏到
+                     其后的正文，交付 PDF 第 9 页起每页字符数达 6,761–8,258
+                     （正常约 4,400–5,100），第 15 页渲染成"756 757 758 …"的数字墙
+    0x07  \approx  → <BEL>pprox：数学模式外使用，! Missing $ inserted
+    0x0D  \ref     → Table~<CR>ef{tab:typepaired}：正文印出"Table ef{...}"
+    0x09  \texttt  → 3 处，表格 caption 印出 "exttttype paired.py"
+    0x09  \times   → 2 处，$2.6imes$ / $27imes$：**LaTeX 零报错、静默印错**
+    教训：这类损坏不会让编译失败，只能靠 PDF 文本扫描（exttt / imes / ?? / egin）发现；
+    本轮已对 output/final/{,tables,tables500,tables500/backup_r8} 做全量控制字符扫描，
+    剩余命中仅为 CRLF 的 0x0D，无害。
 
-[结论 / Verdict]
-重写稿编译干净 (0 错误 / 0 未定义引用 / 0 overfull / 23 文献全解析), **交付 PDF 15 页**
-(tectonic 实测; 页数口径见上), GLM 仅作补充, 数字全部可溯源且三代际离线复算一致。
-保留事项: 本机无 pdflatex; 交付 PDF 已为 15 页, 若须 pdflatex 权威复现见"页数口径"说明。
+[4.2] tables500/type_paired.tex 结构性错误
+    文件为 CRLF 且**每行之间夹一个空行**（tabular 内的空行会提前结束环境），
+    末行 overall 又缺结尾 \\。修复前产生 25 个 LaTeX 错误：
+    ! Misplaced \noalign / ! Missing } inserted / ! \begin{document} ended by \end{table}
+
+[4.3] 交付 PDF 的"15 页"来自排版损坏，不是压缩
+    git 历史（bc0104a^）中的 paper.log 与朴素重建一样含 **25 个 ! 错误**，
+    逐页字符数 [3849,4818,5327,4526,5333,5291,3707,4787,6761,7981,4346,6619,8258,7236,3501]
+    在 p9–p15 明显异常；修复后同样内容的诚实排版是 18 页
+    [3849,4816,5327,4526,5334,5291,3704,4757,4469,4621,5015,4444,4413,4550,5103,6473,5907,859]。
+    提取文本总量几乎不变（82,354 → 83,475 字符）⇒ 没有删内容，只是排版坏了。
+    因此上一版本报告里的「0 errors / 15 页」对 10-25 交付物并不成立。
+
+[4.4] 页数回归 18 → 15：移出而非删减
+    评审窗口只读前 15 页（见 code/iclr/legacy_2026-10-16/response_letter.md），
+    故把 §8 Negative Results、§9 A Practical Selection Guideline，以及原附录
+    A 指令模板 / B GLM 第二读者 / C 预算记账 / D 数据溯源，整体移入
+    supplementary.tex（A–F 六节，3 页，约 9,400 字符）。
+    仅移 §8/§9 时为 16 页，最后 1 页由 \linespread{1.0}→{0.97} 收下
+    （\bibsep 同步 0.4pt→0pt+0.1ex）。正文已无 \appendix 块。
+    被移动文本的交叉引用全部改写为「Supplement, Section X」，\ref 悬空数 0。
+
+[4.5] 文档与工具链对齐
+    - code/scripts/populate_output.py：REQUIRED_PAGES 固定 15；当前代际分支复制并编译
+      补充材料；旧代际（code/iclr/legacy_2026-10-16/）才走 15 页 + 路径改写分支
+    - code/tests/test_system.py：旧稿路径同步到 legacy_2026-10-16/，回归不再被静默跳过
+    - README.md / output/README.md / output/final/README.md / code/README.md：
+      标题、12,500 条口径、results.jsonl 双代际说明、final_15p 不存在的说明、
+      正文 15 页 + 补充材料 3 页，全部改为当前状态
+
+------------------------------------------------------------------------
+[5] 页数口径（诚实说明）
+------------------------------------------------------------------------
+- 现在的 15 页 = pdflatex 真实排版 15 页：正文 9 节 + 参考文献，无附录，
+  \linespread 0.97，逐页字符数 4,041–5,564、末页 6,515（参考文献），密度均匀。
+- 旧的 15 页 = 坏排版压出来的 15 页（p9 起因 \scriptsize 泄漏把正文压成小字），
+  其 25 个错误从未被审计报告披露，属于"用排版故障换页数"。
+- 上一版本报告的"本机未安装 pdflatex / tectonic 0.17 编译"同样过时：本机 MiKTeX
+  pdflatex 可用，本报告所有页数均为 pdflatex 实测，不再有引擎推断成分。
+
+------------------------------------------------------------------------
+[6] 结论 / Verdict
+------------------------------------------------------------------------
+正文 15 页 / 345,891 B、补充材料 3 页 / 174,106 B，两者均为 0 错误 / 0 未定义引用，
+参考文献 35 条零警告，交付位与工作副本 SHA256 一致，且可在干净目录独立重建。
+主网格 12,500 条跨三个文件、口径与 resource_report.md §1.2 的 token 账目对账通过。
+已知遗留（不是缺陷，是代际标记）：
+    - output/results.jsonl 仍是上一代 mimo 2,520 条，正文不引用它；
+    - glm5.3-flash 1,046 条为弃用代际残留，未参与任何表；
+    - output/final/audit_report.txt（本文件）此前长期停留在 10-16 代际，本轮已重写。
+
+------------------------------------------------------------------------
+[7] 历史沿革（压缩保留，仅作追溯）
+------------------------------------------------------------------------
+2026-10-16  mimo 全新结构重写轮：11 章 + 附录 A–E，23 条文献，报告称
+           15 页 / 184,362 B、由 tectonic 0.17 编译。该"本机无 pdflatex"的说法
+           对 10-25 之后的构建不成立。
+2026-10-18  主网格升级到 deepseek 500 题 / 25 格 / 12,500 条，正文口径改为
+           主读者 deepseek、mimo 作副读者；PDF 200,010 B / 35 条文献。
+2026-10-25  三轮外部评审回应（离线，零 API）：新增 per-type×per-budget 配对表、
+           write-side token 账目段、Selection-at-a-glance、judge 语义旁证、
+           cross-writer/latency 范围等局限项。PDF 15 页 / 422,560 B —— 即
+           §4.3 所述、含 25 个 LaTeX 错误的那个交付物。
+2026-11-07  发现并修复 8 处控制字符损坏、type_paired 结构错误（bc0104a），
+           诚实排版回到 18 页；随后修复 5 处 \t 损坏（0e13708）。
+2026-11-08  按评审窗口把 §8/§9 与实现细节附录移入补充材料，正文回到 15 页
+           （a415691）；本审计报告全文重写。
 ========================================================================
-
---- 附注（2026-10-25 同步） ---
-10-18 主网格升级轮重新构建后 final/paper.pdf 为 200,010 字节（deepseek 主读者、
-35 篇文献、15 页）。提交位 paper/paper.pdf 当日同步为该版本；上行 184,362 字节
-为本报告所记录的 10-16 重写轮当时状态，保留作历史。
-
---- 附注（2026-10-25 评审回应优化轮，零 API 消耗） ---
-应用户提交的外部评审意见离线优化论文并重编译：新增 per-type×per-budget 配对表
-(tables500/type_paired.tex, 由 type_paired.py 从 results.jsonl 复算)、write-side 构造
-token 账目段(54.7M 总量/57k 每题/4h, 见 §4.2)、Selection-at-a-glance 表(§9)、
-Proxy-scope 局限项(§10)。全部数字源自落盘文件，无新增 LLM 调用。本机 pdflatex
-(MiKTeX 26.5) 编译：13 页 / 0 错误 / 0 未定义引用 / 0 overfull（此前 tectonic 构建为 15 页）。
-同步至提交位 paper/paper.pdf。
-
---- 附注（2026-10-25 第二轮评审回应，零 API 消耗） ---
-新增: §7.3 Judge-based semantic corroboration(tables/judge_type.tex +
-judge_type.py 复算: 翻转率按预算恒定 0.33-0.35, 按型 0.17-0.79, 对照 0/210) ——
-回应 Q1(4096 分歧非评分假象)与 Q5(读取失败按型刻画); §7.1 compselect 按型分解
-(多会话 +0.06 vs knowledge-update -0.154*/-0.256**, 回应 Q6); 分配变体显式
-链接 adaptive allocation(Q4); Limitations 增补 cross-writer/latency 范围/长文
-utilization 任务(Q2轮弱点); Intro 贡献列表加 at-a-glance 指针。
-linespread 0.91->1.0(移除 tectonic 时代压缩), pdflatex 15 页/0 错误/0 未定义
-引用/0 overfull。同步提交位 paper/paper.pdf。
-
---- 附注（2026-10-25 第三轮评审回应，零 API 消耗） ---
-§2 增 budget-routing/read-time curation 桥接段(可证伪预测: 增益在组合模式与
-预算档间路由, 非更好排序——排序侧干预全部 n.s. vs fetch-then-summarize +0.150);
-§9 增 When does full-context win? 段(主读者下 fc 0.370@104,160tok/10.7s 已被
-hier@4096 0.372@3,817tok/4.1s 追平反超, 27x token 无任何价格下买到准确率,
-≥128k-1M 架构只把亏损变平局; fc 的剩余价值=免写入通道/免索引; 跨读者中
-fc 排序是唯一读者依赖结论需随规模复检); §4 增 Evidence base 总览句(n=500
-vs n=120 由 tab:map 汇总); at-a-glance caption 补证据口径; Limitations 增
-read-time 摘要索引仅 BM25 + turn 级金标靠抽样(瓶颈为有界非精确)两点。
-pdflatex 15 页/0 错误/0 未定义引用/0 overfull, 同步提交位。
