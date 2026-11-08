@@ -2,7 +2,7 @@
 
 **标题**：The Memory Trilemma Under a Fixed Token Budget: Accuracy, Cost, and Latency
 Trade-offs on LongMemEval-S
-**源文件**：`paper.tex`（1,017 行）+ `supplementary.tex`；**构建产物**：`paper.pdf`（15 页 / 345,891 字节 / 0 错误）
+**源文件**：`paper.tex`（1,051 行）+ `supplementary.tex`；**构建产物**：`paper.pdf`（15 页 / 349,537 字节 / 0 错误）
 + `supplementary.pdf`（3 页 / 174,106 字节 / 0 错误）
 **打包副本**：`paper/paper.pdf`（补充材料不随 `paper/` 打包，引用位置即 `output/final/supplementary.pdf`）
 

@@ -229,7 +229,12 @@ envelope yields a falsifiable prediction: under fixed budgets, ranking-side inte
 at most n.s.\ amounts here, while the one composition-side intervention---fetch-then-
 summarize at read time---gained $+0.150$. Learned budget routers and read-time curation
 should therefore route \emph{between composition modes and budget tiers}, not toward
-better ranking; that is where our measurements localize the remaining headroom.
+better ranking; that is where our measurements localize the remaining headroom. Three
+further lines bear on our conclusions without being instantiated here: expectation-guided
+compression (EPC), which shares our write-side accounting; the confound analysis of
+MemDelta, whose reader dependence our cross-reader replication corroborates; and DeferMem's
+read-time, set-aware selection, the composition-side alternative to the frozen digests we
+evaluate.
 
 \section{Study Design: Six Policies, One Budget, Four Readers}
 \label{sec:design}
@@ -362,6 +367,12 @@ on accuracy differences is $0.02$--$0.04$, bounding the minimum detectable effec
 $0.04$ EM. Within a question type ($n{=}56$--$133$) the paired CI half-width is
 $0.05$--$0.08$ EM, so type-level contrasts are tested rather than merely described. All
 tables name their answering reader; absolute numbers compare \emph{within-table} only.
+Because the grid supports forty paired contrasts (ten policy pairs at four budgets), we also
+apply a Holm--Bonferroni correction over that family: $17$ of the $40$ reach $p<0.05$
+uncorrected and $14$ survive. Every contrast the paper leans on survives (retrieval over
+write-time compression at $512$--$2048$, $p<10^{-9}$; retrieval over the hierarchy at $512$);
+the single casualty, retrieval versus hierarchy at $1024$ ($p{=}0.013$, family threshold
+$2.0\times10^{-3}$), is not claimed anywhere.
 
 \paragraph{What is directly comparable.} Because the study spans one full-set grid and several
 probe runs, Table~\ref{tab:map} states, for each table, its question set, reader and the
@@ -510,7 +521,11 @@ and cells, and read-side cost is at parity with retrieval ($4{,}197$ vs.\ $3{,}9
 prompt tokens at $B{=}4096$). Retrieval, hierarchical and full-context incur zero LLM write
 cost, and the structured verbatim compressors are deterministic. Deployments where write
 time is non-negligible should bill this pass separately: it is the cheapest-to-read family
-that pays the largest one-time write.
+that pays the largest one-time write. At the measured rates the pass amortizes after
+$\approx 545$ questions on the same corpus: $54.7$M tokens of digesting buy $\approx 100$k
+tokens saved per question against replaying full context ($104$k vs.\ $3.7$k mean prompt
+tokens), so a store answering more than a few hundred questions should digest once rather
+than replay.
 
 \subsection{Statistical tests}
 Table~\ref{tab:stats} reports, per budget, the paired bootstrap 95\% CI and the exact McNemar
@@ -638,6 +653,25 @@ of milliseconds; the answer forward pass costs seconds. Latency claims about mem
 must be component-separated: assembling the context is invisible next to the reader call, so
 optimizing it (e.g., dropping BM25 for a take-newest store) trades away accuracy for a saving
 no user observes.
+
+\begin{table}[h]
+\centering\scriptsize
+\caption{Selection at a glance (relaxed EM, full-set $n{=}500$ evidence). The rule set and the
+negative results behind the last row are derived in Supplement, Section~B.}
+\label{tab:select}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Regime & Pick \\
+\midrule
+$B\leq2048$ & BM25 retrieval: best or tied-best at every budget \\
+$B=2048$ (tie) & retrieval over hierarchy: equal accuracy, $30$ vs.\ $52$\,ms access \\
+$B=4096$ & hierarchy $\approx$ retrieval ($0.372$ vs.\ $0.364$, $p{=}0.90$), at $1/25$ full-context tokens \\
+single-session-heavy & retrieval at any budget (hierarchy $-0.058^{**}$ pooled) \\
+write cost non-negligible & retrieval or hierarchy (zero LLM write) \\
+never & sliding window (multi-session $0.000$ EM) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Where the Residual Error Lives}
 \label{sec:reading}
@@ -906,11 +940,11 @@ from \texttt{judge\_full.json}).}
 \input{tables/judge_type.tex}
 \end{table}
 
-\paragraph{Supplementary material.} A catalogue of negative results and the practical
-selection guideline distilled from the full grid are deferred to the accompanying
-supplement (\texttt{supplementary.pdf}, Sections~A--B), as are the instruction template,
-the second-reader grid, and the budget accounting (Sections~C--E), so that the main text stays
-within its page budget.
+\paragraph{Supplementary material.} A catalogue of negative results, and the full derivation
+of the selection rule set summarised in Table~\ref{tab:select}, are deferred to the
+accompanying supplement (\texttt{supplementary.pdf}, Sections~A--B); the instruction
+template, the second-reader grid, and the budget accounting follow in Sections~C--E, so that
+the main text stays within its page budget.
 
 \section{Limitations}
 \label{sec:limits}

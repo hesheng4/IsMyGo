@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  7 NOV 2026 18:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.9.25)  8 NOV 2026 11:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -479,34 +479,38 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 onts/enc/dvips/base/8r.enc}
 
 ] [2] [3]
-<tables/fig_policy_anatomy.pdf, id=253, 448.07399pt x 68.6565pt>
+<tables/fig_policy_anatomy.pdf, id=252, 448.07399pt x 68.6565pt>
 File: tables/fig_policy_anatomy.pdf Graphic file (type pdf)
 <use tables/fig_policy_anatomy.pdf>
-Package pdftex.def Info: tables/fig_policy_anatomy.pdf  used on input line 295.
+Package pdftex.def Info: tables/fig_policy_anatomy.pdf  used on input line 300.
 
 (pdftex.def)             Requested size: 349.78873pt x 53.59688pt.
  [4 <./tables/fig_policy_anatomy.pdf>]
 [5] (tables500/main.tex)
-<tables/fig_takeaway.pdf, id=346, 466.89244pt x 199.69789pt>
+<tables/fig_takeaway.pdf, id=345, 466.89244pt x 199.69789pt>
 File: tables/fig_takeaway.pdf Graphic file (type pdf)
 <use tables/fig_takeaway.pdf>
-Package pdftex.def Info: tables/fig_takeaway.pdf  used on input line 450.
+Package pdftex.def Info: tables/fig_takeaway.pdf  used on input line 461.
 (pdftex.def)             Requested size: 325.9406pt x 139.41277pt.
- [6 <./tables/fig_takeaway.pdf>] (tables500/latency.tex) [7] (tables500/stats.t
-ex) (tables500/bytype.tex) (tables500/type_paired.tex)
-[8] (tables500/diag.tex)
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[9] (tables500/tight.tex) [10]
-Underfull \hbox (badness 3229) in paragraph at lines 803--803
+(tables500/latency.tex) [6] [7 <./tables/fig_takeaway.pdf>]
+(tables500/stats.tex) (tables500/bytype.tex) (tables500/type_paired.tex)
+[8] [9] (tables500/diag.tex) (tables500/tight.tex) [10]
+Underfull \hbox (badness 3229) in paragraph at lines 837--837
 \OT1/ptm/b/n/10 (+20) (b) \OT1/ptm/m/n/10 (+20) Hi-er-ar-chi-cal tier al-lo-ca-
 tion (\OT1/pcr/m/n/10 ablation[]allocation.tex\OT1/ptm/m/n/10 (+20) ). \OT1/ptm
 /b/n/10 (+20) (c) \OT1/ptm/m/n/10 (+20) Re-triever fam-ily
  []
 
 (tables/ablation_summary_len.tex) (tables/ablation_allocation.tex)
-(tables/ablation_retrieval.tex) (tables/plug_baselines.tex)
+(tables/ablation_retrieval.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+(tables/plug_baselines.tex)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -514,8 +518,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[11] (tables500/cross.tex) (tables500/reader_comparison.tex) [12]
-(tables/judge_type.tex) [13] (paper.bbl [14]) [15] (paper.aux)
+[11] (tables500/cross.tex) (tables500/reader_comparison.tex)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[12] (tables/judge_type.tex)
+Underfull \hbox (badness 1325) in paragraph at lines 943--948
+\OT1/ptm/m/n/10 (+20) se-lec-tion rule set sum-marised in Ta-ble []7[], are de-
+ferred to the ac-com-pa-ny-ing sup-ple-ment
+ []
+
+[13] [14] (paper.bbl) [15] (paper.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
@@ -524,13 +537,13 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 69B2A22A6DC9F7D5CFB1D99403D9821D;4105.
  ) 
 Here is how much of TeX's memory you used:
- 14091 strings out of 467441
- 215385 string characters out of 5424496
- 696873 words of memory out of 5000000
- 42573 multiletter control sequences out of 15000+600000
- 673625 words of font info for 382 fonts, out of 8000000 for 9000
+ 14096 strings out of 467441
+ 215438 string characters out of 5424496
+ 707012 words of memory out of 5000000
+ 42574 multiletter control sequences out of 15000+600000
+ 674040 words of font info for 384 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,12n,90p,1004b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,12n,90p,1004b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/MikTex/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/MikTex/fonts/type1/p
 ublic/amsfonts/cm/cmmi7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr10.pfb
 ><D:/MikTex/fonts/type1/public/amsfonts/cm/cmr5.pfb><D:/MikTex/fonts/type1/publ
@@ -540,9 +553,9 @@ ic/amsfonts/cm/cmr7.pfb><D:/MikTex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D
 /fonts/type1/urw/helvetic/uhvb8a.pfb><D:/MikTex/fonts/type1/urw/times/utmb8a.pf
 b><D:/MikTex/fonts/type1/urw/times/utmr8a.pfb><D:/MikTex/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on paper.pdf (15 pages, 345891 bytes).
+Output written on paper.pdf (15 pages, 349537 bytes).
 PDF statistics:
- 600 PDF objects out of 1000 (max. 8388607)
- 123 named destinations out of 1000 (max. 500000)
+ 602 PDF objects out of 1000 (max. 8388607)
+ 124 named destinations out of 1000 (max. 500000)
  57507 words of extra memory for PDF output out of 61914 (max. 10000000)
 
