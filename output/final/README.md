@@ -4,7 +4,7 @@
 Trade-offs on LongMemEval-S
 **源文件**：`paper.tex`（1,017 行）+ `supplementary.tex`；**构建产物**：`paper.pdf`（15 页 / 345,891 字节 / 0 错误）
 + `supplementary.pdf`（3 页 / 174,106 字节 / 0 错误）
-**打包副本**：`paper/paper.pdf`、`paper/supplementary.pdf`
+**打包副本**：`paper/paper.pdf`（补充材料不随 `paper/` 打包，引用位置即 `output/final/supplementary.pdf`）
 
 ## 1. 数据口径（2026-11-07 校准）
 

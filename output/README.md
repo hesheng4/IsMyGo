@@ -15,7 +15,7 @@
 > 本文件下面各节是历史沿革，凡与本节冲突处以本节为准。
 
 - 提交的 PDF 如何来自该生成稿：`final/paper.tex` 经 pdflatex ×3 + bibtex 编译为 `final/paper.pdf`（15 页）+ `final/supplementary.pdf`（3 页），
-  同步至提交位 `paper/paper.pdf` / `paper/supplementary.pdf`；正文数字全部来自下方结果文件，可重编译、可逐格复算
+  正文同步至提交位 `paper/paper.pdf`，补充材料留在本目录（`final/supplementary.pdf`）；正文数字全部来自下方结果文件，可重编译、可逐格复算
 - 结果文件：本目录 `results.jsonl` 为**上一代** mimo-v2.6-flash 120 题 / 21 格 / 2,520 条；
   论文主网格的 14,066 条逐题记录在 `code/output/longmemeval/results.jsonl`
   （deepseek-v4.1-flash 10,500 + mimo 2,520 + 弃用代际 glm5.3-flash 1,046）、`tables/`（论文全部表格的 tex/json 源）

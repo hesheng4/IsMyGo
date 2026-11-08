@@ -4,7 +4,7 @@ CCF BDCI 2026 华为 openJiuwen 赛题三「Agent 科研短论文自动生成」
 选题方向：**Agent 记忆引擎设计**——长程流式任务中的记忆策略权衡。
 
 论文：*The Memory Trilemma Under a Fixed Token Budget: Accuracy, Cost, and Latency
-Trade-offs on LongMemEval-S*（ICLR 模板，正文 15 页，`paper/paper.pdf`；补充材料 3 页，`paper/supplementary.pdf`）
+Trade-offs on LongMemEval-S*（ICLR 模板，正文 15 页，`paper/paper.pdf`；补充材料 3 页，`output/final/supplementary.pdf`）
 
 ## 这是什么
 
